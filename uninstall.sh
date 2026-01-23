@@ -106,11 +106,50 @@ else
 fi
 
 echo ""
-echo "✅ Uninstall complete!"
+echo "Found installation type: $INSTALL_TYPE"
 echo ""
-echo "To completely remove all data (docs, memory, cache), run:"
+
 if [ "$INSTALL_TYPE" = "global" ]; then
-    echo "  rm -rf $HOME/.ai_docs/opencode"
+    echo "This will remove:"
+    echo "  - $GLOBAL_SKILL/SKILL.md"
+    echo "  - $GLOBAL_SCRIPTS/*.py"
+    echo ""
+    echo "These will NOT be removed (your data):"
+    echo "  - $HOME/.ai_docs/opencode/docs/"
+    echo "  - $HOME/.ai_docs/opencode/memory/"
+    echo "  - $HOME/.ai_docs/opencode/cache/"
 else
-    echo "  rm -rf $(pwd)/.ai_docs/opencode"
+    echo "This will remove:"
+    echo "  - $PROJECT_SKILL/SKILL.md"
+    echo "  - $PROJECT_SCRIPTS/*.py"
+    echo ""
+    echo "These will NOT be removed (your data):"
+    echo "  - $(pwd)/.ai_docs/opencode/docs/"
+    echo "  - $(pwd)/.ai_docs/opencode/memory/"
+    echo "  - $(pwd)/.ai_docs/opencode/cache/"
+fi
+
+echo ""
+
+if [ "$1" = "--yes" ] || [ "$1" = "-y" ]; then
+    CONFIRM="y"
+elif [ -t 0 ]; then
+    read -p "Continue uninstall? [y/N] (default: N): " confirm
+    CONFIRM="${confirm:-N}"
+else
+    echo "⚠️  Not running interactively (piped from curl)"
+    echo "   To uninstall, add --yes flag:"
+    echo "   curl ... | bash -s -- --yes"
+    echo ""
+    echo "   Or download first:"
+    echo "   curl -O https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uninstall.sh"
+    echo "   chmod +x uninstall.sh"
+    echo "   ./uninstall.sh"
+    echo ""
+    exit 1
+fi
+
+if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+    echo "Uninstall cancelled."
+    exit 0
 fi
