@@ -17,7 +17,7 @@ if [ "$install_type" = "2" ]; then
     SKILL_DIR="$(pwd)/.opencode/skills/opencode-mastery"
 else
     INSTALL_DIR="$HOME/.ai_docs/opencode"
-    SKILL_DIR="$HOME/.opencode/skills/opencode-mastery"
+    SKILL_DIR="$HOME/.config/opencode/skills/opencode-mastery"
 fi
 
 SCRIPTS_DIR="$INSTALL_DIR/scripts"

@@ -14,7 +14,7 @@ cd ~/.ai_docs/opencode
 ```
 
 The installer will ask:
-- **Global installation** (default): Available in all projects at `~/.opencode/skills/`
+- **Global installation** (default): Available in all projects at `~/.config/opencode/skills/`
 - **Project installation**: Available only in current project at `.opencode/skills/`
 
 ### Option 2: One-line Global Install
@@ -23,7 +23,7 @@ The installer will ask:
 curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/install.sh | bash
 ```
 
-This installs globally in `~/.opencode/skills/`.
+This installs globally in `~/.config/opencode/skills/`.
 
 ## Uninstall
 
@@ -133,7 +133,7 @@ Ask questions like:
 ├── cache/                   # GitHub search results cache
 └── install.sh              # Installation script
 
-~/.opencode/skills/opencode-mastery/
+~/.config/opencode/skills/opencode-mastery/
 └── SKILL.md                 # Skill file (copied here)
 ```
 
@@ -222,7 +222,7 @@ Commands:
 
 **Global installation:**
 ```
-~/.opencode/skills/opencode-mastery/SKILL.md
+~/.config/opencode/skills/opencode-mastery/SKILL.md
 ```
 
 **Project installation:**
@@ -291,8 +291,8 @@ python .ai_docs/opencode/scripts/index-builder.py --rebuild
 
 **For global installation:**
 ```bash
-ls -la ~/.opencode/skills/opencode-mastery/SKILL.md
-head -10 ~/.opencode/skills/opencode-mastery/SKILL.md
+ls -la ~/.config/opencode/skills/opencode-mastery/SKILL.md
+head -10 ~/.config/opencode/skills/opencode-mastery/SKILL.md
 ```
 
 **For project installation:**
@@ -344,7 +344,7 @@ To remove ALL data including documentation, memory, and cache:
 
 **Global installation:**
 ```bash
-rm -rf ~/.ai_docs/opencode ~/.opencode/skills/opencode-mastery
+rm -rf ~/.ai_docs/opencode ~/.config/opencode/skills/opencode-mastery
 ```
 
 **Project installation:**

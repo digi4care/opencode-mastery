@@ -7,7 +7,7 @@ echo "This will remove only OpenCode Mastery skill files."
 echo "Your downloaded documentation, memory, and cache will NOT be removed."
 echo ""
 
-GLOBAL_SKILL="$HOME/.opencode/skills/opencode-mastery"
+GLOBAL_SKILL="$HOME/.config/opencode/skills/opencode-mastery"
 PROJECT_SKILL="$(pwd)/.opencode/skills/opencode-mastery"
 GLOBAL_SCRIPTS="$HOME/.ai_docs/opencode/scripts"
 PROJECT_SCRIPTS="$(pwd)/.ai_docs/opencode/scripts"

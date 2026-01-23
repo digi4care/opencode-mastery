@@ -59,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Installation
 - GitHub repository created: `digi4care/opencode-mastery`
 - Quick install: `curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/install.sh | bash`
-- Skill location: `~/.opencode/skills/opencode-mastery/SKILL.md`
+- Skill location: `~/.config/opencode/skills/opencode-mastery/SKILL.md`
 
 ---
 

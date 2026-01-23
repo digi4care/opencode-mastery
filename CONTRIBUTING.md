@@ -33,10 +33,10 @@ Thank you for your interest in contributing! This document provides guidelines f
    ```bash
    # Create directories
    mkdir -p ~/.ai_docs/opencode
-   mkdir -p ~/.opencode/skills/opencode-mastery
+   mkdir -p ~/.config/opencode/skills/opencode-mastery
 
    # Copy skill file
-   cp src/skill/SKILL.md ~/.opencode/skills/opencode-mastery/SKILL.md
+   cp src/skill/SKILL.md ~/.config/opencode/skills/opencode-mastery/SKILL.md
 
    # Download docs
    python3 src/scripts/download-docs.py
