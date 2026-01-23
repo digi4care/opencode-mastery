@@ -105,16 +105,17 @@ This creates the fuzzy search index in your memory directory.
 
 ### 3. Use the Skill
 
-Start OpenCode and invoke the skill:
+The skill is automatically loaded when you ask questions about OpenCode.
+
+Simply start OpenCode and ask:
 ```
-/skill opencode-mastery
+How do I create a skill?
+What permissions can I set on agents?
+How do I configure MCP servers?
+How do I develop a plugin?
 ```
 
-Ask questions like:
-- "How do I create a skill?"
-- "What permissions can I set on agents?"
-- "How do I configure MCP servers?"
-- "How do I develop a plugin?"
+The agent will automatically load the OpenCode Mastery skill and answer your questions with references to documentation.
 
 ## Directory Structure
 
@@ -230,7 +231,7 @@ Commands:
 .your-project/.opencode/skills/opencode-mastery/SKILL.md
 ```
 
-Use the same `/skill opencode-mastery` command in both cases - OpenCode automatically detects and loads skills from the correct location.
+In both cases, OpenCode automatically detects and loads the skill when you ask questions about OpenCode.
 
 ## How It Works
 
