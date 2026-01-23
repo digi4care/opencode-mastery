@@ -230,7 +230,7 @@ To add new documentation topics to download:
 
 ## License
 
-MIT License - see LICENSE file for details.
+MIT License - see [LICENSE.md](https://github.com/digi4care/opencode-mastery/blob/main/LICENSE.md) for details.
 
 ## Changelog
 
