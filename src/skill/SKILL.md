@@ -5,7 +5,7 @@ license: MIT
 compatibility: opencode
 metadata:
   author: user
-  version: 1.1.0
+  version: 1.2.0
   refresh: weekly
   paths:
     docs: ~/.ai_docs/opencode/docs
