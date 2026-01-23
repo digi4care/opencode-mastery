@@ -27,7 +27,7 @@ This installs globally in `~/.opencode/skills/`.
 
 ## Uninstall
 
-To remove the OpenCode Mastery skill while keeping your documentation, memory, and cache:
+To remove OpenCode Mastery skill while keeping your documentation, memory, and cache:
 
 **From the repository:**
 ```bash
@@ -35,9 +35,16 @@ cd ~/.ai_docs/opencode
 ./uninstall.sh
 ```
 
-**Or download and run:**
+**Or download and run (interactive):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uninstall.sh | bash
+curl -O https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uninstall.sh
+chmod +x uninstall.sh
+./uninstall.sh
+```
+
+**Or download and run (non-interactive):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uninstall.sh | bash -s -- --yes
 ```
 
 The uninstall script:
