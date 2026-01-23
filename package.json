@@ -15,7 +15,10 @@
     "documentation",
     "knowledge-base"
   ],
-  "author": "digi4care",
+  "author": {
+    "name": "digi4care",
+    "email": "digi4care@users.noreply.github.com"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
