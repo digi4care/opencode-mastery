@@ -245,5 +245,7 @@ Contributions welcome! See [CONTRIBUTING.md](https://github.com/digi4care/openco
 - [GitHub Repository](https://github.com/digi4care/opencode-mastery)
 - [Issues](https://github.com/digi4care/opencode-mastery/issues)
 - [Pull Requests](https://github.com/digi4care/opencode-mastery/pulls)
+- [Security](https://github.com/digi4care/opencode-mastery/security)
+- [Security Policy](https://github.com/digi4care/opencode-mastery/blob/main/SECURITY.md)
 - [OpenCode Documentation](https://opencode.ai/docs)
 - [OpenCode GitHub](https://github.com/anomalyco/opencode)
