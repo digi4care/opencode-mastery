@@ -1,0 +1,28 @@
+{
+  "name": "opencode-mastery",
+  "version": "1.0.0",
+  "description": "OpenCode knowledge base with lazy-loaded docs, fuzzy search and intelligent memory",
+  "main": "src/index.ts",
+  "scripts": {
+    "install": "./install.sh",
+    "download-docs": "python3 src/scripts/download-docs.py",
+    "build-index": "python3 src/scripts/index-builder.py",
+    "test": "echo 'No tests yet'"
+  },
+  "keywords": [
+    "opencode",
+    "skill",
+    "documentation",
+    "knowledge-base"
+  ],
+  "author": "digi4care",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digi4care/opencode-mastery.git"
+  },
+  "bugs": {
+    "url": "https://github.com/digi4care/opencode-mastery/issues"
+  },
+  "homepage": "https://github.com/digi4care/opencode-mastery#readme"
+}

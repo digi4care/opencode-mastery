@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.ruff_cache/
+
+# Cache
+.ai_docs/opencode/docs/
+.ai_docs/opencode/memory/
+.ai_docs/opencode/cache/
+
+# Local
+.DS_Store
+Thumbs.db
