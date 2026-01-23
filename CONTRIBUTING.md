@@ -30,20 +30,22 @@ Thank you for your interest in contributing! This document provides guidelines f
    ```
 
 4. **Install locally (for testing)**
-   ```bash
-   # Create directories
-   mkdir -p ~/.ai_docs/opencode
-   mkdir -p ~/.config/opencode/skills/opencode-mastery
+    ```bash
+    # Create directories
+    mkdir -p ~/.ai_docs/opencode
+    mkdir -p ~/.config/opencode/skill/opencode-mastery
+    mkdir -p ~/.config/opencode/skill/meta-agent
 
-   # Copy skill file
-   cp src/skill/SKILL.md ~/.config/opencode/skills/opencode-mastery/SKILL.md
+    # Copy skill files
+    cp src/skill/opencode-mastery/SKILL.md ~/.config/opencode/skill/opencode-mastery/SKILL.md
+    cp src/skill/meta-agent/SKILL.md ~/.config/opencode/skill/meta-agent/SKILL.md
 
-   # Download docs
-   python3 src/scripts/download-docs.py
+    # Download docs
+    python3 src/scripts/download-docs.py
 
-   # Build index
-   python3 src/scripts/index-builder.py
-   ```
+    # Build index
+    python3 src/scripts/index-builder.py
+    ```
 
 ## Types of Contributions
 

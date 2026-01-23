@@ -9,14 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0] - 2026-01-23
 
+### Added
+- Meta-agent skill for generating OpenCode commands, skills, and agents
+- Meta-agent uses opencode-mastery skill for accurate documentation
+- Component templates for commands, skills, and agents
+
 ### Fixed
-- Global skill installation path corrected from `~/.opencode/skills/` to `~/.config/opencode/skills/`
-- OpenCode now correctly discovers and loads the skill per official documentation
-- Updated all documentation (README, CHANGELOG, CONTRIBUTING) with correct paths
+- Global skill installation path uses `.opencode/skill/` (singular) to match system requirements
+- OpenCode now correctly discovers and loads skills from `.opencode/skill/`
+- Meta-agent skill structure matches opencode-mastery skill structure
+- Updated all documentation (README, CHANGELOG) with correct `.opencode/skill/` paths
 
 ### Changed
-- `install.sh`: Global installs to `~/.config/opencode/skills/opencode-mastery/`
-- `uninstall.sh`: Checks and removes from correct global location
+- `install.sh`: Installs to `~/.config/opencode/skill/` (singular, not skills/)
+- `uninstall.sh`: Checks and removes from `~/.config/opencode/skill/` (singular)
+- Meta-agent template generates skills to `.opencode/skill/` (singular) directory
 
 ## [1.1.0] - 2026-01-23
 
