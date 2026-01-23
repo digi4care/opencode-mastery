@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Scripts directory not being populated correctly in local installation
 - Missing directory structure creation in project installation mode
 - Silent failures in file copy operations now show explicit errors
-- Non-interactive uninstall via `curl | bash` now works with `--yes` flag
+- Uninstall: changed `--yes` to `--silent` flag for non-interactive mode
 
 ### Documentation
 - Added installation mode comparison in README.md

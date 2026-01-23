@@ -42,9 +42,9 @@ chmod +x uninstall.sh
 ./uninstall.sh
 ```
 
-**Or download and run (non-interactive):**
+**Or download and run (non-interactive, no confirmation):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uninstall.sh | bash -s -- --yes
+curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uninstall.sh | bash -s -- --silent
 ```
 
 The uninstall script:

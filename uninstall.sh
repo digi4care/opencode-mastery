@@ -131,25 +131,13 @@ fi
 
 echo ""
 
-if [ "$1" = "--yes" ] || [ "$1" = "-y" ]; then
-    CONFIRM="y"
-elif [ -t 0 ]; then
-    read -p "Continue uninstall? [y/N] (default: N): " confirm
-    CONFIRM="${confirm:-N}"
+if [ "$1" = "--silent" ] || [ "$1" = "-s" ]; then
+    echo "🗑️  Proceeding with uninstall (silent mode)..."
 else
-    echo "⚠️  Not running interactively (piped from curl)"
-    echo "   To uninstall, add --yes flag:"
-    echo "   curl ... | bash -s -- --yes"
-    echo ""
-    echo "   Or download first:"
-    echo "   curl -O https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uninstall.sh"
-    echo "   chmod +x uninstall.sh"
-    echo "   ./uninstall.sh"
-    echo ""
-    exit 1
-fi
-
-if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
-    echo "Uninstall cancelled."
-    exit 0
+    read -p "Continue uninstall? [y/N] (default: N): " confirm
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        echo "Uninstall cancelled."
+        exit 0
+    fi
+    echo "🗑️  Proceeding with uninstall..."
 fi
