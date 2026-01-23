@@ -2,6 +2,19 @@
 
 Complete OpenCode knowledge base with lazy-loaded documentation, fuzzy search, and intelligent memory.
 
+## Quick Install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/install.sh | bash
+```
+
+Or clone and install manually:
+```bash
+git clone https://github.com/digi4care/opencode-mastery.git ~/.ai_docs/opencode
+cd ~/.ai_docs/opencode
+./install.sh
+```
+
 ## Features
 
 - ✅ **Lazy-loaded documentation** - Only loads relevant sections from cached docs
@@ -12,12 +25,21 @@ Complete OpenCode knowledge base with lazy-loaded documentation, fuzzy search, a
 - ✅ **Source citations** - Always cites sources (docs, GitHub links, commits)
 - ✅ **Confidence scoring** - Rates answer confidence, verifies when uncertain
 
-## Quick Start
+## What It Does
+
+This skill helps you master OpenCode by:
+1. **Caching docs locally** - Downloads latest OpenCode documentation from GitHub
+2. **Building search index** - Creates fuzzy search index for fast lookups
+3. **Remembering conversations** - Tracks Q&A across sessions
+4. **Automating research** - Searches GitHub when cached docs don't suffice
+5. **Citing sources** - Always references where information comes from
+
+## Usage
 
 ### 1. Download Documentation
 
 ```bash
-python ~/.ai_docs/opencode/scripts/download-docs.py --verbose
+python ~/.ai_docs/opencode/src/scripts/download-docs.py --verbose
 ```
 
 This downloads all OpenCode documentation from GitHub to `~/.ai_docs/opencode/docs/`.
@@ -25,7 +47,7 @@ This downloads all OpenCode documentation from GitHub to `~/.ai_docs/opencode/do
 ### 2. Build Search Index
 
 ```bash
-python ~/.ai_docs/opencode/scripts/index-builder.py --rebuild
+python ~/.ai_docs/opencode/src/scripts/index-builder.py --rebuild
 ```
 
 This creates the fuzzy search index in `~/.ai_docs/opencode/memory/index.json`.
@@ -47,23 +69,17 @@ Ask questions like:
 
 ```
 ~/.ai_docs/opencode/
-├── docs/                          # Downloaded documentation
-│   ├── skills.mdx
-│   ├── agents.mdx
-│   ├── commands.mdx
-│   ├── config.mdx
-│   └── ... (16 total files)
-├── memory/
-│   ├── index.json                 # Master fuzzy search index
-│   ├── master_index.json          # Topics index
-│   ├── topics/                    # Topic-specific memory
-│   └── sessions/                  # Session history
-├── cache/
-│   └── github/                    # GitHub search results cache
-└── scripts/
-    ├── download-docs.py           # Download docs from GitHub
-    ├── index-builder.py            # Build/search index
-    └── memory-manager.py          # Memory management
+├── src/
+│   ├── scripts/
+│   │   ├── download-docs.py           # Download docs from GitHub
+│   │   ├── index-builder.py            # Build/search index
+│   │   └── memory-manager.py          # Memory management
+│   └── skill/
+│       └── SKILL.md                   # Skill definition
+├── docs/                    # Downloaded documentation (16 files)
+├── memory/                  # Index, topics, sessions
+├── cache/                   # GitHub search results cache
+└── install.sh              # Installation script
 ```
 
 ## Scripts
@@ -73,7 +89,7 @@ Ask questions like:
 Download latest OpenCode documentation from GitHub.
 
 ```bash
-python ~/.ai_docs/opencode/scripts/download-docs.py [--force] [--verbose]
+python ~/.ai_docs/opencode/src/scripts/download-docs.py [--force] [--verbose]
 ```
 
 Options:
@@ -87,7 +103,7 @@ Cache policy: Refreshes after 7 days.
 Build or search the fuzzy search index.
 
 ```bash
-python ~/.ai_docs/opencode/scripts/index-builder.py [--rebuild] [--search QUERY]
+python ~/.ai_docs/opencode/src/scripts/index-builder.py [--rebuild] [--search QUERY]
 ```
 
 Options:
@@ -99,10 +115,10 @@ Options:
 Manage session and topic memory.
 
 ```bash
-python ~/.ai_docs/opencode/scripts/memory-manager.py --add "QUESTION" "ANSWER" "TOPICS"
-python ~/.ai_docs/opencode/scripts/memory-manager.py --history
-python ~/.ai_docs/opencode/scripts/memory-manager.py --topic TOPIC
-python ~/.ai_docs/opencode/scripts/memory-manager.py --search KEYWORDS...
+python ~/.ai_docs/opencode/src/scripts/memory-manager.py --add "QUESTION" "ANSWER" "TOPICS"
+python ~/.ai_docs/opencode/src/scripts/memory-manager.py --history
+python ~/.ai_docs/opencode/src/scripts/memory-manager.py --topic TOPIC
+python ~/.ai_docs/opencode/src/scripts/memory-manager.py --search KEYWORDS...
 ```
 
 Commands:
@@ -160,13 +176,13 @@ The skill is installed at:
 Docs are cached for 7 days by default. To force refresh:
 
 ```bash
-python ~/.ai_docs/opencode/scripts/download-docs.py --force
+python ~/.ai_docs/opencode/src/scripts/download-docs.py --force
 ```
 
 Then rebuild the index:
 
 ```bash
-python ~/.ai_docs/opencode/scripts/index-builder.py --rebuild
+python ~/.ai_docs/opencode/src/scripts/index-builder.py --rebuild
 ```
 
 ## Troubleshooting
@@ -187,7 +203,7 @@ head -10 ~/.opencode/skills/opencode-mastery/SKILL.md
 
 Run the index builder:
 ```bash
-python ~/.ai_docs/opencode/scripts/index-builder.py --rebuild
+python ~/.ai_docs/opencode/src/scripts/index-builder.py --rebuild
 ```
 
 ### Docs not downloading
@@ -207,7 +223,7 @@ ls -la ~/.ai_docs/opencode/memory/
 ## Contributing
 
 To add new documentation topics to download:
-1. Edit `~/.ai_docs/opencode/scripts/download-docs.py`
+1. Edit `~/.ai_docs/opencode/src/scripts/download-docs.py`
 2. Add filename to `DOCS_MAPPING` dict
 3. Run `download-docs.py --force`
 4. Run `index-builder.py --rebuild`
