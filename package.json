@@ -1,10 +1,11 @@
 {
   "name": "opencode-mastery",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "OpenCode knowledge base with lazy-loaded docs, fuzzy search and intelligent memory",
   "main": "src/index.ts",
   "scripts": {
     "install": "./install.sh",
+    "uninstall": "./uninstall.sh",
     "download-docs": "python3 src/scripts/download-docs.py",
     "build-index": "python3 src/scripts/index-builder.py",
     "test": "echo 'No tests yet'"

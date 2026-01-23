@@ -5,7 +5,7 @@ license: MIT
 compatibility: opencode
 metadata:
   author: user
-  version: 1.0.0
+  version: 1.1.0
   refresh: weekly
   paths:
     docs: ~/.ai_docs/opencode/docs
@@ -61,8 +61,15 @@ When you ask something not in cached docs:
 
 ### `refresh docs`
 Download the latest documentation from GitHub:
+
+**Global installation:**
 ```bash
 ~/.ai_docs/opencode/scripts/download-docs.py --verbose
+```
+
+**Project installation:**
+```bash
+.ai_docs/opencode/scripts/download-docs.py --verbose
 ```
 
 This refreshes:
@@ -74,8 +81,15 @@ This refreshes:
 
 ### `rebuild index`
 Rebuild the fuzzy search index:
+
+**Global installation:**
 ```bash
 ~/.ai_docs/opencode/scripts/index-builder.py --rebuild
+```
+
+**Project installation:**
+```bash
+.ai_docs/opencode/scripts/index-builder.py --rebuild
 ```
 
 This optimizes:
@@ -85,24 +99,46 @@ This optimizes:
 
 ### `show session history`
 Review what we've discussed in this session:
+
+**Global installation:**
 ```bash
 ~/.ai_docs/opencode/scripts/memory-manager.py --history
 ```
 
+**Project installation:**
+```bash
+.ai_docs/opencode/scripts/memory-manager.py --history
+```
+
 ### `search topic memory`
 Find all discussions about a specific topic:
+
+**Global installation:**
 ```bash
 ~/.ai_docs/opencode/scripts/memory-manager.py --topic <topic-name>
 ```
 
+**Project installation:**
+```bash
+.ai_docs/opencode/scripts/memory-manager.py --topic <topic-name>
+```
+
 ### `search memory keywords`
 Find relevant context across all topics:
+
+**Global installation:**
 ```bash
 ~/.ai_docs/opencode/scripts/memory-manager.py --search <keyword1> <keyword2>
 ```
 
+**Project installation:**
+```bash
+.ai_docs/opencode/scripts/memory-manager.py --search <keyword1> <keyword2>
+```
+
 ## Directory Structure
 
+**Global installation:**
 ```
 ~/.ai_docs/opencode/
 ├── docs/                          # Downloaded documentation
@@ -129,6 +165,25 @@ Find relevant context across all topics:
     ├── download-docs.py           # Download docs from GitHub
     ├── index-builder.py            # Build search index
     └── memory-manager.py          # Memory management
+```
+
+**Project installation:**
+```
+your-project/
+├── .ai_docs/
+│   └── opencode/
+│       ├── docs/                  # Downloaded documentation
+│       ├── memory/                # Index, topics, sessions
+│       ├── cache/
+│       │   └── github/           # GitHub search cache
+│       └── scripts/              # Python scripts
+│           ├── download-docs.py
+│           ├── index-builder.py
+│           └── memory-manager.py
+└── .opencode/
+    └── skills/
+        └── opencode-mastery/
+            └── SKILL.md
 ```
 
 ## Workflow Examples
@@ -215,8 +270,15 @@ I always:
 ## Getting Started
 
 First time using me?
+
+**Global installation:**
 1. Run: `~/.ai_docs/opencode/scripts/download-docs.py`
 2. Run: `~/.ai_docs/opencode/scripts/index-builder.py`
+
+**Project installation:**
+1. Run: `.ai_docs/opencode/scripts/download-docs.py`
+2. Run: `.ai_docs/opencode/scripts/index-builder.py`
+
 3. Ask me anything about OpenCode!
 
 I'll learn from our conversation and become more helpful over time.

@@ -33,6 +33,9 @@ wheels/
 .ai_docs/opencode/memory/
 .ai_docs/opencode/cache/
 
+# Installed files
+.opencode/
+
 # Local
 .DS_Store
 Thumbs.db

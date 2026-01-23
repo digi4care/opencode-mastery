@@ -4,16 +4,48 @@ Complete OpenCode knowledge base with lazy-loaded documentation, fuzzy search, a
 
 ## Quick Install
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/install.sh | bash
-```
+### Option 1: Interactive Installer (Recommended)
 
-Or clone and install manually:
+Clone and run the interactive installer:
 ```bash
 git clone https://github.com/digi4care/opencode-mastery.git ~/.ai_docs/opencode
 cd ~/.ai_docs/opencode
 ./install.sh
 ```
+
+The installer will ask:
+- **Global installation** (default): Available in all projects at `~/.opencode/skills/`
+- **Project installation**: Available only in current project at `.opencode/skills/`
+
+### Option 2: One-line Global Install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/install.sh | bash
+```
+
+This installs globally in `~/.opencode/skills/`.
+
+## Uninstall
+
+To remove the OpenCode Mastery skill while keeping your documentation, memory, and cache:
+
+**From the repository:**
+```bash
+cd ~/.ai_docs/opencode
+./uninstall.sh
+```
+
+**Or download and run:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uninstall.sh | bash
+```
+
+The uninstall script:
+- Removes only skill files (`SKILL.md`, `*.py` scripts)
+- Keeps your downloaded documentation (`docs/`)
+- Keeps your memory and cache (`memory/`, `cache/`)
+- Offers to remove empty directories automatically
+- Shows commands to completely remove all data if desired
 
 ## Features
 
@@ -38,19 +70,31 @@ This skill helps you master OpenCode by:
 
 ### 1. Download Documentation
 
+**Global installation:**
 ```bash
-python ~/.ai_docs/opencode/src/scripts/download-docs.py --verbose
+python ~/.ai_docs/opencode/scripts/download-docs.py --verbose
 ```
 
-This downloads all OpenCode documentation from GitHub to `~/.ai_docs/opencode/docs/`.
+**Project installation:**
+```bash
+python .ai_docs/opencode/scripts/download-docs.py --verbose
+```
+
+This downloads all OpenCode documentation to your docs directory.
 
 ### 2. Build Search Index
 
+**Global installation:**
 ```bash
-python ~/.ai_docs/opencode/src/scripts/index-builder.py --rebuild
+python ~/.ai_docs/opencode/scripts/index-builder.py --rebuild
 ```
 
-This creates the fuzzy search index in `~/.ai_docs/opencode/memory/index.json`.
+**Project installation:**
+```bash
+python .ai_docs/opencode/scripts/index-builder.py --rebuild
+```
+
+This creates the fuzzy search index in your memory directory.
 
 ### 3. Use the Skill
 
@@ -67,6 +111,7 @@ Ask questions like:
 
 ## Directory Structure
 
+**Global installation:**
 ```
 ~/.ai_docs/opencode/
 ├── src/
@@ -80,6 +125,24 @@ Ask questions like:
 ├── memory/                  # Index, topics, sessions
 ├── cache/                   # GitHub search results cache
 └── install.sh              # Installation script
+
+~/.opencode/skills/opencode-mastery/
+└── SKILL.md                 # Skill file (copied here)
+```
+
+**Project installation:**
+```
+your-project/
+├── .ai_docs/
+│   └── opencode/
+│       ├── scripts/
+│       ├── docs/
+│       ├── memory/
+│       └── cache/
+└── .opencode/
+    └── skills/
+        └── opencode-mastery/
+            └── SKILL.md
 ```
 
 ## Scripts
@@ -88,8 +151,14 @@ Ask questions like:
 
 Download latest OpenCode documentation from GitHub.
 
+**Global installation:**
 ```bash
-python ~/.ai_docs/opencode/src/scripts/download-docs.py [--force] [--verbose]
+python ~/.ai_docs/opencode/scripts/download-docs.py [--force] [--verbose]
+```
+
+**Project installation:**
+```bash
+python .ai_docs/opencode/scripts/download-docs.py [--force] [--verbose]
 ```
 
 Options:
@@ -102,8 +171,14 @@ Cache policy: Refreshes after 7 days.
 
 Build or search the fuzzy search index.
 
+**Global installation:**
 ```bash
-python ~/.ai_docs/opencode/src/scripts/index-builder.py [--rebuild] [--search QUERY]
+python ~/.ai_docs/opencode/scripts/index-builder.py [--rebuild] [--search QUERY]
+```
+
+**Project installation:**
+```bash
+python .ai_docs/opencode/scripts/index-builder.py [--rebuild] [--search QUERY]
 ```
 
 Options:
@@ -114,11 +189,20 @@ Options:
 
 Manage session and topic memory.
 
+**Global installation:**
 ```bash
-python ~/.ai_docs/opencode/src/scripts/memory-manager.py --add "QUESTION" "ANSWER" "TOPICS"
-python ~/.ai_docs/opencode/src/scripts/memory-manager.py --history
-python ~/.ai_docs/opencode/src/scripts/memory-manager.py --topic TOPIC
-python ~/.ai_docs/opencode/src/scripts/memory-manager.py --search KEYWORDS...
+python ~/.ai_docs/opencode/scripts/memory-manager.py --add "QUESTION" "ANSWER" "TOPICS"
+python ~/.ai_docs/opencode/scripts/memory-manager.py --history
+python ~/.ai_docs/opencode/scripts/memory-manager.py --topic TOPIC
+python ~/.ai_docs/opencode/scripts/memory-manager.py --search KEYWORDS...
+```
+
+**Project installation:**
+```bash
+python .ai_docs/opencode/scripts/memory-manager.py --add "QUESTION" "ANSWER" "TOPICS"
+python .ai_docs/opencode/scripts/memory-manager.py --history
+python .ai_docs/opencode/scripts/memory-manager.py --topic TOPIC
+python .ai_docs/opencode/scripts/memory-manager.py --search KEYWORDS...
 ```
 
 Commands:
@@ -129,10 +213,17 @@ Commands:
 
 ## Skill Location
 
-The skill is installed at:
+**Global installation:**
 ```
 ~/.opencode/skills/opencode-mastery/SKILL.md
 ```
+
+**Project installation:**
+```
+.your-project/.opencode/skills/opencode-mastery/SKILL.md
+```
+
+Use the same `/skill opencode-mastery` command in both cases - OpenCode automatically detects and loads skills from the correct location.
 
 ## How It Works
 
@@ -175,35 +266,48 @@ The skill is installed at:
 
 Docs are cached for 7 days by default. To force refresh:
 
+**Global installation:**
 ```bash
-python ~/.ai_docs/opencode/src/scripts/download-docs.py --force
+python ~/.ai_docs/opencode/scripts/download-docs.py --force
+python ~/.ai_docs/opencode/scripts/index-builder.py --rebuild
 ```
 
-Then rebuild the index:
-
+**Project installation:**
 ```bash
-python ~/.ai_docs/opencode/src/scripts/index-builder.py --rebuild
+python .ai_docs/opencode/scripts/download-docs.py --force
+python .ai_docs/opencode/scripts/index-builder.py --rebuild
 ```
 
 ## Troubleshooting
 
 ### Skill not showing up in OpenCode
 
-Check that the SKILL.md file exists:
+**For global installation:**
 ```bash
 ls -la ~/.opencode/skills/opencode-mastery/SKILL.md
-```
-
-Verify frontmatter is valid:
-```bash
 head -10 ~/.opencode/skills/opencode-mastery/SKILL.md
 ```
 
+**For project installation:**
+```bash
+ls -la .opencode/skills/opencode-mastery/SKILL.md
+head -10 .opencode/skills/opencode-mastery/SKILL.md
+```
+
+Verify frontmatter is valid in both cases.
+
 ### Index not built
 
-Run the index builder:
+Run index builder:
+
+**Global installation:**
 ```bash
-python ~/.ai_docs/opencode/src/scripts/index-builder.py --rebuild
+python ~/.ai_docs/opencode/scripts/index-builder.py --rebuild
+```
+
+**Project installation:**
+```bash
+python .ai_docs/opencode/scripts/index-builder.py --rebuild
 ```
 
 ### Docs not downloading
@@ -216,17 +320,39 @@ curl -I https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/sr
 ### Memory not tracking
 
 Check memory directory permissions:
+
+**Global installation:**
 ```bash
 ls -la ~/.ai_docs/opencode/memory/
+```
+
+**Project installation:**
+```bash
+ls -la .ai_docs/opencode/memory/
+```
+
+### Complete Removal
+
+To remove ALL data including documentation, memory, and cache:
+
+**Global installation:**
+```bash
+rm -rf ~/.ai_docs/opencode ~/.opencode/skills/opencode-mastery
+```
+
+**Project installation:**
+```bash
+rm -rf .ai_docs/opencode .opencode/skills/opencode-mastery
 ```
 
 ## Contributing
 
 To add new documentation topics to download:
-1. Edit `~/.ai_docs/opencode/src/scripts/download-docs.py`
+1. Edit `download-docs.py` in the repository
 2. Add filename to `DOCS_MAPPING` dict
-3. Run `download-docs.py --force`
-4. Run `index-builder.py --rebuild`
+3. Reinstall or update your installation
+4. Run `download-docs.py --force`
+5. Run `index-builder.py --rebuild`
 
 ## License
 

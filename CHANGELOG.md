@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-01-23
+
+### Added
+- Interactive installation mode selection (global vs project)
+- Project-local installation option at `.opencode/skills/`
+- Automatic local file detection when installing from repo
+- Installation confirmation prompt with preview of paths
+- `uninstall.sh` script that removes only skill files, not user data
+- Uninstall section in README.md with instructions for safe removal
+
+### Changed
+- `install.sh` now prompts for installation scope
+- Enhanced error handling in `install.sh` with explicit error messages
+- Updated documentation for both global and project installation modes
+- Scripts now install to `.ai_docs/opencode/scripts/` (was `src/scripts/`)
+
+### Fixed
+- Scripts directory not being populated correctly in local installation
+- Missing directory structure creation in project installation mode
+- Silent failures in file copy operations now show explicit errors
+
+### Documentation
+- Added installation mode comparison in README.md
+- Updated all path references to support both global and project installs
+- Updated SKILL.md with dual-mode command examples
+- Added troubleshooting section with both installation modes
+- Added complete removal instructions
+
 ## [1.0.0] - 2026-01-23
 
 ### Added
