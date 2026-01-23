@@ -230,4 +230,20 @@ To add new documentation topics to download:
 
 ## License
 
-MIT
+MIT License - see LICENSE file for details.
+
+## Changelog
+
+See [CHANGELOG.md](https://github.com/digi4care/opencode-mastery/blob/main/CHANGELOG.md) for version history and changes.
+
+## Contributing
+
+Contributions welcome! See [CONTRIBUTING.md](https://github.com/digi4care/opencode-mastery/blob/main/CONTRIBUTING.md) for guidelines.
+
+## Links
+
+- [GitHub Repository](https://github.com/digi4care/opencode-mastery)
+- [Issues](https://github.com/digi4care/opencode-mastery/issues)
+- [Pull Requests](https://github.com/digi4care/opencode-mastery/pulls)
+- [OpenCode Documentation](https://opencode.ai/docs)
+- [OpenCode GitHub](https://github.com/anomalyco/opencode)
