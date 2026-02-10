@@ -93,7 +93,7 @@ python3 "$SCRIPTS_DIR/download-docs.py"
 
 echo ""
 echo "🔍 Building search index..."
-python3 "$SCRIPTS_DIR/index-builder.py"
+python3 "$SCRIPTS_DIR/index_builder.py"
 
 echo ""
 echo "✅ Installation complete!"
