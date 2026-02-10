@@ -598,3 +598,78 @@ First time using me?
 4. Ask me anything about OpenCode!
 
 I'll learn from our conversation and become more helpful over time.
+
+---
+
+## 🔌 Plugins
+
+OpenCode also supports **plugins**, which are TypeScript/JavaScript modules that extend OpenCode's capabilities beyond what skills can provide.
+
+### What's the Difference?
+
+| Aspect | Skills | Plugins |
+|---------|---------|----------|
+| **Format** | Markdown (.md) | TypeScript (.ts) / JavaScript (.js) |
+| **Complexity** | Low | Medium-High |
+| **Execution** | Via bash tool | Direct execution |
+| **Tools** | Via scripts | Custom tools with Zod schemas |
+| **Agents** | Via config | Custom agents with scoped tools |
+| **Hooks** | None | 25+ event hooks |
+| **SDK Access** | Limited | Full API (session, TUI, shell) |
+| **Best For** | Simple instructions | Advanced features |
+
+### Plugin Examples
+
+See `examples/plugins/` directory for complete plugin examples:
+
+- **[examples/plugins/README.md](./examples/plugins/README.md)** - Complete plugin guide
+- **[examples/plugins/minimal-plugin/](./examples/plugins/minimal-plugin/)** - Tier 1: Event logging
+- **[examples/plugins/intermediate-plugin/](./examples/plugins/intermediate-plugin/)** - Tier 2: Custom tools + agents
+- **[examples/plugins/advanced-plugin/](./examples/plugins/advanced-plugin/)** - Tier 3: Full capabilities
+
+### Plugin Documentation
+
+See `examples/plugins/` directory for comprehensive plugin documentation:
+
+- **[PLUGIN_OVERVIEW.md](./examples/plugins/PLUGIN_OVERVIEW.md)** - What are plugins?
+- **[PLUGIN_VS_SKILLS.md](./examples/plugins/PLUGIN_VS_SKILLS.md)** - When to use which?
+- **[PLUGIN_ARCHITECTURE.md](./examples/plugins/PLUGIN_ARCHITECTURE.md)** - Plugin structure
+- **[PLUGIN_EVENT_HOOKS.md](./examples/plugins/PLUGIN_EVENT_HOOKS.md)** - 25+ event hooks
+- **[PLUGIN_SDK_REFERENCE.md](./examples/plugins/PLUGIN_SDK_REFERENCE.md)** - API reference
+- **[PLUGIN_BEST_PRACTICES.md](./examples/plugins/PLUGIN_BEST_PRACTICES.md)** - Guidelines
+
+### When to Use Plugins vs Skills
+
+**Use Skills when**:
+- You need simple, human-readable instructions
+- You want quick prototyping
+- You don't need event interception
+- Your use case is straightforward
+
+**Use Plugins when**:
+- You need type-safe custom tools
+- You want to intercept tool executions
+- You need custom agents with scoped tools
+- You require event-driven behavior
+- You want to extend OpenCode's UI or session management
+
+### Quick Links
+
+**Skills Examples**:
+- [minimal-example/](./examples/minimal-example/) - Basic skill structure
+- [intermediate-example/](./examples/intermediate-example/) - Helper script integration
+- [advanced-example/](./examples/advanced-example/) - Config-driven workflows
+
+**Plugins Examples**:
+- [plugins/minimal-plugin/](./examples/plugins/minimal-plugin/) - Tier 1 example
+- [plugins/intermediate-plugin/](./examples/plugins/intermediate-plugin/) - Tier 2 example
+- [plugins/advanced-plugin/](./examples/plugins/advanced-plugin/) - Tier 3 example
+
+### Summary
+
+You now have **two complete learning paths**:
+
+1. **Skills** (Markdown-based) → From simple instructions to advanced workflows
+2. **Plugins** (TypeScript/JavaScript) → From event hooks to full SDK access
+
+Choose based on your use case, complexity, and requirements!
