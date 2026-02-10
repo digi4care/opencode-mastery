@@ -42,44 +42,41 @@ mkdir -p "$MASTERY_SKILL_DIR"
 mkdir -p "$META_AGENT_SKILL_DIR"
 mkdir -p "$SCRIPTS_DIR"
 
-if [ -f "./src/skill/opencode-mastery/SKILL.md" ] && [ -f "./src/skill/meta-agent/SKILL.md" ]; then
-    echo "📋 Copying files from local repo..."
-    if ! cp ./src/skill/opencode-mastery/scripts/*.py "$SCRIPTS_DIR/"; then
-        echo "❌ Failed to copy scripts"
-        exit 1
-    fi
-    if ! cp ./src/skill/opencode-mastery/SKILL.md "$MASTERY_SKILL_FILE"; then
-        echo "❌ Failed to copy opencode-mastery skill file"
-        exit 1
-    fi
-    if ! cp ./src/skill/meta-agent/SKILL.md "$META_AGENT_SKILL_FILE"; then
-        echo "❌ Failed to copy meta-agent skill file"
-        exit 1
-    fi
-    echo "✓ Scripts copied to:    $SCRIPTS_DIR"
-    echo "✓ opencode-mastery copied to: $MASTERY_SKILL_DIR"
-    echo "✓ meta-agent copied to:      $META_AGENT_SKILL_DIR"
-else
-    echo "📥 Downloading latest version from GitHub..."
-    cd "$INSTALL_DIR"
-    if ! curl -fsSL "$REPO_URL/tarball/main" | tar xz --strip=1; then
-        echo "❌ Failed to download from GitHub"
-        exit 1
-    fi
-
-    echo ""
-    echo "📋 Copying skill files..."
-    if ! cp "$INSTALL_DIR/src/skill/opencode-mastery/SKILL.md" "$MASTERY_SKILL_FILE"; then
-        echo "❌ Failed to copy opencode-mastery skill file"
-        exit 1
-    fi
-    if ! cp "$INSTALL_DIR/src/skill/meta-agent/SKILL.md" "$META_AGENT_SKILL_FILE"; then
-        echo "❌ Failed to copy meta-agent skill file"
-        exit 1
-    fi
-    echo "✓ opencode-mastery copied to: $MASTERY_SKILL_DIR"
-    echo "✓ meta-agent copied to:      $META_AGENT_SKILL_DIR"
+echo "📥 Downloading latest version from GitHub..."
+TEMP_DIR=$(mktemp -d)
+echo "  Downloading to temporary directory: $TEMP_DIR"
+if ! curl -fsSL "$REPO_URL/tarball/main" | tar xz --strip=1 -C "$TEMP_DIR"; then
+    echo "❌ Failed to download from GitHub"
+    rm -rf "$TEMP_DIR"
+    exit 1
 fi
+
+echo ""
+echo "📋 Copying scripts to global location..."
+if ! cp "$TEMP_DIR/src/skill/opencode-mastery/scripts/"*.py "$SCRIPTS_DIR/"; then
+    echo "❌ Failed to copy scripts"
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+
+echo ""
+echo "📋 Copying skill directories..."
+if ! cp -r "$TEMP_DIR/src/skill/opencode-mastery/"* "$MASTERY_SKILL_DIR/"; then
+    echo "❌ Failed to copy opencode-mastery skill directory"
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+if ! cp -r "$TEMP_DIR/src/skill/meta-agent/"* "$META_AGENT_SKILL_DIR/"; then
+    echo "❌ Failed to copy meta-agent skill directory"
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+
+rm -rf "$TEMP_DIR"
+
+echo "✓ Scripts copied to:         $SCRIPTS_DIR"
+echo "✓ opencode-mastery copied to: $MASTERY_SKILL_DIR"
+echo "✓ meta-agent copied to:       $META_AGENT_SKILL_DIR"
 
 echo ""
 echo "📜 Making scripts executable..."
@@ -105,8 +102,8 @@ echo "  3. Run: /skill meta-agent"
 echo "     → Create commands, skills, and agents!"
 echo ""
 echo "📍 Files installed at:"
-echo "  - Scripts:           $SCRIPTS_DIR"
-echo "  - opencode-mastery:  $MASTERY_SKILL_FILE"
-echo "  - meta-agent:         $META_AGENT_SKILL_FILE"
-echo "  - Docs:              $INSTALL_DIR/docs"
-echo "  - Memory:            $INSTALL_DIR/memory"
+echo "  - Scripts:               $SCRIPTS_DIR"
+echo "  - opencode-mastery:      $MASTERY_SKILL_DIR"
+echo "  - meta-agent:            $META_AGENT_SKILL_DIR"
+echo "  - Docs:                  $INSTALL_DIR/docs"
+echo "  - Memory:                $INSTALL_DIR/memory"
