@@ -60,7 +60,7 @@ if ! cp "$TEMP_DIR/src/skill/opencode-mastery/scripts/"*.py "$SCRIPTS_DIR/"; the
 fi
 
 echo ""
-echo "📋 Copying skill directories..."
+echo "📋 Copying skill directories (excluding scripts)..."
 if ! cp -r "$TEMP_DIR/src/skill/opencode-mastery/"* "$MASTERY_SKILL_DIR/"; then
     echo "❌ Failed to copy opencode-mastery skill directory"
     rm -rf "$TEMP_DIR"
@@ -71,6 +71,11 @@ if ! cp -r "$TEMP_DIR/src/skill/meta-agent/"* "$META_AGENT_SKILL_DIR/"; then
     rm -rf "$TEMP_DIR"
     exit 1
 fi
+
+echo ""
+echo "🗑️  Removing scripts from skill directories (kept globally)..."
+rm -rf "$MASTERY_SKILL_DIR/scripts" 2>/dev/null || true
+rm -rf "$META_AGENT_SKILL_DIR/scripts" 2>/dev/null || true
 
 rm -rf "$TEMP_DIR"
 

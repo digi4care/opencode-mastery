@@ -23,9 +23,9 @@ fi
 echo "Found global installation"
 echo ""
 echo "This will remove:"
-echo "  - $GLOBAL_MASTERY/SKILL.md"
-echo "  - $GLOBAL_META/SKILL.md"
-echo "  - $GLOBAL_SCRIPTS/*.py"
+echo "  - $GLOBAL_MASTERY/ (skill directory)"
+echo "  - $GLOBAL_META/ (skill directory)"
+echo "  - $GLOBAL_SCRIPTS/*.py (scripts)"
 echo ""
 echo "These will NOT be removed (your data):"
 echo "  - $HOME/.ai_docs/opencode/docs/"
@@ -49,13 +49,14 @@ fi
 echo ""
 echo "Removing skill files..."
 
-if [ -f "$GLOBAL_MASTERY/SKILL.md" ]; then
-    rm -f "$GLOBAL_MASTERY/SKILL.md"
-    echo "Removed: $GLOBAL_MASTERY/SKILL.md"
+if [ -d "$GLOBAL_MASTERY" ]; then
+    rm -rf "$GLOBAL_MASTERY"
+    echo "Removed: $GLOBAL_MASTERY/"
 fi
-if [ -f "$GLOBAL_META/SKILL.md" ]; then
-    rm -f "$GLOBAL_META/SKILL.md"
-    echo "Removed: $GLOBAL_META/SKILL.md"
+
+if [ -d "$GLOBAL_META" ]; then
+    rm -rf "$GLOBAL_META"
+    echo "Removed: $GLOBAL_META/"
 fi
 
 if [ -d "$GLOBAL_SCRIPTS" ]; then
@@ -63,8 +64,6 @@ if [ -d "$GLOBAL_SCRIPTS" ]; then
     echo "Removed scripts from: $GLOBAL_SCRIPTS/"
 
     rmdir "$GLOBAL_SCRIPTS" 2>/dev/null || true
-    rmdir "$GLOBAL_MASTERY" 2>/dev/null || true
-    rmdir "$GLOBAL_META" 2>/dev/null || true
 
     if [ -d "$HOME/.ai_docs/opencode" ]; then
         REMAINING=$(find "$HOME/.ai_docs/opencode" -mindepth 1 -maxdepth 1 | wc -l)
