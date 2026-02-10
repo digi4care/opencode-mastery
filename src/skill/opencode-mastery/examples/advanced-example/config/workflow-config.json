@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "mode": "development",
+  "verbose": false,
+  "phases": {
+    "init": {
+      "enabled": true,
+      "timeout": 60,
+      "required": true
+    },
+    "validate": {
+      "enabled": true,
+      "timeout": 120,
+      "required": true
+    },
+    "execute": {
+      "enabled": true,
+      "timeout": 300,
+      "required": true
+    },
+    "finalize": {
+      "enabled": true,
+      "timeout": 60,
+      "required": false
+    }
+  },
+  "execution": {
+    "parallel": false,
+    "continue_on_error": false,
+    "dry_run": false
+  },
+  "output": {
+    "path": "./output",
+    "format": "json",
+    "timestamp": true,
+    "compression": false
+  },
+  "logging": {
+    "level": "info",
+    "file": "./logs/workflow.log",
+    "console": true
+  },
+  "validation": {
+    "strict": true,
+    "fail_fast": true,
+    "rules": {
+      "check_dependencies": true,
+      "check_disk_space": true,
+      "check_permissions": true
+    }
+  }
+}

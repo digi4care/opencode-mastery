@@ -405,6 +405,91 @@ More content...
 
 Combined answer gives you both official patterns AND practical experience.
 
+## Examples
+
+**Location:** `src/skill/opencode-mastery/examples/`
+
+This directory contains **progressive skill examples** that demonstrate different levels of complexity, from minimal POC to full workflow orchestration. Each tier builds upon the previous one, providing a structured learning path.
+
+### Overview of Tiers
+
+| Tier  | Example                 | Complexity | Files                             | What it Shows                                          |
+| ----- | ----------------------- | ---------- | --------------------------------- | ------------------------------------------------------ |
+| **1** | `minimal-example/`      | ⭐         | 1 (SKILL.md)                      | Basic skill structure, frontmatter, instructions = POC |
+| **2** | `intermediate-example/` | ⭐⭐       | 2 (SKILL.md + helper.sh)          | Helper scripts, multi-step workflows, timing           |
+| **3** | `advanced-example/`     | ⭐⭐⭐     | 7 (SKILL.md + config + 5 scripts) | Config-driven, router pattern, state management        |
+
+### Learning Path
+
+```
+Tier 1 (Minimal) → Tier 2 (Intermediate) → Tier 3 (Advanced)
+    ⭐                    ⭐⭐                    ⭐⭐⭐
+```
+
+Start with **Tier 1** to understand basics, then progress to **Tier 2** for script integration, and finally **Tier 3** for full workflow orchestration.
+
+### Quick Start
+
+**For beginners** (new to OpenCode):
+
+```bash
+cd src/skill/opencode-mastery/examples/minimal-example
+cat SKILL.md
+```
+
+**For intermediate users**:
+
+```bash
+cd src/skill/opencode-mastery/examples/intermediate-example
+cat SKILL.md
+./helper.sh
+```
+
+**For advanced users**:
+
+```bash
+cd src/skill/opencode-mastery/examples/advanced-example
+cat SKILL.md
+./router.sh --dry-run  # Preview without execution
+./router.sh           # Run complete workflow
+```
+
+### What You'll Learn
+
+**Tier 1 - Minimal Example:**
+
+- ✅ Basic skill structure (single file)
+- ✅ Frontmatter metadata (`name`, `description`)
+- ✅ Skills are **INSTRUCTIONS**, not code
+- ✅ Simple instruction format
+
+**Tier 2 - Intermediate Example:**
+
+- ✅ Helper script integration
+- ✅ Multi-step workflows (init → process → validate → output → finalize)
+- ✅ Console output with timing
+- ✅ Agent executes scripts via bash tool
+
+**Tier 3 - Advanced Example:**
+
+- ✅ Config-driven behavior (3 modes: development, testing, production)
+- ✅ Router script with arg parsing (`--phase`, `--dry-run`)
+- ✅ Four-phase orchestration (init → validate → execute → finalize)
+- ✅ State management with JSON
+- ✅ Output file generation with timestamps
+- ✅ Summary report generation
+- ✅ Dry-run mode for testing
+
+### For More Details
+
+See the complete examples documentation:
+
+- **[examples/README.md](../src/skill/opencode-mastery/examples/README.md)** - Full guide with tier comparison tables, learning paths, and usage examples
+- **[examples/WORKFLOW_PATTERNS.md](../src/skill/opencode-mastery/examples/WORKFLOW_PATTERNS.md)** - Sequential, conditional, and parallel workflow patterns
+- **[examples/BEST_PRACTICES.md](../src/skill/opencode-mastery/examples/BEST_PRACTICES.md)** - Best practices for skill development
+
+---
+
 ## Workflow Examples
 
 ### Example 1: Creating a Skill
