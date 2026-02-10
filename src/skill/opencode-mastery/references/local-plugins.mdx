@@ -1,0 +1,314 @@
+# Lokale Plugins
+
+Overzicht van lokale plugin ontwikkeling in OpenCode.
+
+## Wat zijn Lokale Plugins?
+
+Lokale plugins zijn JavaScript/TypeScript bestanden die automatisch worden geladen uit specifieke directories. Ze zijn ideaal voor project-specifieke extensies, snelle ontwikkeling, en plugins die je niet als npm package wilt publiceren.
+
+## Plugin Types
+
+### Type 1: Lokale Plugins
+
+- **Locatie:** Directories - `.opencode/plugins/` of `~/.config/opencode/plugins/`
+- **Formaat:** Bestanden met `.js` of `.ts` extensie
+- **Laden:** Automatisch bij startup
+- **Config:** Niet in `opencode.json` bestand!
+
+### Type 2: NPM Plugins
+
+- **Locatie:** `opencode.json` config bestand
+- **Config:**
+  ```json
+  {
+    "plugin": ["opencode-helicone-session", "@my-org/custom-plugin"]
+  }
+  ```
+- **Laden:** Automatisch via Bun bij startup
+- **Delen:** Eenvoudig via npm publish
+
+## Directory Structuur
+
+### Project-Level Plugins
+
+```
+opencode-project/
+├── .opencode/
+│   └── plugins/
+│       ├── my-plugin.ts              ✅ Plugin entry point
+│       ├── another-plugin.js
+│       └── package.json               (voor npm dependencies)
+```
+
+### Global Plugins
+
+```
+~/.config/opencode/plugins/
+├── global-plugin.ts
+├── shared-utils.js
+└── package.json
+```
+
+## Multi-File Plugins
+
+Er zijn twee patronen voor plugins met meerdere bestanden:
+
+### Patroon 1: Import-Pattern (Aanbevolen)
+
+Één main plugin bestand dat andere bestanden importeert.
+
+```
+.opencode/
+├── plugins/
+│   ├── my-auth-plugin.ts              ✅ Entry point (wordt automatisch geladen)
+│   ├── helpers/
+│   │   ├── providers.ts              👉 Helper bestanden (niet automatisch geladen)
+│   │   ├── validation.ts
+│   │   └── constants.ts
+│   ├── config/
+│   │   └── settings.ts
+│   └── templates/
+│       └── prompts.txt
+└── package.json                       (voor npm dependencies)
+```
+
+**Plugin entry point:**
+
+```typescript
+// .opencode/plugins/my-auth-plugin.ts
+import { OAuthProvider } from "./helpers/providers";
+import { validateUser } from "./helpers/validation";
+import { CONSTANTS } from "./helpers/constants";
+
+export const MyAuthPlugin = async ({ project, client, $ }) => {
+  return {
+    "tool.execute.before": async (input, output) => {
+      const user = validateUser(input);
+      if (user) {
+        await OAuthProvider.connect(user, CONSTANTS);
+      }
+    },
+  };
+};
+```
+
+**Voordeel:** Helper bestanden worden niet als aparte plugins geladen.
+
+### Patroon 2: Flat-Pattern (Niet aanbevolen)
+
+Alle bestanden direct in plugin directory.
+
+```
+.opencode/
+├── plugins/
+│   ├── auth-provider.ts               ✅ Plugin 1
+│   ├── auth-middleware.ts             ✅ Plugin 2
+│   └── auth-constants.ts              ⚠️ Geen plugin exports (foutmelding!)
+```
+
+**Nadeel:** Elk `.ts`/`.js` bestand wordt als aparte plugin geladen. Bestanden zonder exports veroorzaken foutmeldingen.
+
+## Plugin Export Format
+
+```typescript
+// .opencode/plugins/my-plugin.ts
+export const MyPlugin = async ({ project, client, $ }) => {
+  return {
+    // Hook: tool.execute.before
+    "tool.execute.before": async (input, output) => {
+      console.log("Plugin running before tool execution...");
+      return { input, output };
+    },
+
+    // Hook: tool.execute.after
+    "tool.execute.after": async (input, output) => {
+      console.log("Plugin running after tool execution...");
+      return { input, output };
+    },
+
+    // Custom tool
+    "my-custom-tool": async (params) => {
+      // Custom tool implementation
+      return { result: "..." };
+    },
+  };
+};
+```
+
+## Available Context
+
+Elke plugin ontvangt een context object:
+
+```typescript
+{
+  project: Project,      // OpenCode project object
+  client: Client,        // OpenCode client
+  $: any               // Utility functions
+}
+```
+
+## Externe Dependencies
+
+Als je plugin externe npm packages gebruikt:
+
+**Option 1: package.json in plugin directory**
+
+```json
+// .opencode/plugins/package.json
+{
+  "dependencies": {
+    "axios": "^1.6.0",
+    "lodash": "^4.17.21"
+  }
+}
+```
+
+**Option 2: package.json in root plugin directory**
+
+```json
+// .opencode/package.json
+{
+  "dependencies": {
+    "shared-lib": "^1.0.0"
+  }
+}
+```
+
+Installatie:
+
+```bash
+cd .opencode/plugins
+bun install
+# of
+npm install
+```
+
+## Load Order
+
+Plugins worden geladen in deze volgorde:
+
+1. **Global config** - `~/.config/opencode/opencode.json`
+2. **Project config** - `opencode.json`
+3. **Global plugins** - `~/.config/opencode/plugins/`
+4. **Project plugins** - `.opencode/plugins/`
+
+> ⚠️ Dubbele npm packages met dezelfde naam en versie worden één keer geladen.
+
+## Best Practices
+
+### ✅ Do's
+
+- Gebruik één entry point per plugin (Import-Pattern)
+- Organiseer code in logische subdirectories
+- Gebruik TypeScript voor type safety
+- Test plugins lokaal voordat je ze deelt
+- Documenteer wat je plugin doet in code comments
+
+### ❌ Don'ts
+
+- Zet geen meerdere entry points in één directory zonder duidelijke naamgeving
+- Gebruik niet `opencode.json` voor lokale plugins (alleen voor NPM!)
+- Vermijd grote complexe plugins - splits ze op
+- Gebruik geen absolute paden in imports (relatief paden: `./helpers/...`)
+
+## Troubleshooting
+
+### Plugin niet geladen?
+
+- Check: Bestand zit in `.opencode/plugins/` of `~/.config/opencode/plugins/`
+- Check: Bestand heeft `.ts` of `.js` extensie
+- Check: Bestand exporteert een functie met `export const PluginName`
+- Check: Geen syntax errors in TypeScript
+
+### Dependencies niet gevonden?
+
+- Check: `package.json` bestaat in `.opencode/` of `.opencode/plugins/`
+- Run: `bun install` in de juiste directory
+- Check: Dependencies zijn geïnstalleerd in `node_modules/`
+
+### Plugin crasht bij start?
+
+- Check: Plugin export is een async function
+- Check: Plugin returned een object met hooks
+- Check: Geen runtime errors in plugin code
+- Tip: Voeg `console.log` toe voor debugging
+
+## Voorbeeld: Complete Multi-File Plugin
+
+```
+.opencode/
+├── plugins/
+│   ├── code-review-plugin.ts
+│   ├── helpers/
+│   │   ├── linter.ts
+│   │   ├── formatter.ts
+│   │   └── patterns.ts
+│   ├── config/
+│   │   └── rules.json
+│   └── package.json
+```
+
+**code-review-plugin.ts:**
+
+```typescript
+import { linter } from "./helpers/linter";
+import { formatter } from "./helpers/formatter";
+import { patterns } from "./helpers/patterns";
+import rules from "./config/rules.json";
+
+export const CodeReviewPlugin = async ({ project, client, $ }) => {
+  return {
+    "tool.execute.after": async (input, output) => {
+      if (input.tool === "write" || input.tool === "edit") {
+        const issues = linter.check(output, rules);
+        if (issues.length > 0) {
+          console.log("Code review issues found:", issues);
+        }
+        return { input, output };
+      }
+    },
+  };
+};
+```
+
+**helpers/linter.ts:**
+
+```typescript
+import { patterns } from "./patterns";
+
+export const linter = {
+  check: (code: string, rules: any) => {
+    const issues: string[] = [];
+
+    for (const pattern of patterns) {
+      if (pattern.regex.test(code)) {
+        issues.push(pattern.message);
+      }
+    }
+
+    return issues;
+  },
+};
+```
+
+**package.json:**
+
+```json
+{
+  "dependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+```
+
+## Samenvatting
+
+- ✅ Lokale plugins: `.opencode/plugins/*.ts` of `*.js`
+- ✅ NPM plugins: In `opencode.json` config
+- ✅ Multi-file: Import-Pattern (één entry point, rest in subdirs)
+- ✅ Dependencies: `package.json` in `.opencode/` of `.opencode/plugins/`
+- ❌ Lokale plugins NIET in `opencode.json`
+
+---
+
+_Gebaseerd op OpenCode plugins.mdx documentatie en praktische ervaring._

@@ -1,0 +1,32 @@
+{
+  "id": "lazy-loading-docs-04",
+  "seq": "04",
+  "title": "Update SKILL.md with custom references documentation",
+  "status": "completed",
+  "agent_id": "coder-agent",
+  "started_at": "2026-02-10T12:45:00Z",
+  "completed_at": "2026-02-10T12:50:00Z",
+  "completion_summary": "Updated SKILL.md with custom references documentation, version 1.3.0",
+  "depends_on": [],
+  "parallel": true,
+  "context_files": [
+    "/home/digi4care/.config/opencode/context/core/task-management/standards/task-schema.md"
+  ],
+  "reference_files": [
+    "/media/digi4care/ExtDrive/projects/ai/opencode-mastery/src/skill/opencode-mastery/SKILL.md",
+    "/media/digi4care/ExtDrive/projects/ai/opencode-mastery/src/skill/opencode-mastery/references/local-plugins.mdx"
+  ],
+  "suggested_agent": "CoderAgent",
+  "acceptance_criteria": [
+    "SKILL.md includes Custom References section",
+    "Documents two-source system (official + custom)",
+    "Explains registry.json structure and purpose",
+    "Updates Directory Structure section to include references/",
+    "Provides usage examples for load-docs.py",
+    "metadata.version incremented",
+    "YAML frontmatter remains valid"
+  ],
+  "deliverables": [
+    "src/skill/opencode-mastery/SKILL.md"
+  ]
+}

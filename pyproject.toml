@@ -1,0 +1,13 @@
+[project]
+name = "opencode-mastery"
+version = "1.2.0"
+description = "OpenCode knowledge base with lazy-loaded docs, fuzzy search and intelligent memory"
+requires-python = ">=3.10"
+dependencies = [
+    "rapidfuzz>=3.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+]

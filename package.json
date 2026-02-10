@@ -6,9 +6,11 @@
   "scripts": {
     "install": "./install.sh",
     "uninstall": "./uninstall.sh",
-    "download-docs": "python3 src/scripts/download-docs.py",
-    "build-index": "python3 src/scripts/index-builder.py",
-    "test": "echo 'No tests yet'"
+    "download-docs": "uv run src/skill/opencode-mastery/scripts/download-docs.py",
+    "load-docs": "uv run src/skill/opencode-mastery/scripts/load_docs.py",
+    "build-index": "uv run src/skill/opencode-mastery/scripts/index_builder.py",
+    "test": "uv run src/skill/opencode-mastery/scripts/test-load-docs.py",
+    "uv:install": "uv sync"
   },
   "keywords": [
     "opencode",

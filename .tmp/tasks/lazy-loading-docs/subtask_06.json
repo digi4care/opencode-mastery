@@ -1,0 +1,30 @@
+{
+  "id": "lazy-loading-docs-06",
+  "seq": "06",
+  "title": "Create comprehensive test suite",
+  "status": "complete",
+  "depends_on": ["02", "03", "05"],
+  "parallel": false,
+  "context_files": [
+    "/home/digi4care/.config/opencode/context/core/task-management/standards/task-schema.md"
+  ],
+  "reference_files": [
+    "/media/digi4care/ExtDrive/projects/ai/opencode-mastery/src/skill/opencode-mastery/scripts/load-docs.py",
+    "/media/digi4care/ExtDrive/projects/ai/opencode-mastery/src/skill/opencode-mastery/scripts/index-builder.py",
+    "/media/digi4care/ExtDrive/projects/ai/opencode-mastery/src/skill/opencode-mastery/references/local-plugins.mdx"
+  ],
+  "suggested_agent": "TestEngineer",
+  "acceptance_criteria": [
+    "Test script exists and runs successfully",
+    "Tests keyword matching with various queries (single word, multiple words, phrases)",
+    "Validates result ranking and relevance scores",
+    "Tests content loading from both sources",
+    "Tests edge cases: empty query, no matches, special characters",
+    "All tests pass without errors",
+    "Test results are clearly reported"
+  ],
+  "deliverables": [
+    "src/skill/opencode-mastery/scripts/test-load-docs.py",
+    "test-results.md"
+  ]
+}

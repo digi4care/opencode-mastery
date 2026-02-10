@@ -13,22 +13,31 @@ OpenCode documentation skill with lazy-loaded docs, fuzzy search, GitHub researc
 ```
 ./
 ├── src/
-│   ├── scripts/       # Python utilities (download-docs, index-builder, memory-manager)
-│   └── skill/         # OpenCode skills (opencode-mastery, meta-agent)
+│   └── skill/         # OpenCode skills
+│       └── opencode-mastery/
+│           ├── SKILL.md
+│           ├── references/    # Custom reference docs (deep-dive content)
+│           │   ├── registry.json    # Index of custom refs with keywords
+│           │   └── *.mdx            # Custom documentation files
+│           └── scripts/      # Python utilities (download-docs, index-builder, load-docs, memory-manager)
 ├── install.sh / uninstall.sh  # Install skill globally
 └── package.json      # npm scripts for docs/management
 ```
 
 ## WHERE TO LOOK
 
-| Task                   | Location                        | Notes                         |
-| ---------------------- | ------------------------------- | ----------------------------- |
-| Documentation download | `src/scripts/download-docs.py`  | GitHub API, 7-day cache       |
-| Search index           | `src/scripts/index-builder.py`  | Fuzzy search via rapidfuzz    |
-| Session memory         | `src/scripts/memory-manager.py` | Topic tracking, cross-session |
-| Skill definitions      | `src/skill/*/SKILL.md`          | Frontmatter + Markdown        |
+| Task                   | Location                                               | Notes                          |
+| ---------------------- | ------------------------------------------------------ | ------------------------------ |
+| Documentation download | `src/skill/opencode-mastery/scripts/download-docs.py`  | GitHub API, 7-day cache        |
+| Custom references      | `src/skill/opencode-mastery/references/`               | Custom deep-dive docs          |
+| Search docs            | `src/skill/opencode-mastery/scripts/load-docs.py`      | Lazy loader, combines sources  |
+| Build search index     | `src/skill/opencode-mastery/scripts/index-builder.py`  | Indexes official + custom refs |
+| Session memory         | `src/skill/opencode-mastery/scripts/memory-manager.py` | Topic tracking, cross-session  |
+| Skill definitions      | `src/skill/*/SKILL.md`                                 | Frontmatter + Markdown         |
 
 ## CONVENTIONS
+
+**Package manager:** Bun for npm scripts, uv for Python scripts
 
 **Scripts (Python):**
 
@@ -36,6 +45,12 @@ OpenCode documentation skill with lazy-loaded docs, fuzzy search, GitHub researc
 - `Path.home() / ".ai_docs" / "opencode"` for paths
 - Global install: `~/.ai_docs/opencode/`, Project: `.ai_docs/opencode/`
 - Cache duration: 7 days (TTL)
+
+**GitHub CLI:**
+
+- Required for downloading OpenCode documentation
+- Must be authenticated: `gh auth login`
+- Used via subprocess calls in download-docs.py
 
 **SKILL.md format:**
 
@@ -46,9 +61,9 @@ OpenCode documentation skill with lazy-loaded docs, fuzzy search, GitHub researc
 **Install flow:**
 
 - `install.sh` → copies to `~/.config/opencode/skill/` (global)
-- `npm run install` → project-local setup
-- `npm run download-docs` → fetch docs from GitHub
-- `npm run build-index` → build fuzzy search index
+- `bun run install` → project-local setup
+- `bun run download-docs` → fetch docs from GitHub
+- `bun run build-index` → build fuzzy search index
 
 ## ANTI-PATTERNS (THIS PROJECT)
 
@@ -87,24 +102,32 @@ OpenCode documentation skill with lazy-loaded docs, fuzzy search, GitHub researc
 # Install globally
 ./install.sh
 
-# Download latest docs
-~/.ai_docs/opencode/scripts/download-docs.py --verbose
+# Download latest official docs (uses GitHub CLI)
+bun run download-docs -- --verbose
 
-# Rebuild search index
-~/.ai_docs/opencode/scripts/index-builder.py --rebuild
+# Load custom references (lazy loader)
+bun run load-docs -- --query "<topic>" --verbose
+
+# Rebuild search index (official + custom)
+bun run build-index -- --rebuild
 
 # View session history
-~/.ai_docs/opencode/scripts/memory-manager.py --history
+uv run src/skill/opencode-mastery/scripts/memory_manager.py --history
 
 # Search topic memory
-~/.ai_docs/opencode/scripts/memory-manager.py --topic <topic-name>
+uv run src/skill/opencode-mastery/scripts/memory_manager.py --topic <topic-name>
 ```
 
 ## NOTES
 
 - **Two install modes**: Global (`~/.config/opencode/skill/`) and Project (`.opencode/skill/`)
+- **Two documentation sources**:
+  - **Official docs** (~/.ai_docs/opencode/docs/) - Downloaded from OpenCode GitHub
+  - **Custom references** (src/skill/opencode-mastery/references/) - Deep-dive content written by you
+- **Lazy loading**: `load-docs.py` combines both sources based on keywords, returns ranked results
+- **Registry system**: `references/registry.json` indexes all custom references with keywords
 - **Docs location**: `~/.ai_docs/opencode/docs/` (global) or `.ai_docs/opencode/docs/` (project)
 - **Memory structure**: `memory/` has `index.json` (fuzzy), `master_index.json` (topics), `sessions/`, `topics/`
 - **GitHub API**: Uses `gh` CLI for repo searches with caching
-- **opencode-mastery skill**: Lazy-loads docs based on keywords, tracks sessions, falls back to GitHub research
+- **opencode-mastery skill**: Lazy-loads docs (official + custom), tracks sessions, falls back to GitHub research
 - **meta-agent skill**: Generates OpenCode components (commands, skills, agents) using opencode-mastery for accuracy

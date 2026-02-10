@@ -44,7 +44,7 @@ mkdir -p "$SCRIPTS_DIR"
 
 if [ -f "./src/skill/opencode-mastery/SKILL.md" ] && [ -f "./src/skill/meta-agent/SKILL.md" ]; then
     echo "📋 Copying files from local repo..."
-    if ! cp ./src/scripts/*.py "$SCRIPTS_DIR/"; then
+    if ! cp ./src/skill/opencode-mastery/scripts/*.py "$SCRIPTS_DIR/"; then
         echo "❌ Failed to copy scripts"
         exit 1
     fi

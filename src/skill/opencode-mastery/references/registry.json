@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "created": "2026-02-10T00:00:00Z",
+  "last_updated": "2026-02-10T00:00:00Z",
+  "registry_type": "reference_documents",
+  "entries": [
+    {
+      "id": "local-plugins",
+      "title": "Lokale Plugins",
+      "filename": "local-plugins.mdx",
+      "category": "plugins",
+      "description": "Overzicht van lokale plugin ontwikkeling in OpenCode - covers plugin types, directory structure, multi-file patterns, and best practices",
+      "keywords": [
+        "plugins",
+        "local",
+        "npm",
+        "plugin-types",
+        "directory-structure",
+        "multi-file",
+        "development",
+        "hooks",
+        "tool.execute.before",
+        "tool.execute.after",
+        "load-order",
+        "best-practices",
+        "troubleshooting",
+        "TypeScript",
+        "JavaScript",
+        "dependencies",
+        "package.json",
+        "opencode.json",
+        ".opencode/plugins/",
+        "~/.config/opencode/plugins/",
+        "import-pattern",
+        "flat-pattern",
+        "plugin-export",
+        "context-object",
+        "bun-install"
+      ],
+      "topics": [
+        "plugin-types",
+        "directory-structure",
+        "load-order",
+        "best-practices",
+        "troubleshooting"
+      ],
+      "language": "nl",
+      "created": "2026-02-10T00:00:00Z",
+      "last_updated": "2026-02-10T00:00:00Z"
+    }
+  ]
+}
