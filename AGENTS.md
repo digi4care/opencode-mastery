@@ -37,7 +37,7 @@ OpenCode documentation skill with lazy-loaded docs, fuzzy search, GitHub researc
 
 ## CONVENTIONS
 
-**Package manager:** Bun for npm scripts, uv for Python scripts
+**Package manager:** Bun (not pnpm) for npm scripts, uv for Python scripts
 
 **Scripts (Python):**
 
