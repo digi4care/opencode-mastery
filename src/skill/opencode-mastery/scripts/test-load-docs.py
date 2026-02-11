@@ -24,6 +24,11 @@ if str(SCRIPT_DIR) not in sys.path:
 # Import modules from hyphenated files using importlib
 import importlib.util
 
+# NOTE: These modules are loaded dynamically from local files.
+# Keep them assigned in all code paths to satisfy type checkers.
+load_docs = None
+index_builder = None
+
 # Load load_docs.py as load_docs module
 load_docs_spec = importlib.util.spec_from_file_location(
     "load_docs", SCRIPT_DIR / "load_docs.py"
@@ -31,6 +36,8 @@ load_docs_spec = importlib.util.spec_from_file_location(
 if load_docs_spec and load_docs_spec.loader:
     load_docs = importlib.util.module_from_spec(load_docs_spec)
     load_docs_spec.loader.exec_module(load_docs)
+else:
+    raise RuntimeError("Failed to load load_docs module")
 
 # Load index_builder.py as index_builder module
 index_builder_spec = importlib.util.spec_from_file_location(
@@ -39,6 +46,11 @@ index_builder_spec = importlib.util.spec_from_file_location(
 if index_builder_spec and index_builder_spec.loader:
     index_builder = importlib.util.module_from_spec(index_builder_spec)
     index_builder_spec.loader.exec_module(index_builder)
+else:
+    raise RuntimeError("Failed to load index_builder module")
+
+assert load_docs is not None
+assert index_builder is not None
 
 # Import functions from loaded modules
 load_official_index = load_docs.load_official_index
@@ -1216,3 +1228,11 @@ class TestIntegration:
 
         # Assert
         assert len(combined) == 0
+
+
+if __name__ == "__main__":
+    # When executed as a script (via `bun run test`), run the pytest suite.
+    # Include this file and the tool examples smoke tests.
+    this_file = str(Path(__file__).resolve())
+    tools_tests = str((SCRIPT_DIR / "test_tool_examples.py").resolve())
+    raise SystemExit(pytest.main([this_file, tools_tests]))
