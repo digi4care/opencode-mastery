@@ -13,11 +13,11 @@ Tier 1 (Minimal) → Tier 2 (Intermediate) → Tier 3 (Advanced)
 
 ## 🎯 Tiers Overview
 
-| Tier | Example | Complexity | Files | Use Case | Learning Curve |
-|------|----------|-------------|--------|-----------|---------------|
-| **1** | `minimal-example/` | ⭐ Minimal | 1 (SKILL.md) | Proof of Concept, Quick Demo | 5 minutes |
-| **2** | `intermediate-example/` | ⭐⭐ Intermediate | 2 (SKILL.md + script) | Helper Scripts, Multi-Step | 15 minutes |
-| **3** | `advanced-example/` | ⭐⭐⭐ Advanced | 7 (SKILL.md + config + 5 scripts) | Full Workflow, Config-Driven | 30+ minutes |
+| Tier  | Example                 | Complexity        | Files                             | Use Case                     | Learning Curve |
+| ----- | ----------------------- | ----------------- | --------------------------------- | ---------------------------- | -------------- |
+| **1** | `minimal-example/`      | ⭐ Minimal        | 1 (SKILL.md)                      | Proof of Concept, Quick Demo | 5 minutes      |
+| **2** | `intermediate-example/` | ⭐⭐ Intermediate | 2 (SKILL.md + script)             | Helper Scripts, Multi-Step   | 15 minutes     |
+| **3** | `advanced-example/`     | ⭐⭐⭐ Advanced   | 7 (SKILL.md + config + 5 scripts) | Full Workflow, Config-Driven | 30+ minutes    |
 
 ---
 
@@ -26,35 +26,41 @@ Tier 1 (Minimal) → Tier 2 (Intermediate) → Tier 3 (Advanced)
 **Location**: `minimal-example/`
 
 **What it demonstrates**:
+
 - Basic skill structure (single file)
 - Frontmatter metadata
 - Simple instruction format
 - Skill = Instructions, not code
 
 **Files**:
+
 ```
 minimal-example/
 └── SKILL.md
 ```
 
 **Key concepts**:
+
 - Skills are Markdown files with YAML frontmatter
 - Minimal structure: `name` + `description` in frontmatter
 - Content is human-readable instructions
 - No executable code in SKILL.md itself
 
-**Use case**: 
+**Use case**:
+
 - Proof of concept
 - Quick demonstration
 - Instant understanding of what a skill is
 
 **How to use**:
+
 1. Read `minimal-example/SKILL.md`
 2. Understand the frontmatter structure
 3. See the instruction format
 4. Ready to create your own minimal skill
 
 **Learning objectives**:
+
 - ✅ Understand skill basic structure
 - ✅ Learn frontmatter format
 - ✅ Grasp that skills are instructions
@@ -66,12 +72,14 @@ minimal-example/
 **Location**: `intermediate-example/`
 
 **What it demonstrates**:
+
 - Helper script integration
 - Multi-step workflows
 - Console output with timing
 - Script execution patterns
 
 **Files**:
+
 ```
 intermediate-example/
 ├── SKILL.md
@@ -79,18 +87,21 @@ intermediate-example/
 ```
 
 **Key concepts**:
+
 - Skills can reference helper scripts
 - Agent executes scripts via bash tool
 - Scripts can be any language (bash, python, etc.)
 - Ordered execution with clear phases
 
 **How to use**:
+
 ```bash
 cd intermediate-example
 ./helper.sh
 ```
 
 **Workflow phases**:
+
 1. **Initialization** - Setup environment, validate prerequisites
 2. **Processing** - Perform main operations (data transformation, etc.)
 3. **Validation** - Verify results, check quality
@@ -98,6 +109,7 @@ cd intermediate-example
 5. **Finalization** - Cleanup, summary, exit
 
 **Learning objectives**:
+
 - ✅ Integrate helper scripts with skills
 - ✅ Implement multi-step workflows
 - ✅ Add console output with timing
@@ -110,6 +122,7 @@ cd intermediate-example
 **Location**: `advanced-example/`
 
 **What it demonstrates**:
+
 - Config-driven behavior
 - Workflow orchestration
 - State management
@@ -118,6 +131,7 @@ cd intermediate-example
 - Output file generation with timestamps
 
 **Files**:
+
 ```
 advanced-example/
 ├── SKILL.md
@@ -132,6 +146,7 @@ advanced-example/
 ```
 
 **Architecture**:
+
 ```
 ┌─────────────────────────────────────────────┐
 │            SKILL.md                       │
@@ -164,12 +179,14 @@ advanced-example/
 **How to use**:
 
 Run complete workflow:
+
 ```bash
 cd advanced-example
 ./router.sh
 ```
 
 Run specific phase:
+
 ```bash
 ./router.sh --phase init
 ./router.sh --phase validate
@@ -178,6 +195,7 @@ Run specific phase:
 ```
 
 Dry run (no execution):
+
 ```bash
 ./router.sh --dry-run
 ```
@@ -215,6 +233,7 @@ Edit `config/workflow-config.json`:
 ```
 
 **Output structure**:
+
 ```
 output/
 ├── workflow-state.json      # Current state tracking
@@ -224,6 +243,7 @@ output/
 ```
 
 **Learning objectives**:
+
 - ✅ Implement config-driven workflows
 - ✅ Create router patterns for script orchestration
 - ✅ Manage state across phases
@@ -260,6 +280,7 @@ See [BEST_PRACTICES.md](./BEST_PRACTICES.md) for comprehensive guidelines on:
 ### For Beginners (New to OpenCode)
 
 Start with **Tier 1** to understand the basics:
+
 ```bash
 cd minimal-example
 cat SKILL.md
@@ -268,6 +289,7 @@ cat SKILL.md
 ### For Intermediate Users
 
 Move to **Tier 2** to learn script integration:
+
 ```bash
 cd intermediate-example
 cat SKILL.md
@@ -277,6 +299,7 @@ cat SKILL.md
 ### For Advanced Users
 
 Explore **Tier 3** for full workflow orchestration:
+
 ```bash
 cd advanced-example
 cat SKILL.md
@@ -291,40 +314,42 @@ cat config/workflow-config.json
 
 ### Complexity Levels
 
-| Feature | Tier 1 | Tier 2 | Tier 3 |
-|---------|---------|---------|---------|
-| Frontmatter | ✅ | ✅ | ✅ |
-| Helper scripts | ❌ | ✅ | ✅ |
-| Multiple phases | ❌ | ✅ (5 steps) | ✅ (4 phases) |
-| Configuration | ❌ | ❌ | ✅ (JSON) |
-| Router pattern | ❌ | ❌ | ✅ |
-| State management | ❌ | ❌ | ✅ |
-| Arg parsing | ❌ | ❌ | ✅ |
-| Dry-run mode | ❌ | ❌ | ✅ |
-| Output files | ❌ | ❌ | ✅ |
-| Timestamps | ❌ | ✅ | ✅ |
-| Summary report | ❌ | ❌ | ✅ |
+| Feature          | Tier 1 | Tier 2       | Tier 3        |
+| ---------------- | ------ | ------------ | ------------- |
+| Frontmatter      | ✅     | ✅           | ✅            |
+| Helper scripts   | ❌     | ✅           | ✅            |
+| Multiple phases  | ❌     | ✅ (5 steps) | ✅ (4 phases) |
+| Configuration    | ❌     | ❌           | ✅ (JSON)     |
+| Router pattern   | ❌     | ❌           | ✅            |
+| State management | ❌     | ❌           | ✅            |
+| Arg parsing      | ❌     | ❌           | ✅            |
+| Dry-run mode     | ❌     | ❌           | ✅            |
+| Output files     | ❌     | ❌           | ✅            |
+| Timestamps       | ❌     | ✅           | ✅            |
+| Summary report   | ❌     | ❌           | ✅            |
 
 ### Use Cases
 
-| Scenario | Recommended Tier | Why |
-|----------|------------------|-----|
-| Quick demo / POC | Tier 1 | Instant understanding, minimal setup |
-| Simple automation | Tier 2 | Multi-step execution, clear phases |
-| Complex workflows | Tier 3 | Config-driven, orchestration, state management |
-| Production deployment | Tier 3 | Robust error handling, dry-run, validation |
-| Learning OpenCode | All tiers | Progressive complexity, clear patterns |
+| Scenario              | Recommended Tier | Why                                            |
+| --------------------- | ---------------- | ---------------------------------------------- |
+| Quick demo / POC      | Tier 1           | Instant understanding, minimal setup           |
+| Simple automation     | Tier 2           | Multi-step execution, clear phases             |
+| Complex workflows     | Tier 3           | Config-driven, orchestration, state management |
+| Production deployment | Tier 3           | Robust error handling, dry-run, validation     |
+| Learning OpenCode     | All tiers        | Progressive complexity, clear patterns         |
 
 ---
 
 ## 🎓 Learning Resources
 
 ### Official OpenCode Docs
+
 - Skills Guide: Learn skill fundamentals
 - Agent System: Understand agent-skill interaction
 - CLI Reference: Command-line usage
 
 ### This Examples Repo
+
 - Tier Examples: Hands-on learning
 - Workflow Patterns: Design patterns
 - Best Practices: Guidelines and standards
@@ -336,16 +361,19 @@ cat config/workflow-config.json
 ### Common Issues
 
 **Issue**: Permission denied when running scripts
+
 ```bash
 chmod +x script-name.sh
 ```
 
 **Issue**: Config file not found
+
 - Check you're in the correct directory
 - Verify `config/` directory exists
 - Ensure JSON syntax is valid
 
 **Issue**: Phase fails with error
+
 - Run individual phase: `./router.sh --phase <name>`
 - Check logs for error details
 - Verify prerequisites are met
@@ -355,6 +383,7 @@ chmod +x script-name.sh
 ## 📈 Roadmap
 
 ### Completed
+
 - ✅ Tier 1: Minimal example
 - ✅ Tier 2: Intermediate example
 - ✅ Tier 3: Advanced example
@@ -362,6 +391,7 @@ chmod +x script-name.sh
 - ✅ Best practices guide
 
 ### Future Enhancements
+
 - ⏳ Tier 4: Interactive personality skill (Movie Personality pattern)
 - ⏳ More workflow patterns (fan-out/fan-in, circuit breaker)
 - ⏳ Integration with external APIs
@@ -379,6 +409,7 @@ Have ideas for new examples or improvements?
 4. Submit a pull request
 
 **Guidelines**:
+
 - Follow best practices from `BEST_PRACTICES.md`
 - Document new patterns in `WORKFLOW_PATTERNS.md`
 - Update this README with new examples
@@ -395,6 +426,7 @@ This examples repository is part of OpenCode Mastery and follows the same licens
 ## 🙏 Acknowledgments
 
 Inspired by and patterns learned from:
+
 - [Opencode-skills-example](https://github.com/darrenhinde/Opencode-skills-example) by Darren Hinde
 - OpenCode community contributions
 - Real-world skill implementations
@@ -407,22 +439,34 @@ For questions or issues, please refer to the main OpenCode Mastery documentation
 
 ---
 
+## 🧰 Tool Examples
+
+If you want to focus specifically on writing **custom tools** (Zod schema + handler + stable return shapes), see the `tools/` directory.
+
+- **[tools/README.md](./tools/README.md)** - Tools learning path (tiers)
+- **[tools/TOOLS_GUIDE.md](./tools/TOOLS_GUIDE.md)** - Step-by-step tool authoring
+- **[tools/TOOLS_REFERENCE.md](./tools/TOOLS_REFERENCE.md)** - Reference snippets + pitfalls
+
+Tools are usually authored inside plugins. For plugin fundamentals (installation/loading), see `plugins/`.
+
+---
+
 ## 🔌 Plugin Examples
 
 OpenCode also supports **plugins**, which are TypeScript/JavaScript modules that extend OpenCode's capabilities beyond what skills can provide.
 
 ### What's the Difference?
 
-| Aspect | Skills | Plugins |
-|---------|---------|----------|
-| **Format** | Markdown (.md) | TypeScript (.ts) / JavaScript (.js) |
-| **Complexity** | Low | Medium-High |
-| **Execution** | Via bash tool | Direct execution |
-| **Tools** | Via scripts | Custom tools with Zod schemas |
-| **Agents** | Via config | Custom agents with scoped tools |
-| **Hooks** | None | 25+ event hooks |
-| **SDK Access** | Limited | Full API (session, TUI, shell) |
-| **Best For** | Simple instructions | Advanced features |
+| Aspect         | Skills              | Plugins                             |
+| -------------- | ------------------- | ----------------------------------- |
+| **Format**     | Markdown (.md)      | TypeScript (.ts) / JavaScript (.js) |
+| **Complexity** | Low                 | Medium-High                         |
+| **Execution**  | Via bash tool       | Direct execution                    |
+| **Tools**      | Via scripts         | Custom tools with Zod schemas       |
+| **Agents**     | Via config          | Custom agents with scoped tools     |
+| **Hooks**      | None                | 25+ event hooks                     |
+| **SDK Access** | Limited             | Full API (session, TUI, shell)      |
+| **Best For**   | Simple instructions | Advanced features                   |
 
 ### Plugin Examples
 
@@ -436,12 +480,14 @@ See `plugins/` directory for complete plugin examples:
 ### When to Use Plugins vs Skills
 
 **Use Skills when**:
+
 - You need simple, human-readable instructions
 - You want quick prototyping
 - You don't need event interception
 - Your use case is straightforward
 
 **Use Plugins when**:
+
 - You need type-safe custom tools
 - You want to intercept tool executions
 - You need custom agents with scoped tools
@@ -462,6 +508,7 @@ See `plugins/` directory for comprehensive plugin documentation:
 ### Quick Links
 
 **Skills** (this directory):
+
 - [minimal-example/](./minimal-example/) - Basic skill structure
 - [intermediate-example/](./intermediate-example/) - Helper script integration
 - [advanced-example/](./advanced-example/) - Config-driven workflows
@@ -469,16 +516,24 @@ See `plugins/` directory for comprehensive plugin documentation:
 - [BEST_PRACTICES.md](./BEST_PRACTICES.md) - Development guidelines
 
 **Plugins** (`plugins/` directory):
+
 - [plugins/README.md](./plugins/README.md) - Complete plugin guide
 - [plugins/minimal-plugin/](./plugins/minimal-plugin/) - Tier 1 example
 - [plugins/intermediate-plugin/](./plugins/intermediate-plugin/) - Tier 2 example
 - [plugins/advanced-plugin/](./plugins/advanced-plugin/) - Tier 3 example
 
+**Tools** (`tools/` directory):
+
+- [tools/README.md](./tools/README.md) - Tools learning path
+- [tools/TOOLS_GUIDE.md](./tools/TOOLS_GUIDE.md) - How to author tools
+- [tools/TOOLS_REFERENCE.md](./tools/TOOLS_REFERENCE.md) - API patterns + pitfalls
+
 ### Summary
 
-You now have **two complete learning paths**:
+You now have **three complete learning paths**:
 
 1. **Skills** (Markdown-based) → From simple instructions to advanced workflows
 2. **Plugins** (TypeScript/JavaScript) → From event hooks to full SDK access
+3. **Tools** (Zod-validated functions) → From a single tool to a structured toolset
 
 Choose based on your use case, complexity, and requirements!

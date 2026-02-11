@@ -27,6 +27,7 @@ Ask me about any OpenCode topic:
 - **Custom Agents** - Primary agents, subagents, permissions
 - **Commands** - Slash commands, custom commands, arguments
 - **Plugins** - Plugin architecture, SDK, development patterns (including local plugins deep-dive)
+- **Tools** - Writing custom tools (Zod schemas, ToolResult shape, safety patterns)
 - **Configuration** - Complete opencode.json reference
 - **Integration** - MCP, LSP, custom tools, formatters
 - **Troubleshooting** - Common issues and solutions
@@ -607,16 +608,16 @@ OpenCode also supports **plugins**, which are TypeScript/JavaScript modules that
 
 ### What's the Difference?
 
-| Aspect | Skills | Plugins |
-|---------|---------|----------|
-| **Format** | Markdown (.md) | TypeScript (.ts) / JavaScript (.js) |
-| **Complexity** | Low | Medium-High |
-| **Execution** | Via bash tool | Direct execution |
-| **Tools** | Via scripts | Custom tools with Zod schemas |
-| **Agents** | Via config | Custom agents with scoped tools |
-| **Hooks** | None | 25+ event hooks |
-| **SDK Access** | Limited | Full API (session, TUI, shell) |
-| **Best For** | Simple instructions | Advanced features |
+| Aspect         | Skills              | Plugins                             |
+| -------------- | ------------------- | ----------------------------------- |
+| **Format**     | Markdown (.md)      | TypeScript (.ts) / JavaScript (.js) |
+| **Complexity** | Low                 | Medium-High                         |
+| **Execution**  | Via bash tool       | Direct execution                    |
+| **Tools**      | Via scripts         | Custom tools with Zod schemas       |
+| **Agents**     | Via config          | Custom agents with scoped tools     |
+| **Hooks**      | None                | 25+ event hooks                     |
+| **SDK Access** | Limited             | Full API (session, TUI, shell)      |
+| **Best For**   | Simple instructions | Advanced features                   |
 
 ### Plugin Examples
 
@@ -626,6 +627,10 @@ See `examples/plugins/` directory for complete plugin examples:
 - **[examples/plugins/minimal-plugin/](./examples/plugins/minimal-plugin/)** - Tier 1: Event logging
 - **[examples/plugins/intermediate-plugin/](./examples/plugins/intermediate-plugin/)** - Tier 2: Custom tools + agents
 - **[examples/plugins/advanced-plugin/](./examples/plugins/advanced-plugin/)** - Tier 3: Full capabilities
+
+If you want a tool-focused learning path (schema -> handler -> stable results), see:
+
+- **[examples/tools/README.md](./examples/tools/README.md)** - Tool examples and documentation
 
 ### Plugin Documentation
 
@@ -641,12 +646,14 @@ See `examples/plugins/` directory for comprehensive plugin documentation:
 ### When to Use Plugins vs Skills
 
 **Use Skills when**:
+
 - You need simple, human-readable instructions
 - You want quick prototyping
 - You don't need event interception
 - Your use case is straightforward
 
 **Use Plugins when**:
+
 - You need type-safe custom tools
 - You want to intercept tool executions
 - You need custom agents with scoped tools
@@ -656,20 +663,29 @@ See `examples/plugins/` directory for comprehensive plugin documentation:
 ### Quick Links
 
 **Skills Examples**:
+
 - [minimal-example/](./examples/minimal-example/) - Basic skill structure
 - [intermediate-example/](./examples/intermediate-example/) - Helper script integration
 - [advanced-example/](./examples/advanced-example/) - Config-driven workflows
 
 **Plugins Examples**:
+
 - [plugins/minimal-plugin/](./examples/plugins/minimal-plugin/) - Tier 1 example
 - [plugins/intermediate-plugin/](./examples/plugins/intermediate-plugin/) - Tier 2 example
 - [plugins/advanced-plugin/](./examples/plugins/advanced-plugin/) - Tier 3 example
 
+**Tools Examples**:
+
+- [tools/README.md](./examples/tools/README.md) - Tools learning path
+- [tools/TOOLS_GUIDE.md](./examples/tools/TOOLS_GUIDE.md) - How to author tools
+- [tools/TOOLS_REFERENCE.md](./examples/tools/TOOLS_REFERENCE.md) - API patterns + pitfalls
+
 ### Summary
 
-You now have **two complete learning paths**:
+You now have **three complete learning paths**:
 
 1. **Skills** (Markdown-based) → From simple instructions to advanced workflows
 2. **Plugins** (TypeScript/JavaScript) → From event hooks to full SDK access
+3. **Tools** (Zod-validated functions) → From a single tool to a structured toolset
 
 Choose based on your use case, complexity, and requirements!
