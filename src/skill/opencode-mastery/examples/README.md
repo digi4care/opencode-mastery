@@ -496,14 +496,13 @@ See `plugins/` directory for complete plugin examples:
 
 ### Plugin Documentation
 
-See `plugins/` directory for comprehensive plugin documentation:
+**Consolidated guide**: [../../../docs/opencode/plugins.md](../../../docs/opencode/plugins.md)
 
-- **[PLUGIN_OVERVIEW.md](./plugins/PLUGIN_OVERVIEW.md)** - What are plugins?
-- **[PLUGIN_VS_SKILLS.md](./plugins/PLUGIN_VS_SKILLS.md)** - When to use which?
-- **[PLUGIN_ARCHITECTURE.md](./plugins/PLUGIN_ARCHITECTURE.md)** - Plugin structure
-- **[PLUGIN_EVENT_HOOKS.md](./plugins/PLUGIN_EVENT_HOOKS.md)** - 25+ event hooks
-- **[PLUGIN_SDK_REFERENCE.md](./plugins/PLUGIN_SDK_REFERENCE.md)** - API reference
-- **[PLUGIN_BEST_PRACTICES.md](./plugins/PLUGIN_BEST_PRACTICES.md)** - Guidelines
+See `plugins/` directory for executable examples:
+
+- **[plugins/minimal-plugin/](./plugins/minimal-plugin/)** - Tier 1: Event logging
+- **[plugins/intermediate-plugin/](./plugins/intermediate-plugin/)** - Tier 2: Custom tools + agents
+- **[plugins/advanced-plugin/](./plugins/advanced-plugin/)** - Tier 3: Full capabilities
 
 ### Quick Links
 
@@ -525,8 +524,11 @@ See `plugins/` directory for comprehensive plugin documentation:
 **Tools** (`tools/` directory):
 
 - [tools/README.md](./tools/README.md) - Tools learning path
-- [tools/TOOLS_GUIDE.md](./tools/TOOLS_GUIDE.md) - How to author tools
-- [tools/TOOLS_REFERENCE.md](./tools/TOOLS_REFERENCE.md) - API patterns + pitfalls
+
+**Consolidated guides** (in docs/):
+
+- [docs/opencode/tools.md](../../../docs/opencode/tools.md) - Complete tools reference
+- [docs/opencode/plugins.md](../../../docs/opencode/plugins.md) - Complete plugins reference
 
 ### Summary
 

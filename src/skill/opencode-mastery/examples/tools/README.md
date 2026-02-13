@@ -29,10 +29,34 @@ Current status:
 - Tier 2 is implemented (`intermediate-tool/`)
 - Tier 3 is implemented (`advanced-tool/`) (tests are still TODO)
 
-## Docs In This Folder
+## Documentation
 
-- `TOOLS_GUIDE.md` - How to write a tool end-to-end (schema -> handler -> result)
-- `TOOLS_REFERENCE.md` - Reference snippets (return type, patterns, pitfalls)
+Voor volledige tools documentatie, zie de geconsolideerde docs:
+
+- **[docs/opencode/tools.md](../../../../../docs/opencode/tools.md)** - Complete tools gids
+
+Deze bevat:
+
+- Tool basics (schema + handler + result)
+- Zod validatie patterns
+- ToolResult shapes
+- Best practices
+- Common pitfalls
+
+## Quick Reference
+
+```ts
+// Tool pattern
+import { tool } from "@opencode-ai/plugin";
+import { z } from "zod";
+
+export const myTool = tool(
+  z.object({ input: z.string() }),
+  async (args, ctx) => {
+    return { success: true, data: { result: args.input } };
+  },
+).describe("Tool description");
+```
 
 ## What A Tool Looks Like
 

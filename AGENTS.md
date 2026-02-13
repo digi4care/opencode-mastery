@@ -1,133 +1,119 @@
-# PROJECT KNOWLEDGE BASE
+# AGENTS.md - Project Index
 
-**Generated:** 2026-01-23
-**Commit:** HEAD
-**Branch:** main
+**Project:** opencode-mastery  
+**Versie:** 1.4.0  
+**Laatste update:** 2026-02-13
 
-## OVERVIEW
+## Overzicht
 
-OpenCode documentation skill with lazy-loaded docs, fuzzy search, GitHub research, and session memory.
+OpenCode documentation skill met lazy-loaded docs, fuzzy search, GitHub research, en session memory. Inclusief ACE (Agentic Context Engineering) framework voor self-improving prompts.
 
-## STRUCTURE
+## Quick Links
+
+| Wat                    | Waar                                                           |
+| ---------------------- | -------------------------------------------------------------- |
+| **Project Conventies** | [docs/project/conventions.md](docs/project/conventions.md)     |
+| **Anti-Patterns**      | [docs/project/anti-patterns.md](docs/project/anti-patterns.md) |
+| **Plugins Guide**      | [docs/opencode/plugins.md](docs/opencode/plugins.md)           |
+| **Tools Guide**        | [docs/opencode/tools.md](docs/opencode/tools.md)               |
+| **ACE Framework**      | [docs/ace/framework.md](docs/ace/framework.md)                 |
+
+## Structuur
 
 ```
-./
-├── src/
-│   └── skill/         # OpenCode skills
-│       └── opencode-mastery/
-│           ├── SKILL.md
-│           ├── references/    # Custom reference docs (deep-dive content)
-│           │   ├── registry.json    # Index of custom refs with keywords
-│           │   └── *.mdx            # Custom documentation files
-│           └── scripts/      # Python utilities (download-docs, index-builder, load-docs, memory-manager)
-├── install.sh / uninstall.sh  # Install skill globally
-└── package.json      # npm scripts for docs/management
+opencode-mastery/
+├── docs/                      # 📚 Gestructureerde documentatie
+│   ├── project/               # Project-specifiek
+│   │   ├── conventions.md     # Conventies & regels
+│   │   └── anti-patterns.md   # Te vermijden patronen
+│   ├── opencode/              # OpenCode guides
+│   │   ├── plugins.md         # Plugin development
+│   │   └── tools.md           # Custom tools
+│   └── ace/                   # ACE framework
+│       └── framework.md       # Agentic Context Engineering
+│
+├── src/skill/                 # 🎯 OpenCode skills
+│   ├── opencode-mastery/      # Hoofd skill
+│   │   ├── SKILL.md           # Skill definitie
+│   │   ├── references/        # Custom .mdx docs
+│   │   ├── scripts/           # Python utilities
+│   │   └── examples/          # Voorbeelden (skills, plugins, tools)
+│   └── meta-agent/            # Component generator
+│       └── SKILL.md
+│
+├── .opencode/                 # ⚙️ OpenCode config
+│   └── commands/              # Custom commands
+│       └── ace-reflect.md     # ACE reflection command
+│
+├── ai_docs/                   # 📖 AI documentatie cache
+│
+├── install.sh                 # 🔧 Global install
+├── uninstall.sh               # 🔧 Global uninstall
+├── package.json               # 📦 npm scripts
+└── pyproject.toml             # 🐍 Python config
 ```
 
-## WHERE TO LOOK
-
-| Task                   | Location                                               | Notes                          |
-| ---------------------- | ------------------------------------------------------ | ------------------------------ |
-| Documentation download | `src/skill/opencode-mastery/scripts/download-docs.py`  | GitHub API, 7-day cache        |
-| Custom references      | `src/skill/opencode-mastery/references/`               | Custom deep-dive docs          |
-| Search docs            | `src/skill/opencode-mastery/scripts/load-docs.py`      | Lazy loader, combines sources  |
-| Build search index     | `src/skill/opencode-mastery/scripts/index-builder.py`  | Indexes official + custom refs |
-| Session memory         | `src/skill/opencode-mastery/scripts/memory-manager.py` | Topic tracking, cross-session  |
-| Skill definitions      | `src/skill/*/SKILL.md`                                 | Frontmatter + Markdown         |
-
-## CONVENTIONS
-
-**Package manager:** Bun (not pnpm) for npm scripts, uv for Python scripts
-
-**Scripts (Python):**
-
-- Type hints required (`|` syntax for unions)
-- `Path.home() / ".ai_docs" / "opencode"` for paths
-- Global install: `~/.ai_docs/opencode/`, Project: `.ai_docs/opencode/`
-- Cache duration: 7 days (TTL)
-
-**GitHub CLI:**
-
-- Required for downloading OpenCode documentation
-- Must be authenticated: `gh auth login`
-- Used via subprocess calls in download-docs.py
-
-**SKILL.md format:**
-
-- YAML frontmatter: name, description, license, compatibility, metadata
-- `refresh: weekly` for documentation updates
-- Paths in metadata for docs/memory/scripts locations
-
-**Install flow:**
-
-- `install.sh` → copies to `~/.config/opencode/skill/` (global)
-- `bun run install` → project-local setup
-- `bun run download-docs` → fetch docs from GitHub
-- `bun run build-index` → build fuzzy search index
-
-## ANTI-PATTERNS (THIS PROJECT)
-
-- **NEVER** use `skills/` (plural) - ONLY `skill/` (singular) works on this system
-- **NEVER** hardcode install paths - use `Path.home()` for global, relative for project
-- **NEVER** skip cache validation - always check 7-day TTL before GitHub fetch
-- **NEVER** modify SKILL.md without updating metadata (version/refresh)
-- **NEVER** add new scripts without updating `package.json` scripts section
-
-## CRITICAL DIRECTORY NAMING (SYSTEM-SPECIFIC)
-
-**SKILL DIRECTORY IS `skill/` (SINGULAR) ON THIS SYSTEM**
-
-**Note:** Official OpenCode documentation and code uses `skills/` (plural), but on THIS SPECIFIC SYSTEM, only `skill/` (singular) works.
-
-**This appears to be a system-specific configuration issue, not a general OpenCode rule.**
-
-**Paths:**
-
-- Global: `~/.config/opencode/skill/` (NOT `skills/`)
-- Project: `.opencode/skill/`
-
-**For this project only:** Always use `skill/`, never `skills/`.
-
-**If you see ANY reference to `skills/` in code, CHANGE IT TO `skill/` IMMEDIATELY.**
-
-**To debug this in the future:**
-
-- Check OpenCode version: `opencode --version`
-- Check config: `cat ~/.config/opencode/opencode.json`
-- Compare with official OpenCode repo for directory conventions
-
-## COMMANDS
+## Commands
 
 ```bash
-# Install globally
-./install.sh
+# Installatie
+./install.sh                    # Globaal installeren
+./uninstall.sh                  # Globaal verwijderen
+uv sync                         # Python dependencies
 
-# Download latest official docs (uses GitHub CLI)
-bun run download-docs -- --verbose
+# Documentatie
+bun run download-docs           # Docs van GitHub halen
+bun run load-docs -- --query "topic"   # Docs zoeken
+bun run build-index             # Search index rebuild
 
-# Load custom references (lazy loader)
-bun run load-docs -- --query "<topic>" --verbose
-
-# Rebuild search index (official + custom)
-bun run build-index -- --rebuild
-
-# View session history
-uv run src/skill/opencode-mastery/scripts/memory_manager.py --history
-
-# Search topic memory
-uv run src/skill/opencode-mastery/scripts/memory_manager.py --topic <topic-name>
+# Testing
+bun run test                    # Run tests
 ```
 
-## NOTES
+## Skills in dit Project
 
-- **Two install modes**: Global (`~/.config/opencode/skill/`) and Project (`.opencode/skill/`)
-- **Two documentation sources**:
-  - **Official docs** (~/.ai_docs/opencode/docs/) - Downloaded from OpenCode GitHub
-  - **Custom references** (src/skill/opencode-mastery/references/) - Deep-dive content written by you
-- **Lazy loading**: `load-docs.py` combines both sources based on keywords, returns ranked results
-- **Registry system**: `references/registry.json` indexes all custom references with keywords
-- **Docs location**: `~/.ai_docs/opencode/docs/` (global) or `.ai_docs/opencode/docs/` (project)
-- **Memory structure**: `memory/` has `index.json` (fuzzy), `master_index.json` (topics), `sessions/`, `topics/`
-- **GitHub API**: Uses `gh` CLI for repo searches with caching
-- **opencode-mastery skill**: Lazy-loads docs (official + custom), tracks sessions, falls back to GitHub research
-- **meta-agent skill**: Generates OpenCode components (commands, skills, agents) using opencode-mastery for accuracy
+| Skill                | Doel                                        |
+| -------------------- | ------------------------------------------- |
+| **opencode-mastery** | Complete OpenCode kennisassistent           |
+| **meta-agent**       | Genereert commands, skills, agents, plugins |
+
+## Custom Commands
+
+| Command        | Doel                                              |
+| -------------- | ------------------------------------------------- |
+| `/ace-reflect` | Analyseer sessies en genereer verbeter suggesties |
+
+## Package Managers
+
+| Taal                  | Tool                    |
+| --------------------- | ----------------------- |
+| JavaScript/TypeScript | **Bun** (niet pnpm/npm) |
+| Python                | **uv**                  |
+
+## Belangrijke Bestanden
+
+| File              | Doel                        |
+| ----------------- | --------------------------- |
+| `AGENTS.md`       | Dit bestand - project index |
+| `README.md`       | Project introductie         |
+| `CHANGELOG.md`    | Versie geschiedenis         |
+| `CONTRIBUTING.md` | Bijdrage richtlijnen        |
+| `SECURITY.md`     | Security policy             |
+| `LICENSE.md`      | MIT licentie                |
+
+## CRITICAL: Directory Naming
+
+> **ALWAYS use `skill/` (singular), NEVER `skills/` (plural)**
+
+Dit is systeem-specifiek. Zie [anti-patterns.md](docs/project/anti-patterns.md) voor details.
+
+## Documentatie Lazy Loading
+
+AGENTS.md is minimalistisch. Gedetailleerde documentatie wordt lazy-loaded vanuit `docs/`:
+
+- **Conventies** → `docs/project/conventions.md`
+- **Plugins** → `docs/opencode/plugins.md`
+- **Tools** → `docs/opencode/tools.md`
+- **ACE** → `docs/ace/framework.md`
+
+Dit houdt AGENTS.md klein en context-efficiënt.

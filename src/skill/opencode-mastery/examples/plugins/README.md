@@ -219,20 +219,20 @@ advanced-plugin/
 
 ## 📖 Additional Documentation
 
-### Plugin Fundamentals
+**Consolidated guide**: [../../../../docs/opencode/plugins.md](../../../../docs/opencode/plugins.md)
 
-- **PLUGIN_OVERVIEW.md** - What are plugins?
-- **PLUGIN_VS_SKILLS.md** - When to use which?
+This comprehensive guide includes:
 
-### Technical Details
+- What are plugins?
+- Plugins vs Skills
+- Architecture & SDK
+- Event hooks (25+)
+- Best practices
 
-- **PLUGIN_ARCHITECTURE.md** - Structure and SDK
-- **PLUGIN_EVENT_HOOKS.md** - 25+ event hooks
-- **PLUGIN_SDK_REFERENCE.md** - API reference
+For project-specific patterns, see:
 
-### Best Practices
-
-- **PLUGIN_BEST_PRACTICES.md** - Guidelines and patterns
+- [docs/project/conventions.md](../../../../docs/project/conventions.md)
+- [docs/project/anti-patterns.md](../../../../docs/project/anti-patterns.md)
 
 ---
 
@@ -371,7 +371,7 @@ export const myPlugin = async (context) => {
 
 **Issue**: Event hooks not firing
 
-- Verify event name is correct (see PLUGIN_EVENT_HOOKS.md)
+- Verify event name is correct (see [docs/opencode/plugins.md](../../../../docs/opencode/plugins.md))
 - Check console for errors
 - Ensure plugin is returning event handlers
 
@@ -418,7 +418,7 @@ Have ideas for new plugin examples or improvements?
 
 **Guidelines**:
 
-- Follow best practices from `PLUGIN_BEST_PRACTICES.md`
+- Follow best practices from [docs/opencode/plugins.md](../../../../docs/opencode/plugins.md)
 - Document new patterns in relevant documentation
 - Update this README with new examples
 - Ensure all code compiles without errors
