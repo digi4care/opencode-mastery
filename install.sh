@@ -26,6 +26,7 @@ echo ""
 INSTALL_DIR="$HOME/.ai_docs/opencode"
 MASTERY_SKILL_DIR="$HOME/.config/opencode/skill/opencode-mastery"
 META_AGENT_SKILL_DIR="$HOME/.config/opencode/skill/meta-agent"
+COMMANDS_DIR="$HOME/.config/opencode/commands"
 
 SCRIPTS_DIR="$INSTALL_DIR/scripts"
 MASTERY_SKILL_FILE="$MASTERY_SKILL_DIR/SKILL.md"
@@ -36,6 +37,7 @@ echo "Installing to:"
 echo "  Docs/Scripts:   $INSTALL_DIR"
 echo "  opencode-mastery: $MASTERY_SKILL_DIR"
 echo "  meta-agent:      $META_AGENT_SKILL_DIR"
+echo "  commands:        $COMMANDS_DIR"
 echo ""
 
 # Skip confirmation if -y flag provided
@@ -58,6 +60,7 @@ mkdir -p "$INSTALL_DIR/cache/github"
 mkdir -p "$MASTERY_SKILL_DIR"
 mkdir -p "$META_AGENT_SKILL_DIR"
 mkdir -p "$SCRIPTS_DIR"
+mkdir -p "$COMMANDS_DIR"
 
 echo "📥 Downloading latest version from GitHub..."
 TEMP_DIR=$(mktemp -d)
@@ -94,6 +97,15 @@ echo "🗑️  Removing scripts from skill directories (kept globally)..."
 rm -rf "$MASTERY_SKILL_DIR/scripts" 2>/dev/null || true
 rm -rf "$META_AGENT_SKILL_DIR/scripts" 2>/dev/null || true
 
+echo ""
+echo "📋 Copying commands..."
+if [ -d "$TEMP_DIR/.opencode/commands" ]; then
+    cp -r "$TEMP_DIR/.opencode/commands/"* "$COMMANDS_DIR/" 2>/dev/null || true
+    echo "✓ Commands copied to:       $COMMANDS_DIR"
+else
+    echo "ℹ️  No commands to install"
+fi
+
 rm -rf "$TEMP_DIR"
 
 echo "✓ Scripts copied to:         $SCRIPTS_DIR"
@@ -120,12 +132,16 @@ echo "  1. Start OpenCode"
 echo "  2. Run: /skill opencode-mastery"
 echo "     → Ask anything about OpenCode!"
 echo ""
-echo "  3. Run: /skill meta-agent"
+echo "  3. Run: /ace-reflect"
+echo "     → Analyze sessions and improve prompts!"
+echo ""
+echo "  4. Run: /skill meta-agent"
 echo "     → Create commands, skills, and agents!"
 echo ""
 echo "📍 Files installed at:"
 echo "  - Scripts:               $SCRIPTS_DIR"
 echo "  - opencode-mastery:      $MASTERY_SKILL_DIR"
 echo "  - meta-agent:            $META_AGENT_SKILL_DIR"
+echo "  - Commands:              $COMMANDS_DIR"
 echo "  - Docs:                  $INSTALL_DIR/docs"
 echo "  - Memory:                $INSTALL_DIR/memory"

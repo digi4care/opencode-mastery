@@ -33,8 +33,9 @@ wheels/
 .ai_docs/opencode/memory/
 .ai_docs/opencode/cache/
 
-# Installed files
-.opencode/
+# Installed files - but keep commands
+.opencode/*
+!.opencode/commands/
 
 # Local
 .DS_Store
