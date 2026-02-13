@@ -37,6 +37,18 @@ DOCS_MAPPING = {
     "cli.mdx": "Command Line Interface",
     "web.mdx": "Web Interface",
     "ide.mdx": "IDE Integration",
+    "acp.mdx": "Agent Capability Protocol",
+    "server.mdx": "Interact with opencode server over HTTP",
+    "formatters.mdx": "OpenCode uses language specific formatters",
+    "keybinds.mdx": "OpenCode has a list of keybinds that you can customize through the OpenCode config",
+    "themes.mdx": "Select a built-in theme or define your own.",
+    "models.mdx": "Configuring an LLM provider and model.",
+    "rules.mdx": "Set custom instructions for opencode.",
+    "github.mdx": "Use OpenCode in GitHub issues and pull-requests.",
+    "gitlab.mdx": "Use OpenCode in GitLab issues and merge requests.",
+    "share.mdx": "Share your OpenCode conversations.",
+    "zen.mdx": "Curated list of models provided by OpenCode.",
+    "network.mdx": "Configure proxies and custom certificates.",
 }
 
 CACHE_DAYS = 7
