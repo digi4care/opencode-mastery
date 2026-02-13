@@ -13,10 +13,10 @@ Options:
 import argparse
 import json
 import sys
+import urllib.request
+import urllib.error
 from datetime import datetime, timedelta
 from pathlib import Path
-
-import requests
 
 GITHUB_RAW_BASE = "https://raw.githubusercontent.com/anomalyco/opencode/dev/packages/web/src/content/docs"
 
@@ -44,15 +44,22 @@ CACHE_DAYS = 7
 
 def download_file(url: str, verbose: bool = False) -> str | None:
     try:
-        response = requests.get(url, timeout=30)
-        if response.status_code == 200:
-            if verbose:
-                print(f"  ✓ Downloaded: {url}")
-            return response.text
-        else:
-            if verbose:
-                print(f"  ✗ Failed: {url} (HTTP {response.status_code})")
-            return None
+        req = urllib.request.Request(
+            url, headers={"User-Agent": "opencode-mastery/1.0"}
+        )
+        with urllib.request.urlopen(req, timeout=30) as response:
+            if response.status == 200:
+                if verbose:
+                    print(f"  ✓ Downloaded: {url}")
+                return response.read().decode("utf-8")
+            else:
+                if verbose:
+                    print(f"  ✗ Failed: {url} (HTTP {response.status})")
+                return None
+    except urllib.error.HTTPError as e:
+        if verbose:
+            print(f"  ✗ Failed: {url} (HTTP {e.code})")
+        return None
     except Exception as e:
         if verbose:
             print(f"  ✗ Error: {url} - {e}")
