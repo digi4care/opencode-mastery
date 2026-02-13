@@ -5,9 +5,32 @@ agent: general
 
 # ACE Reflect - Session Analysis
 
-Load the ACE framework and analyze recent sessions to generate prompt improvement suggestions.
+Analyze sessions and generate prompt improvement suggestions using the ACE (Agentic Context Engineering) framework.
+
+## Usage
+
+```
+/ace-reflect              Analyze current session
+/ace-reflect --help       Show this help
+/ace-reflect skill:naam   Focus on specific skill
+/ace-reflect agent:naam   Focus on specific agent
+/ace-reflect command:naam Focus on specific command
+/ace-reflect all          Full analysis of all sessions
+```
+
+## What it does
+
+1. Loads ACE framework context (rubric, patterns)
+2. Analyzes session(s) for friction points and successes
+3. Scores on 5 dimensions (1-5 each)
+4. Generates concrete prompt improvement suggestions
 
 ## Instructions
+
+**FIRST**: Check if `$ARGUMENTS` contains `--help` or `-h`.
+
+- If YES: Show ONLY the Usage section above and STOP. Do not run analysis.
+- If NO: Continue with analysis below.
 
 1. Load ACE context:
    - Read references/ace-framework.mdx from opencode-mastery skill
@@ -34,6 +57,7 @@ Load the ACE framework and analyze recent sessions to generate prompt improvemen
 ## Scope Options
 
 Use `$ARGUMENTS` to specify scope:
+
 - No args: Analyze current session
 - `skill:naam`: Focus on specific skill
 - `agent:naam`: Focus on specific agent
@@ -46,23 +70,27 @@ Use `$ARGUMENTS` to specify scope:
 ## ACE Reflection Report
 
 ### Session Summary
+
 [Brief summary of what was attempted]
 
 ### Scores
-| Criterium | Score | Notes |
-|-----------|-------|-------|
-| Completeness | X/5 | ... |
-| Accuracy | X/5 | ... |
-| Efficiency | X/5 | ... |
-| Clarity | X/5 | ... |
-| Relevance | X/5 | ... |
-| **Total** | **XX/25** | |
+
+| Criterium    | Score     | Notes |
+| ------------ | --------- | ----- |
+| Completeness | X/5       | ...   |
+| Accuracy     | X/5       | ...   |
+| Efficiency   | X/5       | ...   |
+| Clarity      | X/5       | ...   |
+| Relevance    | X/5       | ...   |
+| **Total**    | **XX/25** |       |
 
 ### Findings
+
 1. [Finding 1]
 2. [Finding 2]
 
 ### Suggestions
+
 1. **Target**: [file location]
    **Change**: [specific suggestion]
    **Reason**: [why this helps]
@@ -70,6 +98,7 @@ Use `$ARGUMENTS` to specify scope:
 2. ...
 
 ### Decision
+
 - [ ] No changes needed (score ≥ 20)
 - [ ] Suggestions for review (score 15-19)
 - [ ] Changes recommended (score < 15)
