@@ -20,7 +20,7 @@ This tier shows how to group a few related tools and share pure helper logic.
 ## Using In A Plugin
 
 ```ts
-import { normalizeText, textStats } from "<path-to>/intermediate-tool";
+import { normalizeText, textStats } from "<path-to>/tools/intermediate";
 
 export default async function myPlugin(context) {
   return {

@@ -563,6 +563,6 @@ See the `examples/` directory for complete, working examples of these patterns.
 
 ## Further Reading
 
-- **Advanced Example**: `examples/advanced-example/` - Full sequential + conditional workflow
-- **Router Pattern**: `examples/advanced-example/router.sh` - Dynamic routing and orchestration
-- **Best Practices**: `BEST_PRACTICES.md` - Skill development guidelines
+- **Advanced Example**: `../advanced/` - Full sequential + conditional workflow
+- **Router Pattern**: `../advanced/router.sh` - Dynamic routing and orchestration
+- **Best Practices**: `./BEST_PRACTICES.md` - Skill development guidelines

@@ -148,10 +148,21 @@ OpenCode Mastery provides information from:
 - `commands.mdx` - Commands development guide
 - `config.mdx` - Complete configuration reference
 
-This repo also contains curated, repo-local examples:
+This repo also contains curated, repo-local documentation and examples:
 
-- Tool examples: `src/skill/opencode-mastery/examples/tools/`
-- Plugin examples: `src/skill/opencode-mastery/examples/plugins/`
+**Documentation:**
+
+- `docs/opencode/plugins.md` - Complete plugin development guide
+- `docs/opencode/tools.md` - Tools development reference
+- `docs/project/conventions.md` - Project conventions
+- `docs/project/anti-patterns.md` - Anti-patterns to avoid
+- `docs/ace/framework.md` - ACE framework
+
+**Examples:**
+
+- `src/skill/opencode-mastery/examples/skills/` - Skill examples (minimal/intermediate/advanced)
+- `src/skill/opencode-mastery/examples/plugins/` - Plugin examples (minimal/intermediate/advanced)
+- `src/skill/opencode-mastery/examples/tools/` - Tool examples (minimal/intermediate/advanced)
 
 ### Example Workflow with OpenCode Mastery
 
@@ -369,8 +380,10 @@ export default async function myPlugin(context) {
 
 For full plugin structure, consult `opencode-mastery` and see:
 
-- `src/skill/opencode-mastery/examples/plugins/PLUGIN_OVERVIEW.md`
-- `src/skill/opencode-mastery/examples/tools/TOOLS_REFERENCE.md`
+- `docs/opencode/plugins.md` - Complete plugin development guide
+- `docs/opencode/tools.md` - Tools development reference
+- `src/skill/opencode-mastery/examples/plugins/README.md` - Plugin examples
+- `src/skill/opencode-mastery/examples/tools/README.md` - Tool examples
 
 ## Tool Recommendations
 

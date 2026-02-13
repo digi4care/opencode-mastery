@@ -96,7 +96,7 @@ intermediate/
 **How to use**:
 
 ```bash
-cd intermediate-example
+cd intermediate
 ./helper.sh
 ```
 
@@ -497,11 +497,11 @@ See `plugins/` directory for complete plugin examples:
 
 **Consolidated guide**: [../../../docs/opencode/plugins.md](../../../docs/opencode/plugins.md)
 
-See `plugins/` directory for executable examples:
+See `../plugins/` directory for executable examples:
 
-- **[plugins/minimal-plugin/](./plugins/minimal-plugin/)** - Tier 1: Event logging
-- **[plugins/intermediate-plugin/](./plugins/intermediate-plugin/)** - Tier 2: Custom tools + agents
-- **[plugins/advanced-plugin/](./plugins/advanced-plugin/)** - Tier 3: Full capabilities
+- **[plugins/minimal/](../plugins/minimal/)** - Tier 1: Event logging
+- **[plugins/intermediate/](../plugins/intermediate/)** - Tier 2: Custom tools + agents
+- **[plugins/advanced/](../plugins/advanced/)** - Tier 3: Full capabilities
 
 ### Quick Links
 

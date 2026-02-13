@@ -1,5 +1,5 @@
 ---
-name: minimal-example
+name: minimal-skill
 description: Demonstrates the absolute basics of an OpenCode skill
 ---
 
@@ -18,7 +18,7 @@ I demonstrate the simplest possible OpenCode skill structure to help you underst
 This skill contains only one file:
 
 ```
-minimal-example/
+skills/minimal/
 └── SKILL.md  ← You are here!
 ```
 

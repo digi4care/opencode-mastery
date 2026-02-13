@@ -15,7 +15,7 @@ This tier shows the smallest useful tool:
 In your plugin's `index.ts`:
 
 ```ts
-import { echoText } from "<path-to>/minimal-tool";
+import { echoText } from "<path-to>/tools/minimal";
 
 export default async function myPlugin(context) {
   return {
@@ -24,7 +24,7 @@ export default async function myPlugin(context) {
 }
 ```
 
-Tip: See `../../plugins/intermediate-plugin/index.ts` for a complete "tools in a plugin" example.
+Tip: See `../../plugins/intermediate/index.ts` for a complete "tools in a plugin" example.
 
 ## Expected Output
 

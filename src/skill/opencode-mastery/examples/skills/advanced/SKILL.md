@@ -1,5 +1,5 @@
 ---
-name: advanced-example
+name: advanced-skill
 description: Full workflow orchestration with config-driven routing and phase-based execution
 ---
 
@@ -26,7 +26,7 @@ This is a **Tier 3** advanced example showing:
 ## 📁 File Structure
 
 ```
-advanced-example/
+skills/advanced/
 ├── SKILL.md                    # This file
 ├── config/
 │   └── workflow-config.json   # Configuration for workflow

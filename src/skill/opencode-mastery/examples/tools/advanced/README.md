@@ -5,7 +5,7 @@ This tier shows how to organize a small toolset for maintainability.
 ## Structure
 
 ```
-advanced-tool/
+tools/advanced/
 ├── index.ts
 ├── tools/
 │   ├── normalize-text.ts
@@ -26,7 +26,7 @@ advanced-tool/
 ## Using In A Plugin
 
 ```ts
-import { toolset } from "<path-to>/advanced-tool";
+import { toolset } from "<path-to>/tools/advanced";
 
 export default async function myPlugin(context) {
   return {

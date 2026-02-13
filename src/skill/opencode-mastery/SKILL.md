@@ -415,11 +415,11 @@ This directory contains **progressive skill examples** that demonstrate differen
 
 ### Overview of Tiers
 
-| Tier  | Example                 | Complexity | Files                             | What it Shows                                          |
-| ----- | ----------------------- | ---------- | --------------------------------- | ------------------------------------------------------ |
-| **1** | `minimal-example/`      | ⭐         | 1 (SKILL.md)                      | Basic skill structure, frontmatter, instructions = POC |
-| **2** | `intermediate-example/` | ⭐⭐       | 2 (SKILL.md + helper.sh)          | Helper scripts, multi-step workflows, timing           |
-| **3** | `advanced-example/`     | ⭐⭐⭐     | 7 (SKILL.md + config + 5 scripts) | Config-driven, router pattern, state management        |
+| Tier  | Example                | Complexity | Files                             | What it Shows                                          |
+| ----- | ---------------------- | ---------- | --------------------------------- | ------------------------------------------------------ |
+| **1** | `skills/minimal/`      | ⭐         | 1 (SKILL.md)                      | Basic skill structure, frontmatter, instructions = POC |
+| **2** | `skills/intermediate/` | ⭐⭐       | 2 (SKILL.md + helper.sh)          | Helper scripts, multi-step workflows, timing           |
+| **3** | `skills/advanced/`     | ⭐⭐⭐     | 7 (SKILL.md + config + 5 scripts) | Config-driven, router pattern, state management        |
 
 ### Learning Path
 
@@ -435,14 +435,14 @@ Start with **Tier 1** to understand basics, then progress to **Tier 2** for scri
 **For beginners** (new to OpenCode):
 
 ```bash
-cd src/skill/opencode-mastery/examples/minimal-example
+cd src/skill/opencode-mastery/examples/skills/minimal
 cat SKILL.md
 ```
 
 **For intermediate users**:
 
 ```bash
-cd src/skill/opencode-mastery/examples/intermediate-example
+cd src/skill/opencode-mastery/examples/skills/intermediate
 cat SKILL.md
 ./helper.sh
 ```
@@ -450,7 +450,7 @@ cat SKILL.md
 **For advanced users**:
 
 ```bash
-cd src/skill/opencode-mastery/examples/advanced-example
+cd src/skill/opencode-mastery/examples/skills/advanced
 cat SKILL.md
 ./router.sh --dry-run  # Preview without execution
 ./router.sh           # Run complete workflow
@@ -486,9 +486,9 @@ cat SKILL.md
 
 See the complete examples documentation:
 
-- **[examples/README.md](../src/skill/opencode-mastery/examples/README.md)** - Full guide with tier comparison tables, learning paths, and usage examples
-- **[examples/WORKFLOW_PATTERNS.md](../src/skill/opencode-mastery/examples/WORKFLOW_PATTERNS.md)** - Sequential, conditional, and parallel workflow patterns
-- **[examples/BEST_PRACTICES.md](../src/skill/opencode-mastery/examples/BEST_PRACTICES.md)** - Best practices for skill development
+- **[examples/skills/README.md](../src/skill/opencode-mastery/examples/skills/README.md)** - Full guide with tier comparison tables, learning paths, and usage examples
+- **[examples/skills/WORKFLOW_PATTERNS.md](../src/skill/opencode-mastery/examples/skills/WORKFLOW_PATTERNS.md)** - Sequential, conditional, and parallel workflow patterns
+- **[examples/skills/BEST_PRACTICES.md](../src/skill/opencode-mastery/examples/skills/BEST_PRACTICES.md)** - Best practices for skill development
 
 ---
 
@@ -626,9 +626,9 @@ OpenCode also supports **plugins**, which are TypeScript/JavaScript modules that
 See `examples/plugins/` directory for complete plugin examples:
 
 - **[examples/plugins/README.md](./examples/plugins/README.md)** - Complete plugin guide
-- **[examples/plugins/minimal-plugin/](./examples/plugins/minimal-plugin/)** - Tier 1: Event logging
-- **[examples/plugins/intermediate-plugin/](./examples/plugins/intermediate-plugin/)** - Tier 2: Custom tools + agents
-- **[examples/plugins/advanced-plugin/](./examples/plugins/advanced-plugin/)** - Tier 3: Full capabilities
+- **[examples/plugins/minimal/](./examples/plugins/minimal/)** - Tier 1: Event logging
+- **[examples/plugins/intermediate/](./examples/plugins/intermediate/)** - Tier 2: Custom tools + agents
+- **[examples/plugins/advanced/](./examples/plugins/advanced/)** - Tier 3: Full capabilities
 
 If you want a tool-focused learning path (schema -> handler -> stable results), see:
 
@@ -636,14 +636,9 @@ If you want a tool-focused learning path (schema -> handler -> stable results), 
 
 ### Plugin Documentation
 
-See `examples/plugins/` directory for comprehensive plugin documentation:
+See consolidated documentation:
 
-- **[PLUGIN_OVERVIEW.md](./examples/plugins/PLUGIN_OVERVIEW.md)** - What are plugins?
-- **[PLUGIN_VS_SKILLS.md](./examples/plugins/PLUGIN_VS_SKILLS.md)** - When to use which?
-- **[PLUGIN_ARCHITECTURE.md](./examples/plugins/PLUGIN_ARCHITECTURE.md)** - Plugin structure
-- **[PLUGIN_EVENT_HOOKS.md](./examples/plugins/PLUGIN_EVENT_HOOKS.md)** - 25+ event hooks
-- **[PLUGIN_SDK_REFERENCE.md](./examples/plugins/PLUGIN_SDK_REFERENCE.md)** - API reference
-- **[PLUGIN_BEST_PRACTICES.md](./examples/plugins/PLUGIN_BEST_PRACTICES.md)** - Guidelines
+- **[docs/opencode/plugins.md](../../docs/opencode/plugins.md)** - Complete plugin guide (overview, architecture, SDK, events, best practices)
 
 ### When to Use Plugins vs Skills
 
@@ -666,21 +661,23 @@ See `examples/plugins/` directory for comprehensive plugin documentation:
 
 **Skills Examples**:
 
-- [minimal-example/](./examples/minimal-example/) - Basic skill structure
-- [intermediate-example/](./examples/intermediate-example/) - Helper script integration
-- [advanced-example/](./examples/advanced-example/) - Config-driven workflows
+- [skills/minimal/](./examples/skills/minimal/) - Basic skill structure
+- [skills/intermediate/](./examples/skills/intermediate/) - Helper script integration
+- [skills/advanced/](./examples/skills/advanced/) - Config-driven workflows
 
 **Plugins Examples**:
 
-- [plugins/minimal-plugin/](./examples/plugins/minimal-plugin/) - Tier 1 example
-- [plugins/intermediate-plugin/](./examples/plugins/intermediate-plugin/) - Tier 2 example
-- [plugins/advanced-plugin/](./examples/plugins/advanced-plugin/) - Tier 3 example
+- [plugins/minimal/](./examples/plugins/minimal/) - Tier 1 example
+- [plugins/intermediate/](./examples/plugins/intermediate/) - Tier 2 example
+- [plugins/advanced/](./examples/plugins/advanced/) - Tier 3 example
 
 **Tools Examples**:
 
-- [tools/README.md](./examples/tools/README.md) - Tools learning path
-- [tools/TOOLS_GUIDE.md](./examples/tools/TOOLS_GUIDE.md) - How to author tools
-- [tools/TOOLS_REFERENCE.md](./examples/tools/TOOLS_REFERENCE.md) - API patterns + pitfalls
+- [tools/minimal/](./examples/tools/minimal/) - Single tool example
+- [tools/intermediate/](./examples/tools/intermediate/) - Multiple tools
+- [tools/advanced/](./examples/tools/advanced/) - Multi-tool with utils
+
+See [docs/opencode/tools.md](../../docs/opencode/tools.md) for complete tools guide.
 
 ### Summary
 

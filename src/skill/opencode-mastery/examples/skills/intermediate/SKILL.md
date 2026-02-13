@@ -1,5 +1,5 @@
 ---
-name: intermediate-example
+name: intermediate-skill
 description: Demonstrates helper script integration with sequential execution
 ---
 
@@ -18,7 +18,7 @@ I demonstrate how OpenCode skills integrate with helper scripts for sequential t
 This skill contains two files:
 
 ```
-intermediate-example/
+skills/intermediate/
 ├── SKILL.md          ← You are here! (instructions)
 └── helper.sh         ← Helper script (execution)
 ```
@@ -34,7 +34,7 @@ The pattern:
 Execute the helper script to see sequential execution with console output:
 
 ```bash
-bash src/skill/opencode-mastery/examples/intermediate-example/helper.sh
+bash src/skill/opencode-mastery/examples/skills/intermediate/helper.sh
 ```
 
 The script will:

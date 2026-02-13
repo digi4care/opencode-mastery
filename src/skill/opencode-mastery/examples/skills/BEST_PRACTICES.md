@@ -1108,4 +1108,4 @@ See the `examples/` directory for complete, working examples.
 
 - [Workflow Patterns](WORKFLOW_PATTERNS.md) - Sequential, conditional, and parallel workflows
 - [Examples README](README.md) - Tier comparison and getting started guide
-- [Advanced Example](advanced-example/) - Full implementation demonstrating all best practices
+- [Advanced Example](advanced/) - Full implementation demonstrating all best practices
