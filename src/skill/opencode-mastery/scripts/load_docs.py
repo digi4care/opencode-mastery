@@ -26,9 +26,20 @@ OFFICIAL_DOCS_PATH = Path.home() / ".ai_docs" / "opencode" / "docs"
 MEMORY_PATH = Path.home() / ".ai_docs" / "opencode" / "memory"
 OFFICIAL_INDEX_FILE = MEMORY_PATH / "index.json"
 
-# Project-local paths (relative to this script's location)
-SCRIPT_DIR = Path(__file__).parent.parent
-REFERENCES_DIR = SCRIPT_DIR / "references"
+# Custom references paths
+# After install: scripts are in ~/.ai_docs/opencode/scripts/
+# References are in ~/.config/opencode/skill/opencode-mastery/references/
+INSTALLED_REFERENCES_DIR = (
+    Path.home() / ".config" / "opencode" / "skill" / "opencode-mastery" / "references"
+)
+DEV_REFERENCES_DIR = Path(__file__).parent.parent / "references"
+
+# Use installed path if exists, otherwise dev path
+REFERENCES_DIR = (
+    INSTALLED_REFERENCES_DIR
+    if INSTALLED_REFERENCES_DIR.exists()
+    else DEV_REFERENCES_DIR
+)
 REGISTRY_FILE = REFERENCES_DIR / "registry.json"
 
 # Fuzzy match threshold (0-100)
@@ -101,7 +112,8 @@ def fuzzy_search_custom(
         return []
 
     results = []
-    references = registry.get("references", [])
+    # Registry uses "entries" not "references"
+    references = registry.get("entries", registry.get("references", []))
     query_lower = query.lower()
 
     for ref in references:

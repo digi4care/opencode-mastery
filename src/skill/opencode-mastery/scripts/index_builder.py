@@ -19,9 +19,21 @@ INDEX_PATH = Path.home() / ".ai_docs" / "opencode" / "memory"
 INDEX_FILE = INDEX_PATH / "index.json"
 MASTER_INDEX_FILE = INDEX_PATH / "master_index.json"
 
-# Path for custom references (relative to script location)
+# Path for custom references
+# After install: scripts are in ~/.ai_docs/opencode/scripts/
+# References are in ~/.config/opencode/skill/opencode-mastery/references/
 SCRIPT_DIR = Path(__file__).parent
-REFERENCES_PATH = SCRIPT_DIR.parent / "references"
+INSTALLED_REFERENCES_PATH = (
+    Path.home() / ".config" / "opencode" / "skill" / "opencode-mastery" / "references"
+)
+DEV_REFERENCES_PATH = SCRIPT_DIR.parent / "references"
+
+# Use installed path if exists, otherwise dev path
+REFERENCES_PATH = (
+    INSTALLED_REFERENCES_PATH
+    if INSTALLED_REFERENCES_PATH.exists()
+    else DEV_REFERENCES_PATH
+)
 REGISTRY_FILE = REFERENCES_PATH / "registry.json"
 
 

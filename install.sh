@@ -1,6 +1,17 @@
 #!/bin/bash
 set -e
 
+# Parse arguments
+AUTO_CONFIRM=false
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -y|--yes) AUTO_CONFIRM=true ;;
+        -h|--help) echo "Usage: ./install.sh [-y|--yes]"; exit 0 ;;
+        *) echo "Unknown parameter: $1"; exit 1 ;;
+    esac
+    shift
+done
+
 REPO_URL="https://github.com/digi4care/opencode-mastery"
 
 echo "🚀 OpenCode Mastery + Meta-Agent Skills Installer"
@@ -26,11 +37,17 @@ echo "  Docs/Scripts:   $INSTALL_DIR"
 echo "  opencode-mastery: $MASTERY_SKILL_DIR"
 echo "  meta-agent:      $META_AGENT_SKILL_DIR"
 echo ""
-read -p "Continue? [Y/n] (default: Y): " confirm
-confirm=${confirm:-Y}
-if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
-    echo "Installation cancelled."
-    exit 0
+
+# Skip confirmation if -y flag provided
+if [ "$AUTO_CONFIRM" = true ]; then
+    echo "Running in non-interactive mode (-y flag)"
+else
+    read -p "Continue? [Y/n] (default: Y): " confirm
+    confirm=${confirm:-Y}
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        echo "Installation cancelled."
+        exit 0
+    fi
 fi
 
 echo ""
