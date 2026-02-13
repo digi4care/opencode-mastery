@@ -5,7 +5,7 @@ license: MIT
 compatibility: opencode
 metadata:
   author: user
-  version: 1.3.0
+  version: 1.4.0
   refresh: weekly
   paths:
     docs: ~/.ai_docs/opencode/docs
@@ -32,6 +32,7 @@ Ask me about any OpenCode topic:
 - **Integration** - MCP, LSP, custom tools, formatters
 - **Troubleshooting** - Common issues and solutions
 - **Custom References** - Deep-dive content for advanced topics (see `load custom docs` action)
+- **ACE** - Agentic Context Engineering for self-improving prompts (see ACE section below)
 
 ## How I Work
 
@@ -537,6 +538,7 @@ I automatically categorize our discussions into topics:
 - **troubleshooting** - Issues, solutions
 - **providers** - Model providers, setup
 - **custom-refs** - Custom references, deep-dive documentation
+- **ace** - Agentic Context Engineering, self-improving prompts
 
 When you ask something, I:
 
@@ -689,3 +691,126 @@ You now have **three complete learning paths**:
 3. **Tools** (Zod-validated functions) → From a single tool to a structured toolset
 
 Choose based on your use case, complexity, and requirements!
+
+---
+
+## 🔄 ACE - Agentic Context Engineering
+
+ACE (Agentic Context Engineering) is een framework waarbij AI-systemen hun eigen context kunnen verbeteren. In plaats van één perfecte prompt te schrijven, bouw je een **evoluerend playbook** dat continu wordt aangescherpt op basis van echte execution-feedback.
+
+### Wat kan ACE?
+
+| Functie               | Beschrijving                                                        |
+| --------------------- | ------------------------------------------------------------------- |
+| **Sessie analyse**    | Analyseert huidige of vorige sessies                                |
+| **Probleem detectie** | Identificeert frictiepunten en verbeterkansen                       |
+| **Prompt suggesties** | Genereert concrete voorstellen voor skill/agent/command verbetering |
+| **Evidence-based**    | Elk voorstel onderbouwd met specifieke interacties                  |
+
+### Hoe te gebruiken
+
+```
+/ace-reflect                          → Analyseer alles
+/ace-reflect skill:opencode-mastery   → Focus op specifieke skill
+/ace-reflect agent:CoderAgent         → Focus op specifieke agent
+/ace-reflect command:meta-agent       → Focus op specifiek command
+/ace-reflect --sessions 5             → Analyseer laatste 5 sessies
+```
+
+### Workflow
+
+```
+1. Invoke /ace-reflect
+2. Sessie(s) worden geanalyseerd
+3. Problemen/verbeterpunten geïdentificeerd
+4. Concrete suggesties gegenereerd
+5. Diff + rationale getoond
+6. Jij beslist: Approve / Reject / Edit
+```
+
+### ACE Documentatie
+
+De volgende custom references zijn beschikbaar:
+
+| Document            | Beschrijving                                                           |
+| ------------------- | ---------------------------------------------------------------------- |
+| `ace-framework.mdx` | Hoofddocument - architectuur, strategie, tactics                       |
+| `ace-rubric.mdx`    | Evaluatie criteria - completeness, accuracy, efficiency, tone, clarity |
+| `ace-patterns.mdx`  | Success patterns, anti-patterns, implementation patterns               |
+
+Laad ACE documentatie:
+
+```bash
+# Project installation
+npm run load-docs -- --query "ace"
+
+# Global installation
+~/.ai_docs/opencode/scripts/load-docs.py --query "ace"
+```
+
+### Kernprincipes
+
+1. **Grow-and-Refine** - Nieuwe inzichten toevoegen, oude herstructureren (geen brute overschrijvingen)
+2. **Evidence-Based** - Elk voorstel moet ondersteund worden door specifieke interacties
+3. **Human Approval** - Altijd goedkeuring vereist, geen auto-updates
+4. **Version Control** - Alle versies bewaard met rollback capability
+
+### Evaluatie Criteria
+
+| Criterium    | Gewicht | Trigger         |
+| ------------ | ------- | --------------- |
+| Completeness | 20%     | < 3 = suggestie |
+| Accuracy     | 25%     | < 3 = verplicht |
+| Efficiency   | 20%     | < 2 = suggestie |
+| Tone         | 15%     | < 2 = suggestie |
+| Clarity      | 20%     | < 3 = suggestie |
+
+**Totaal < 3.0** → Verplicht voorstel
+**Totaal 3.0-4.0** → Optioneel voorstel
+**Totaal > 4.0** → Alleen loggen
+
+### Voorbeeld Output
+
+````markdown
+## ACE Reflection Report
+
+**Analyzed**: 3 sessions, 47 interactions
+**Scope**: skill:opencode-mastery
+**Date**: 2025-02-13
+
+### Findings
+
+#### Issue: Overly verbose responses
+
+**Evidence**:
+
+- Session 2 msg 7: user says "te langdradig"
+- Session 3 msg 2: user asks for "korte samenvatting"
+
+**Score**: Efficiency 2/5
+
+#### Suggested Change
+
+```diff
+- Provide comprehensive explanations for all topics
++ Provide concise explanations with optional deep-dive links
+```
+````
+
+**Rationale**: Users indicated preference for brevity while maintaining accuracy.
+
+### Actions
+
+- [ ] Review suggested change
+- [ ] Approve / Reject / Edit
+
+```
+
+### Meer informatie
+
+Zie de ACE custom references voor volledige documentatie:
+
+- **Architectuur & Workflow** → `ace-framework.mdx`
+- **Evaluatie Criteria** → `ace-rubric.mdx`
+- **Patterns & Anti-Patterns** → `ace-patterns.mdx`
+```

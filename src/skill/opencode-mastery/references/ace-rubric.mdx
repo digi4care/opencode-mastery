@@ -1,0 +1,303 @@
+---
+title: ACE Evaluation Rubric
+category: ace
+description: Evaluatie criteria voor ACE reflection
+keywords:
+  - rubric
+  - evaluation
+  - criteria
+  - scoring
+topics:
+  - ace
+  - evaluation
+language: nl
+created: 2025-02-13
+last_updated: 2025-02-13
+---
+
+# ACE Evaluation Rubric
+
+Deze rubric definieert hoe de Judge Agent worker agent output evalueert en wanneer context-updates worden voorgesteld.
+
+---
+
+## Evaluatie Criteria
+
+### Overzicht
+
+| Criterium    | Gewicht | Doel                            |
+| ------------ | ------- | ------------------------------- |
+| Completeness | 20%     | Volledigheid van response       |
+| Accuracy     | 25%     | Correctheid van informatie      |
+| Efficiency   | 20%     | Geen overbodige stappen/woorden |
+| Tone         | 15%     | Passende communicatiestijl      |
+| Clarity      | 20%     | Begrijpelijkheid                |
+
+---
+
+## Criteria Details
+
+### 1. Completeness (Volledigheid)
+
+**Vraag**: Is de response volledig voor de gestelde vraag?
+
+| Score | Beschrijving                                     | Voorbeeld                                 |
+| ----- | ------------------------------------------------ | ----------------------------------------- |
+| 5     | Compleet, alle aspecten gedekt                   | Vraag over X, Y, Z → alle drie beantwoord |
+| 4     | Bijna compleet, minor aspecten missing           | X en Y beantwoord, Z impliciet            |
+| 3     | Grotendeels compleet, 1 duidelijk aspect missing | X beantwoord, Y en Z niet                 |
+| 2     | Incompleet, meerdere aspecten missing            | Alleen X beantwoord                       |
+| 1     | Ernstig incompleet                               | Irrelevant of niet beantwoord             |
+
+**Trigger voor suggestie**: < 3
+
+### 2. Accuracy (Correctheid)
+
+**Vraag**: Is de informatie feitelijk correct?
+
+| Score | Beschrijving                     | Voorbeeld                              |
+| ----- | -------------------------------- | -------------------------------------- |
+| 5     | Volledig correct, geen fouten    | Alle feiten kloppen                    |
+| 4     | Minimale onnauwkeurigheid        | Details niet 100% maar niet misleidend |
+| 3     | Enkele fouten, niet kritiek      | 1-2 feitelijke fouten                  |
+| 2     | Meerdere fouten of kritieke fout | Fout die gebruiker misleidt            |
+| 1     | Fundamenteel incorrect           | Verkeerde aanname of conclusie         |
+
+**Trigger voor suggestie**: < 3 (verplicht!)
+
+### 3. Efficiency (Efficiëntie)
+
+**Vraag**: Is de response efficiënt zonder overbodige elementen?
+
+| Score | Beschrijving                     | Voorbeeld                             |
+| ----- | -------------------------------- | ------------------------------------- |
+| 5     | Maximale efficiëntie             | Precies wat nodig, niets meer         |
+| 4     | Goed efficiënt, minor redundancy | Kleine herhaling of overbodige uitleg |
+| 3     | Redelijk, maar te langdradig     | Had 30% korter gekund                 |
+| 2     | Inefficiënt, veel redundancy     | Had 50% korter gekund                 |
+| 1     | Ernstig inefficiënt              | 3x langer dan nodig                   |
+
+**Trigger voor suggestie**: < 2
+
+### 4. Tone (Toon)
+
+**Vraag**: Past de toon bij de context en gebruiker?
+
+| Score | Beschrijving                  | Voorbeeld                                      |
+| ----- | ----------------------------- | ---------------------------------------------- |
+| 5     | Perfecte toon                 | Professioneel maar toegankelijk, context-aware |
+| 4     | Goede toon, minor adjustments | Iets te formeel of informeel                   |
+| 3     | Acceptabel maar verbeterbaar  | Te droog of te enthousiast                     |
+| 2     | Ongepaste toon                | Te technisch voor non-technical user           |
+| 1     | Vreemde of storende toon      | Robotisch, neerbuigend, of onprofessioneel     |
+
+**Trigger voor suggestie**: < 2
+
+### 5. Clarity (Duidelijkheid)
+
+**Vraag**: Is de response begrijpelijk voor de doelgroep?
+
+| Score | Beschrijving                           | Voorbeeld                            |
+| ----- | -------------------------------------- | ------------------------------------ |
+| 5     | Kristalhelder                          | Direct begrijpelijk, goede structuur |
+| 4     | Duidelijk, minor ambiguïteit           | Eén herformulering nodig             |
+| 3     | Begrijpelijk maar verwarrend op punten | Meerdere herformuleringen nodig      |
+| 2     | Verwarrend, moeilijk te volgen         | Structuur onduidelijk                |
+| 1     | Onbegrijpelijk                         | Ontbrekende context, springerig      |
+
+**Trigger voor suggestie**: < 3
+
+---
+
+## Scoring Systeem
+
+### Totaalscore Berekening
+
+```
+Totaal = (Completeness × 0.20) +
+         (Accuracy × 0.25) +
+         (Efficiency × 0.20) +
+         (Tone × 0.15) +
+         (Clarity × 0.20)
+
+Max = 5.0
+```
+
+### Threshold Rules
+
+| Totaalscore | Actie                                                     |
+| ----------- | --------------------------------------------------------- |
+| < 2.5       | **Verplicht voorstel** — kritieke problemen               |
+| 2.5 - 3.5   | **Sterk aanbevolen voorstel** — duidelijke verbeterpunten |
+| 3.5 - 4.0   | **Optioneel voorstel** — minor improvements               |
+| > 4.0       | **Geen actie nodig** — log alleen                         |
+
+### Individual Thresholds
+
+Zelfs bij hoge totaalscore kunnen individuele criteria updates triggeren:
+
+| Criterium    | Threshold | Actie                       |
+| ------------ | --------- | --------------------------- |
+| Accuracy     | < 3       | Verplicht (ongeacht totaal) |
+| Completeness | < 3       | Aanbevolen                  |
+| Efficiency   | < 2       | Aanbevolen                  |
+| Tone         | < 2       | Optioneel                   |
+| Clarity      | < 3       | Aanbevolen                  |
+
+---
+
+## Judge Agent Prompt Template
+
+```markdown
+# Judge Agent Instructions
+
+You are an impartial quality evaluator. Your role is to assess
+agent performance against a rubric, NOT to improve the output.
+
+## Context
+
+- Agent: {agent_name}
+- Task: {task_description}
+- Output: {agent_output}
+- User Feedback: {user_feedback}
+
+## Evaluation
+
+Score each criterion 1-5 with justification:
+
+### Completeness (1-5)
+
+Score: _
+Justification: _
+
+### Accuracy (1-5)
+
+Score: _
+Justification: _
+
+### Efficiency (1-5)
+
+Score: _
+Justification: _
+
+### Tone (1-5)
+
+Score: _
+Justification: _
+
+### Clarity (1-5)
+
+Score: _
+Justification: _
+
+## Summary
+
+- Total Score: \_/5.0
+- Recommendation: [No change | Suggest improvement | Mandatory update]
+- Key Issues: \_
+
+## Evidence
+
+Cite specific interactions that support your evaluation:
+
+- [Session X, message Y]: {quote}
+```
+
+---
+
+## Weight Aanpassingen per Use Case
+
+### Voor Code Tasks
+
+| Criterium    | Standaard | Code | Waarom                    |
+| ------------ | --------- | ---- | ------------------------- |
+| Completeness | 20%       | 25%  | Code moet werken          |
+| Accuracy     | 25%       | 35%  | Bugs zijn kostbaar        |
+| Efficiency   | 20%       | 15%  | Leesbaarheid > korte code |
+| Tone         | 15%       | 5%   | Minder relevant           |
+| Clarity      | 20%       | 20%  | Documentatie belangrijk   |
+
+### Voor Chat/Consultancy Tasks
+
+| Criterium    | Standaard | Chat | Waarom                     |
+| ------------ | --------- | ---- | -------------------------- |
+| Completeness | 20%       | 15%  | Conversatie kan doorgaan   |
+| Accuracy     | 25%       | 25%  | Vertrouwen essentieel      |
+| Efficiency   | 20%       | 15%  | Niet te kort, niet te lang |
+| Tone         | 15%       | 25%  | Ervaring belangrijk        |
+| Clarity      | 20%       | 20%  | Begrijpelijkheid           |
+
+### Voor Research Tasks
+
+| Criterium    | Standaard | Research | Waarom                  |
+| ------------ | --------- | -------- | ----------------------- |
+| Completeness | 20%       | 30%      | Alle opties dekken      |
+| Accuracy     | 25%       | 30%      | Correcte feiten         |
+| Efficiency   | 20%       | 10%      | Diepgang > efficiency   |
+| Tone         | 15%       | 10%      | Minder relevant         |
+| Clarity      | 20%       | 20%      | Complexe info duidelijk |
+
+---
+
+## Voorbeeld Evaluaties
+
+### Voorbeeld 1: Goede Score (4.2/5.0)
+
+| Criterium    | Score | Justification                                |
+| ------------ | ----- | -------------------------------------------- |
+| Completeness | 4     | Alle vragen beantwoord, minor detail missing |
+| Accuracy     | 5     | Alle feiten correct                          |
+| Efficiency   | 4     | Korte uitleg, had iets compacter gekund      |
+| Tone         | 4     | Professioneel, context-appropriate           |
+| Clarity      | 4     | Goed gestructureerd, één ambiguous punt      |
+
+**Actie**: Log only, geen suggestie
+
+### Voorbeeld 2: Middelmatige Score (3.1/5.0)
+
+| Criterium    | Score | Justification                             |
+| ------------ | ----- | ----------------------------------------- |
+| Completeness | 3     | Hoofdvraag beantwoord, vervolgvragen niet |
+| Accuracy     | 4     | Feiten kloppen                            |
+| Efficiency   | 2     | Overbodige herhalingen                    |
+| Tone         | 3     | Iets te formeel                           |
+| Clarity      | 3     | Structuur kon beter                       |
+
+**Actie**: Aanbevolen voorstel — focus op efficiency en structuur
+
+### Voorbeeld 3: Slechte Score (2.0/5.0)
+
+| Criterium    | Score | Justification                    |
+| ------------ | ----- | -------------------------------- |
+| Completeness | 2     | Alleen deel van vraag beantwoord |
+| Accuracy     | 2     | Feitelijke fout in uitleg        |
+| Efficiency   | 2     | Te langdradig                    |
+| Tone         | 2     | Te technisch voor doelgroep      |
+| Clarity      | 2     | Verwarrende structuur            |
+
+**Actie**: Verplicht voorstel — meerdere problemen
+
+---
+
+## Calibratie Tips
+
+### Voor de Judge Agent
+
+1. **Wees consistent** — zelfde output = zelfde score
+2. **Gebruik evidence** — citeer specifieke interacties
+3. **Geen ego** — score eerlijk, niet "aardig zijn"
+4. **Context matters** — pas verwachtingen aan use case
+
+### Voor de Rubric
+
+1. **Herkalibreer periodiek** — scores naar boven of beneden bijstellen
+2. **Voeg criteria toe** — als nieuwe problemen ontstaan
+3. **Verwijder criteria** — als nooit relevant
+4. **Pas weights aan** — op basis van user feedback
+
+---
+
+## Referenties
+
+- [ACE Framework](./ace-framework.mdx) — Hoofddocument
+- [ACE Patterns](./ace-patterns.mdx) — Success en anti-patterns
