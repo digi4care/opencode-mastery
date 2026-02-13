@@ -17,17 +17,17 @@ Tier 1 (Minimal) -> Tier 2 (Intermediate) -> Tier 3 (Advanced)
 
 ## Tiers Overview
 
-| Tier  | Example              | Complexity        | Use Case                                            |
-| ----- | -------------------- | ----------------- | --------------------------------------------------- |
-| **1** | `minimal-tool/`      | \* Minimal        | One tool, one schema, happy path                    |
-| **2** | `intermediate-tool/` | \*\* Intermediate | Multiple tools, validation, safer returns           |
-| **3** | `advanced-tool/`     | \*\*\* Advanced   | Multi-file toolset, shared utils, stricter patterns |
+| Tier  | Example         | Complexity        | Use Case                                            |
+| ----- | --------------- | ----------------- | --------------------------------------------------- |
+| **1** | `minimal/`      | \* Minimal        | One tool, one schema, happy path                    |
+| **2** | `intermediate/` | \*\* Intermediate | Multiple tools, validation, safer returns           |
+| **3** | `advanced/`     | \*\*\* Advanced   | Multi-file toolset, shared utils, stricter patterns |
 
 Current status:
 
-- Tier 1 is implemented (`minimal-tool/`)
-- Tier 2 is implemented (`intermediate-tool/`)
-- Tier 3 is implemented (`advanced-tool/`) (tests are still TODO)
+- Tier 1 is implemented (`minimal/`)
+- Tier 2 is implemented (`intermediate/`)
+- Tier 3 is implemented (`advanced/`) (tests are still TODO)
 
 ## Documentation
 
@@ -76,4 +76,4 @@ export const echo = tool(
 
 ## Next
 
-Start with `TOOLS_GUIDE.md`.
+Zie `minimal/` voor het eerste voorbeeld.

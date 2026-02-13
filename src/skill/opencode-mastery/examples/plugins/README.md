@@ -15,17 +15,17 @@ Tier 1 (Minimal) → Tier 2 (Intermediate) → Tier 3 (Advanced)
 
 ## 🎯 Tiers Overview
 
-| Tier  | Example                | Complexity        | Files        | Use Case              | Learning Curve |
-| ----- | ---------------------- | ----------------- | ------------ | --------------------- | -------------- |
-| **1** | `minimal-plugin/`      | ⭐ Minimal        | 1 (index.ts) | Event Logging         | 5 minutes      |
-| **2** | `intermediate-plugin/` | ⭐⭐ Intermediate | 1 (index.ts) | Custom Tools + Agents | 15 minutes     |
-| **3** | `advanced-plugin/`     | ⭐⭐⭐ Advanced   | 1 + dirs     | Full Capabilities     | 30+ minutes    |
+| Tier  | Example         | Complexity        | Files        | Use Case              | Learning Curve |
+| ----- | --------------- | ----------------- | ------------ | --------------------- | -------------- |
+| **1** | `minimal/`      | ⭐ Minimal        | 1 (index.ts) | Event Logging         | 5 minutes      |
+| **2** | `intermediate/` | ⭐⭐ Intermediate | 1 (index.ts) | Custom Tools + Agents | 15 minutes     |
+| **3** | `advanced/`     | ⭐⭐⭐ Advanced   | 1 + dirs     | Full Capabilities     | 30+ minutes    |
 
 ---
 
 ## Tier 1: Minimal Plugin ⭐
 
-**Location**: `minimal-plugin/`
+**Location**: `minimal/`
 
 **What it demonstrates**:
 
@@ -37,7 +37,7 @@ Tier 1 (Minimal) → Tier 2 (Intermediate) → Tier 3 (Advanced)
 **Files**:
 
 ```
-minimal-plugin/
+minimal/
 └── index.ts
 ```
 
@@ -71,7 +71,7 @@ minimal-plugin/
 
 ## Tier 2: Intermediate Plugin ⭐⭐
 
-**Location**: `intermediate-plugin/`
+**Location**: `intermediate/`
 
 **What it demonstrates**:
 
@@ -83,7 +83,7 @@ minimal-plugin/
 **Files**:
 
 ```
-intermediate-plugin/
+intermediate/
 └── index.ts
 ```
 
@@ -125,7 +125,7 @@ bun build src/index.ts --outdir dist --watch
 
 ## Tier 3: Advanced Plugin ⭐⭐⭐
 
-**Location**: `advanced-plugin/`
+**Location**: `advanced/`
 
 **What it demonstrates**:
 
@@ -139,7 +139,7 @@ bun build src/index.ts --outdir dist --watch
 **Files**:
 
 ```
-advanced-plugin/
+advanced/
 ├── agents/        # Helper modules (optional)
 ├── commands/      # Custom commands (optional)
 ├── hooks/         # Event handlers (optional)
@@ -243,7 +243,7 @@ For project-specific patterns, see:
 Start with **Tier 1** to understand basics:
 
 ```bash
-cd minimal-plugin
+cd minimal
 cat index.ts
 ```
 
@@ -252,7 +252,7 @@ cat index.ts
 Move to **Tier 2** to learn tools and agents:
 
 ```bash
-cd intermediate-plugin
+cd intermediate
 cat index.ts
 ```
 
@@ -261,7 +261,7 @@ cat index.ts
 Explore **Tier 3** for full capabilities:
 
 ```bash
-cd advanced-plugin
+cd advanced
 cat index.ts
 ```
 
