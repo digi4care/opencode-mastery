@@ -20,8 +20,8 @@ Create a new skill skeleton (SKILL.md + references) with dry-run by default.
 **FIRST**: If `$ARGUMENTS` contains `--help` or `-h`, show only the Usage section and stop.
 
 1. Interpret `$ARGUMENTS` as the request text.
-2. If triggers, workflow, or error handling are missing, call `skill-creator-plan` first and ask for the missing fields.
-3. Call `skill-creator-create` with:
+2. If triggers, workflow, or error handling are missing, call the plugin tool `skill-creator-plan` first and ask for the missing fields.
+3. Call the plugin tool `skill-creator-create` (not the slash command) with:
    - `request`
    - `triggers`, `workflow`, `errorHandling`, `tests`, `references`
    - `dryRun: true` unless the user passes `--confirm`

@@ -25,6 +25,34 @@ De Skill Creator plugin helpt je om skills te plannen, te auditen, te maken en t
 
 Dry‑run is standaard; gebruik `--confirm` om echt te schrijven.
 
+## Architecture Map
+
+De slash commands zijn wrappers. De echte uitvoering gebeurt in de plugin tools.
+
+```
+/skill-creator-plan
+  -> wrapper: .opencode/commands/skill-creator-plan.md
+  -> plugin tool: skill-creator-plan
+  -> output: plan JSON (geen writes)
+
+/skill-creator-audit
+  -> wrapper: .opencode/commands/skill-creator-audit.md
+  -> plugin tool: skill-creator-audit
+  -> output: audit JSON (sections + warnings)
+
+/skill-creator-create
+  -> wrapper: .opencode/commands/skill-creator-create.md
+  -> plugin tool: skill-creator-create
+  -> output: planned writes (dry-run) of echte writes met --confirm
+
+/skill-creator-optimize
+  -> wrapper: .opencode/commands/skill-creator-optimize.md
+  -> plugin tool: skill-creator-optimize
+  -> output: quality before/after + planned writes (of apply met --confirm)
+```
+
+Broncode plugin tools: `.opencode/plugin/skill-creator.ts`
+
 ## Tools (API)
 
 Tool-namen:

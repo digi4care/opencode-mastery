@@ -20,7 +20,7 @@ Draft a structured skill plan from a request. No files are written.
 
 1. Interpret `$ARGUMENTS` as the request text. If missing, ask the user for a one-line request.
 2. Extract any obvious triggers, workflow steps, or error handling from the request.
-3. Call the tool `skill-creator-plan` with the request and any extracted fields.
+3. Call the plugin tool `skill-creator-plan` (not the slash command) with the request and any extracted fields.
 4. Present the plan output and list any missing fields that need user input.
 
 ## Output
