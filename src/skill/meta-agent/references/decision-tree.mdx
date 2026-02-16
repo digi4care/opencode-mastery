@@ -1,0 +1,54 @@
+# Decision Tree and Terminology
+
+This reference helps decide which OpenCode component to build and clarifies common terminology.
+
+## Terminology
+
+- Command: a slash command definition (explicit invocation).
+- Skill: a SKILL.md instruction set that triggers automatically.
+- Agent: a scoped assistant with specific tools and instructions.
+- Plugin: a TypeScript/JavaScript module that adds tools, hooks, agents, and config.
+- Tool: a Zod-validated function exposed by a plugin.
+- MCP server: an external service that provides tools or context.
+
+## Component Differences (Summary)
+
+| Component | When to Choose                                | Invocation          | Best For                           |
+| --------- | --------------------------------------------- | ------------------- | ---------------------------------- |
+| Command   | User explicitly wants a one-off workflow      | Manual (`/command`) | Task recipes, guided prompts       |
+| Skill     | Needs automatic guidance based on triggers    | Auto-trigger        | Reusable instructions, checklists  |
+| Agent     | Dedicated assistant with tool scope           | Manual or config    | Long-running workflows, delegation |
+| Plugin    | Needs hooks, custom tools, or SDK access      | Auto-load           | Advanced automation, integrations  |
+| MCP       | External system must be queried or controlled | Tool call           | Cross-system workflows             |
+
+## Decision Tree (Text)
+
+```
+Start
+  |
+  |-- Does the user want an explicit command they run on demand?
+  |      -> Yes: create a command
+  |      -> No:
+  |
+  |-- Does this need to auto-trigger based on user input?
+  |      -> Yes: create a skill
+  |      -> No:
+  |
+  |-- Do we need custom tools, event hooks, or SDK access?
+  |      -> Yes: create a plugin (tools + hooks)
+  |      -> No:
+  |
+  |-- Does the user want a dedicated assistant with scoped tools?
+  |      -> Yes: create an agent
+  |      -> No: clarify requirements
+```
+
+## MCP vs Plugin
+
+Choose MCP when you must call an external service. Choose a plugin when you need to add tools, hooks, or agents inside OpenCode. Use both when a plugin tool needs to call an MCP server.
+
+## Notes
+
+- If the user says "tool", ask whether they mean a command, a skill, or a plugin tool.
+- Skills are best when the instruction is stable and should auto-trigger.
+- Commands are best when the user wants explicit control.

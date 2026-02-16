@@ -60,13 +60,14 @@ Or manually:
 
 ## Documentation
 
-| Topic         | Location                                                       |
-| ------------- | -------------------------------------------------------------- |
-| Conventions   | [docs/project/conventions.md](docs/project/conventions.md)     |
-| Anti-patterns | [docs/project/anti-patterns.md](docs/project/anti-patterns.md) |
-| Plugins       | [docs/opencode/plugins.md](docs/opencode/plugins.md)           |
-| Tools         | [docs/opencode/tools.md](docs/opencode/tools.md)               |
-| ACE Framework | [docs/ace/framework.md](docs/ace/framework.md)                 |
+| Topic         | Location                                                         |
+| ------------- | ---------------------------------------------------------------- |
+| Conventions   | [docs/project/conventions.md](docs/project/conventions.md)       |
+| Anti-patterns | [docs/project/anti-patterns.md](docs/project/anti-patterns.md)   |
+| Plugins       | [docs/opencode/plugins.md](docs/opencode/plugins.md)             |
+| Skill Creator | [docs/opencode/skill-creator.md](docs/opencode/skill-creator.md) |
+| Tools         | [docs/opencode/tools.md](docs/opencode/tools.md)                 |
+| ACE Framework | [docs/ace/framework.md](docs/ace/framework.md)                   |
 
 ## Links
 

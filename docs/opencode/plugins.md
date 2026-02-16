@@ -66,6 +66,23 @@ bun add @scope/opencode-plugin-name
 }
 ```
 
+## Skill Creator Plugin
+
+De Skill Creator plugin helpt je skills te plannen, te auditen, te maken en te optimaliseren volgens de best practices (triggering, compacte SKILL.md, references, error handling).
+
+Zie `docs/opencode/skill-creator.md` voor details.
+
+### Commands
+
+```
+/skill-creator-plan <request>
+/skill-creator-audit <path-to-SKILL.md>
+/skill-creator-create <request>
+/skill-creator-optimize <skill-dir>
+```
+
+Dry-run is standaard; gebruik `--confirm` om te schrijven.
+
 ## Plugin Architectuur
 
 ### Basis Structuur

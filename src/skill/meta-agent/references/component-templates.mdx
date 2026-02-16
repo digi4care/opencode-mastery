@@ -1,0 +1,101 @@
+# Component Templates
+
+Use these templates as a starting point. Keep them small and adapt to the user request.
+
+## Command Template (.opencode/commands/{command}.md)
+
+```
+# /{command}
+
+Purpose: <one sentence>
+
+## Inputs
+- <input 1>
+- <input 2>
+
+## Steps
+1. <step>
+2. <step>
+
+## Output
+- <expected output or files>
+
+## Error Handling
+- If <error>, respond with <message> and stop.
+```
+
+## Skill Template (SKILL.md)
+
+```
+---
+name: <skill-name>
+description: <WHAT + WHEN + trigger phrases + negative triggers>
+license: MIT
+compatibility: opencode
+metadata:
+  author: <author>
+  version: <version>
+---
+
+# <Skill Title>
+
+## When to Use Me
+- Use when <trigger>
+- Do not use when <negative trigger>
+
+## Workflow
+1. <step>
+2. <step>
+
+## Error Handling
+- <error case> -> <response>
+
+## Quick Tests
+- Should trigger: <prompt>
+- Should not trigger: <prompt>
+```
+
+## Agent Template (plugin config)
+
+```
+agent({
+  name: "<agent-name>",
+  description: "<purpose>",
+  model: "<model>",
+  tools: ["<tool1>", "<tool2>"],
+  instructions: "<short instruction>"
+})
+```
+
+## Plugin Template (TypeScript)
+
+```
+import { tool, z } from "@opencode/plugins";
+
+export default async (context) => {
+  const myTool = tool(
+    {
+      name: "<tool_name>",
+      description: "<what the tool does>",
+      schema: z.object({ <fields> })
+    },
+    async (input) => {
+      try {
+        // work
+        return { success: true, data: {} };
+      } catch (error) {
+        return { success: false, error: String(error) };
+      }
+    }
+  );
+
+  return {
+    tools: [myTool]
+  };
+};
+```
+
+Notes:
+
+- Keep descriptions precise, not marketing.
+- Avoid large metadata blocks unless required.

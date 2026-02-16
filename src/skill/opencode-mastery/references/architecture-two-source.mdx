@@ -1,0 +1,58 @@
+# Two-Source Documentation Architecture
+
+OpenCode Mastery answers questions by combining official docs with custom references.
+
+## Sources
+
+- Official docs: `~/.ai_docs/opencode/docs/`
+- Custom references: `src/skill/opencode-mastery/references/`
+
+## How Search Works
+
+1. Extract keywords from the user question.
+2. Search official docs via `memory/index.json`.
+3. Search custom references via `references/registry.json`.
+4. Lazy-load only the relevant sections.
+5. Combine and cite the sources in the response.
+
+## Registry Structure
+
+Each reference entry includes:
+
+- `id`
+- `title`
+- `filename`
+- `category`
+- `description`
+- `keywords`
+- `topics`
+- `language`
+- timestamps
+
+## Add a Custom Reference
+
+1. Create a new `.mdx` file in `references/`.
+2. Add an entry in `references/registry.json`.
+3. Rebuild the index:
+
+```
+bun run build-index -- --rebuild
+```
+
+4. Validate by running:
+
+```
+bun run load-docs -- --query "<keyword>"
+```
+
+## Benefits
+
+- Comprehensive coverage (official + deep-dive)
+- Lazy loading keeps prompts short
+- Fuzzy keyword matching
+- Separation of concerns (official docs stay clean)
+- Scales with new references
+
+## Example
+
+Local plugins: official docs cover the API; `local-plugins.mdx` covers practical patterns and troubleshooting.

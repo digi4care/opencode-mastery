@@ -1,0 +1,23 @@
+# Paths and Installation
+
+Use these paths when placing generated files. Always confirm the target location if the project layout is unknown.
+
+## Project Paths (Common)
+
+- Commands: `.opencode/commands/<command>.md`
+- Skills (runtime): `.opencode/skill/<skill-name>/SKILL.md`
+- Plugins: `.opencode/plugin/` (preferred) or `.opencode/plugins/`
+
+## Repository Paths (This Repo)
+
+- Skill sources: `src/skill/<skill-name>/SKILL.md`
+- Examples: `src/skill/<skill-name>/examples/`
+- References: `src/skill/<skill-name>/references/`
+
+## Rules
+
+- Always use `skill/` (singular), never `skills/`.
+- Verify plugin directory before writing.
+- Prefer `bun run` for JS/TS scripts and `uv` for Python.
+
+If you are unsure, consult opencode-mastery or ask the user to confirm the target directory.

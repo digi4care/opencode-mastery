@@ -1,0 +1,31 @@
+# Plugins Deep Dive
+
+Plugins extend OpenCode with custom tools, hooks, agents, and SDK access.
+
+## Skills vs Plugins
+
+| Aspect   | Skills              | Plugins               |
+| -------- | ------------------- | --------------------- |
+| Format   | Markdown (SKILL.md) | TypeScript/JavaScript |
+| Trigger  | Auto-trigger        | Auto-load             |
+| Tools    | Scripts via bash    | Zod-validated tools   |
+| Hooks    | None                | 25+ event hooks       |
+| Best For | Instructions        | Advanced integrations |
+
+## When to Use Plugins
+
+- You need custom tools or event hooks.
+- You need SDK access (session, TUI, shell).
+- You want custom agents in config.
+
+## Quick Links
+
+- `src/skill/opencode-mastery/examples/plugins/README.md`
+- `src/skill/opencode-mastery/examples/plugins/minimal/`
+- `src/skill/opencode-mastery/examples/plugins/intermediate/`
+- `src/skill/opencode-mastery/examples/plugins/advanced/`
+
+## Related References
+
+- `src/skill/opencode-mastery/references/local-plugins.mdx`
+- `docs/opencode/plugins.md`

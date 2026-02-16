@@ -1,0 +1,68 @@
+{
+  "version": "1.0.0",
+  "created": "2026-02-16T00:00:00Z",
+  "last_updated": "2026-02-16T00:00:00Z",
+  "registry_type": "reference_documents",
+  "entries": [
+    {
+      "id": "decision-tree",
+      "title": "Decision Tree and Terminology",
+      "filename": "decision-tree.mdx",
+      "category": "core",
+      "description": "Terminology and decision tree for selecting the right OpenCode component.",
+      "keywords": ["decision", "tree", "command", "skill", "agent", "plugin", "tool", "mcp"],
+      "topics": ["component-selection", "terminology"],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "component-templates",
+      "title": "Component Templates",
+      "filename": "component-templates.mdx",
+      "category": "templates",
+      "description": "Templates for commands, skills, agents, and plugins.",
+      "keywords": ["template", "command", "skill", "agent", "plugin"],
+      "topics": ["templates", "scaffolding"],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "paths-and-installation",
+      "title": "Paths and Installation",
+      "filename": "paths-and-installation.mdx",
+      "category": "paths",
+      "description": "Where to place commands, skills, and plugins in projects and this repo.",
+      "keywords": ["paths", "install", "commands", "skills", "plugins"],
+      "topics": ["layout", "conventions"],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "tool-recommendations",
+      "title": "Tool Recommendations",
+      "filename": "tool-recommendations.mdx",
+      "category": "guidance",
+      "description": "Matrix for choosing commands vs skills vs agents vs plugins.",
+      "keywords": ["recommendations", "command", "skill", "agent", "plugin"],
+      "topics": ["component-selection"],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "examples",
+      "title": "Examples",
+      "filename": "examples.mdx",
+      "category": "examples",
+      "description": "Short examples for common component creation requests.",
+      "keywords": ["examples", "command", "skill", "plugin"],
+      "topics": ["examples"],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    }
+  ]
+}

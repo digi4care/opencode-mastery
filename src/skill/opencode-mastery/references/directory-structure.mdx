@@ -1,0 +1,52 @@
+# Directory Structure
+
+Use this layout when setting up or debugging the docs cache and skill installation.
+
+## Global Installation
+
+```
+~/.ai_docs/opencode/
+├── docs/               # Downloaded documentation
+├── memory/             # Index, topics, sessions
+├── cache/
+│   └── github/          # GitHub search cache
+└── scripts/            # Python utilities
+    ├── download-docs.py
+    ├── index-builder.py
+    └── memory-manager.py
+```
+
+## Project Installation
+
+```
+<project>/
+├── .ai_docs/opencode/
+│   ├── docs/
+│   ├── memory/
+│   ├── cache/
+│   │   └── github/
+│   └── scripts/
+└── .opencode/skill/opencode-mastery/
+    ├── SKILL.md
+    └── references/
+```
+
+## Getting Started (Project)
+
+1. Install dependencies:
+
+```
+uv sync
+```
+
+2. Download docs:
+
+```
+bun run download-docs
+```
+
+3. Build index:
+
+```
+bun run build-index -- --rebuild
+```

@@ -1,0 +1,36 @@
+# Memory and Confidence Policy
+
+## Topics I Track
+
+- skills
+- agents
+- commands
+- plugins
+- config
+- mcp
+- lsp
+- troubleshooting
+- providers
+- custom-refs
+- ace
+
+## Memory Policy
+
+- Session memory tracks questions, answers, and topics per session.
+- Topic memory aggregates cross-session references per topic.
+- Master index tracks all topics discussed.
+- Sessions older than 30 days are archived.
+
+## Confidence Scoring
+
+- High (>= 80%): from cached docs, verified sources
+- Medium (60-79%): from GitHub research, verified code
+- Low (< 60%): needs confirmation
+
+When confidence is low, say so and ask for confirmation.
+
+## Never Guessing
+
+- If information is missing, say so.
+- Offer to search GitHub or request more input.
+- Always cite sources when available.

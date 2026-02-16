@@ -1,0 +1,33 @@
+# Examples
+
+These examples show how to apply the decision tree and templates.
+
+## Example: Command
+
+Request: "Create a command that formats Python files."
+
+Decision: Command (explicit invocation)
+
+Output: `.opencode/commands/format-python.md` with steps to run formatters and summarize changes.
+
+## Example: Skill
+
+Request: "Generate a skill for Kubernetes troubleshooting."
+
+Decision: Skill (auto-trigger, reusable guidance)
+
+Output: `src/skill/k8s-troubleshooting/SKILL.md` plus references for error catalog and commands.
+
+## Example: Plugin
+
+Request: "Create a plugin tool for validating CSV files."
+
+Decision: Plugin (custom tool)
+
+Output: `.opencode/plugin/csv-validator.ts` with a Zod schema and tool handler.
+
+## Example: Decision Help
+
+Request: "Should I build a command or a skill for this workflow?"
+
+Decision: Ask clarifying questions, then choose based on invocation and triggering needs.

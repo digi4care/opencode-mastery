@@ -1,7 +1,7 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "created": "2026-02-10T00:00:00Z",
-  "last_updated": "2026-02-13T00:00:00Z",
+  "last_updated": "2026-02-16T00:00:00Z",
   "registry_type": "reference_documents",
   "entries": [
     {
@@ -157,6 +157,134 @@
       "language": "nl",
       "created": "2026-02-10T00:00:00Z",
       "last_updated": "2026-02-10T00:00:00Z"
+    },
+    {
+      "id": "architecture-two-source",
+      "title": "Two-Source Documentation Architecture",
+      "filename": "architecture-two-source.mdx",
+      "category": "architecture",
+      "description": "How official docs and custom references are searched and combined.",
+      "keywords": [
+        "two-source",
+        "official-docs",
+        "custom-references",
+        "registry",
+        "lazy-loading",
+        "memory-index",
+        "load-docs"
+      ],
+      "topics": [
+        "architecture",
+        "references"
+      ],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "directory-structure",
+      "title": "Directory Structure",
+      "filename": "directory-structure.mdx",
+      "category": "setup",
+      "description": "Global and project directory layouts and setup steps.",
+      "keywords": [
+        "directory-structure",
+        "installation",
+        "docs",
+        "memory",
+        "scripts",
+        "ai_docs",
+        ".opencode"
+      ],
+      "topics": [
+        "setup",
+        "layout"
+      ],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "workflow-examples",
+      "title": "Workflow Examples",
+      "filename": "workflow-examples.mdx",
+      "category": "examples",
+      "description": "Example workflows for skill creation and GitHub research.",
+      "keywords": [
+        "workflow",
+        "examples",
+        "skill-creation",
+        "github-research"
+      ],
+      "topics": [
+        "examples"
+      ],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "memory-policy",
+      "title": "Memory and Confidence Policy",
+      "filename": "memory-policy.mdx",
+      "category": "memory",
+      "description": "Session memory, topic memory, confidence levels, and never-guessing rules.",
+      "keywords": [
+        "memory",
+        "topics",
+        "confidence",
+        "session",
+        "topic-memory",
+        "master-index",
+        "never-guess"
+      ],
+      "topics": [
+        "memory",
+        "confidence"
+      ],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "plugins-deep-dive",
+      "title": "Plugins Deep Dive",
+      "filename": "plugins-deep-dive.mdx",
+      "category": "plugins",
+      "description": "Overview of plugins, when to use them, and example links.",
+      "keywords": [
+        "plugins",
+        "skills-vs-plugins",
+        "hooks",
+        "tools",
+        "sdk",
+        "examples"
+      ],
+      "topics": [
+        "plugins"
+      ],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
+    },
+    {
+      "id": "tools-deep-dive",
+      "title": "Tools Deep Dive",
+      "filename": "tools-deep-dive.mdx",
+      "category": "tools",
+      "description": "Overview of tool examples and documentation links.",
+      "keywords": [
+        "tools",
+        "zod",
+        "tooling",
+        "examples"
+      ],
+      "topics": [
+        "tools"
+      ],
+      "language": "en",
+      "created": "2026-02-16T00:00:00Z",
+      "last_updated": "2026-02-16T00:00:00Z"
     }
   ]
 }
