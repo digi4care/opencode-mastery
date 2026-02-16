@@ -1,22 +1,24 @@
 #!/bin/bash
 set -e
 
-echo "🗑️  OpenCode Mastery + Meta-Agent Skills Uninstaller"
+echo "🗑️  OpenCode Mastery Skills Uninstaller"
 echo ""
-echo "This will remove opencode-mastery and meta-agent skill files."
+echo "This will remove opencode-mastery, meta-agent, and skill-creator skill files."
 echo "Your downloaded documentation, memory, and cache will NOT be removed."
 echo ""
 
 GLOBAL_MASTERY="$HOME/.config/opencode/skill/opencode-mastery"
 GLOBAL_META="$HOME/.config/opencode/skill/meta-agent"
+GLOBAL_SKILL_CREATOR="$HOME/.config/opencode/skill/skill-creator"
 GLOBAL_SCRIPTS="$HOME/.ai_docs/opencode/scripts"
 
-if [ ! -d "$GLOBAL_MASTERY" ] && [ ! -d "$GLOBAL_META" ]; then
+if [ ! -d "$GLOBAL_MASTERY" ] && [ ! -d "$GLOBAL_META" ] && [ ! -d "$GLOBAL_SKILL_CREATOR" ]; then
     echo "❌ No OpenCode installation found."
     echo ""
     echo "Checked:"
     echo "  - $GLOBAL_MASTERY"
     echo "  - $GLOBAL_META"
+    echo "  - $GLOBAL_SKILL_CREATOR"
     exit 1
 fi
 
@@ -25,6 +27,7 @@ echo ""
 echo "This will remove:"
 echo "  - $GLOBAL_MASTERY/ (skill directory)"
 echo "  - $GLOBAL_META/ (skill directory)"
+echo "  - $GLOBAL_SKILL_CREATOR/ (skill directory)"
 echo "  - $GLOBAL_SCRIPTS/*.py (scripts)"
 echo ""
 echo "These will NOT be removed (your data):"
@@ -57,6 +60,11 @@ fi
 if [ -d "$GLOBAL_META" ]; then
     rm -rf "$GLOBAL_META"
     echo "Removed: $GLOBAL_META/"
+fi
+
+if [ -d "$GLOBAL_SKILL_CREATOR" ]; then
+    rm -rf "$GLOBAL_SKILL_CREATOR"
+    echo "Removed: $GLOBAL_SKILL_CREATOR/"
 fi
 
 if [ -d "$GLOBAL_SCRIPTS" ]; then

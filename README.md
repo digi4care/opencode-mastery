@@ -24,6 +24,7 @@ cd opencode-mastery
 | -------------------- | ------------------------------------------------------ |
 | **opencode-mastery** | Complete OpenCode knowledge with fuzzy search & memory |
 | **meta-agent**       | Generate commands, skills, and agents                  |
+| **skill-creator**    | Create, audit, and optimize OpenCode skills            |
 
 ## Features
 
