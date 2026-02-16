@@ -1,0 +1,21 @@
+# Troubleshooting
+
+## Tool Does Not Run
+
+- Check that the plugin file is available in runtime plugin directory.
+- Verify command wrapper name matches tool name.
+
+## Dry-Run Shows Changes But Nothing Written
+
+- Expected behavior. Set `confirm: true` and `dryRun: false` to write.
+
+## Quality Gate Blocks Apply
+
+- Review before/after metrics.
+- Add missing trigger phrases, error handling, or tests.
+- Re-run optimize in dry-run until score is non-negative delta.
+
+## References Missing in Registry
+
+- Ensure `references/registry.json` contains every referenced filename.
+- Re-run create/optimize with references list and confirm.

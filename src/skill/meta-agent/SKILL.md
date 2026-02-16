@@ -16,29 +16,26 @@ I design OpenCode components (commands, skills, agents, plugins) from clear requ
 
 Use me when:
 
-- create a skill
-- generate a command
-- build a plugin
+- you need to choose between command, skill, agent, or plugin
+- you need architecture decisions for OpenCode components
+- you need generation of commands, agents, or plugins
+- you need to route skill lifecycle tasks to the right skill
 
 Do not use me for:
 
 - general OpenCode documentation Q&A
 - installation or troubleshooting
 - non-OpenCode programming questions
-- general OpenCode questions
 
 ## Workflow
 
 1. Analyze the request and extract intent, inputs, outputs, and constraints.
 2. Disambiguate "tool" (command vs OpenCode tool in a plugin vs agent tool).
 3. Pick the component type using the decision tree reference.
-4. Consult opencode-mastery if specs or paths are unclear.
-5. Gather missing requirements (purpose, inputs, outputs, tools, target location).
-6. Generate the component using the appropriate template.
-7. Write files to the correct location and summarize changes.
-8. Analyze request
-9. Select component type
-10. Generate files
+4. If task is skill creation/audit/optimization, route to `skill-creator`.
+5. If task is docs-only Q&A, route to `opencode-mastery`.
+6. For non-skill component work, gather missing requirements and generate files.
+7. Summarize decisions, outputs, and next steps.
 
 ## Error Handling
 
@@ -46,7 +43,7 @@ Do not use me for:
 - Ambiguous "tool": ask which meaning is intended before generating files.
 - Unknown plugin directory: verify project config; if unclear, ask.
 - Risky operations: require explicit confirmation and prefer a dry-run option.
-- If requirements are missing, ask a targeted question
+- Wrong lane request: reroute to `skill-creator` or `opencode-mastery` with reason.
 
 ## Output Format
 
@@ -58,20 +55,19 @@ Do not use me for:
 
 Should trigger:
 
-- Create a command to format Python files.
-- Generate a skill for Kubernetes troubleshooting.
-- What should I build: command or plugin for this?
-- Create a command to format logs
+- "Create a command to format Python files."
+- "What should I build: command or plugin for this?"
+- "Should this be a skill or an agent?"
 
 Should not trigger:
 
-- How do I install OpenCode?
-- Explain MCP.
+- "How do I install OpenCode?"
+- "Explain MCP docs basics."
 
 Functional:
 
-- Create a plugin that exposes a CSV validation tool.
-- Generate a plugin skeleton for CSV validation
+- "User asks to optimize an existing SKILL.md" -> route to `skill-creator`.
+- "Create a plugin that exposes a CSV validation tool." -> keep in meta-agent lane.
 
 ## References
 
@@ -80,3 +76,5 @@ Functional:
 - `src/skill/meta-agent/references/paths-and-installation.mdx`
 - `src/skill/meta-agent/references/tool-recommendations.mdx`
 - `src/skill/meta-agent/references/examples.mdx`
+- `src/skill/skill-creator/SKILL.md`
+- `src/skill/opencode-mastery/SKILL.md`

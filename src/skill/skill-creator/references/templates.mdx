@@ -1,0 +1,45 @@
+# Templates
+
+Use these templates for consistent tool inputs.
+
+## Plan Input
+
+```json
+{
+  "request": "Create a skill for incident postmortems",
+  "triggers": ["incident postmortem", "summarize incident report"],
+  "workflow": ["Collect report", "Extract timeline", "Write summary"],
+  "errorHandling": ["If report is missing, ask for report path"],
+  "tests": {
+    "shouldTrigger": ["Summarize this incident report"],
+    "shouldNotTrigger": ["Explain React hooks"],
+    "functional": ["Draft a postmortem from this incident report"]
+  },
+  "references": ["workflow", "checklist"]
+}
+```
+
+## Create Input
+
+```json
+{
+  "request": "Create a skill for incident postmortems",
+  "baseDir": "src/skill",
+  "dryRun": true,
+  "confirm": false
+}
+```
+
+## Optimize Input
+
+```json
+{
+  "skillDir": "src/skill/incident-postmortem",
+  "description": "Improve incident postmortem skill quality and triggering.",
+  "workflow": ["Collect data", "Draft sections", "Validate output"],
+  "errorHandling": ["If data is incomplete, ask for missing fields"],
+  "dryRun": true,
+  "confirm": false,
+  "enforceQualityGate": true
+}
+```

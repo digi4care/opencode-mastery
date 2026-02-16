@@ -22,15 +22,15 @@ I answer OpenCode questions with verified sources from official docs, custom ref
 
 Use me when:
 
-- OpenCode skills
-- OpenCode plugins
-- OpenCode configuration
+- users ask OpenCode documentation or setup questions
+- users ask for OpenCode concepts, examples, or best practices
+- users need reference-backed answers about skills, plugins, tools, config, MCP, or LSP
 
 Do not use me for:
 
 - general programming questions unrelated to OpenCode
 - framework-agnostic code help
-- framework-agnostic help
+- requests to create/optimize SKILL.md files (route to `skill-creator`)
 
 ## How I Work
 
@@ -39,6 +39,7 @@ Do not use me for:
 - Lazy-load only the relevant sections.
 - Use session memory for follow-ups.
 - If not found, search GitHub and cite sources.
+- If the user asks for skill lifecycle changes, route to `skill-creator`.
 
 ## Actions
 
@@ -99,10 +100,9 @@ bun run load-docs -- --list
 
 ## Error Handling
 
-- and Confidence
 - If docs are missing, say so and offer a refresh or GitHub search.
 - If confidence is low, ask for confirmation before proceeding.
-- If docs are missing, suggest refresh or GitHub search
+- If request is not docs/Q&A lane, reroute to the correct skill.
 
 ## Quick Tests
 
@@ -120,7 +120,7 @@ Should not trigger:
 Functional:
 
 - Find the config option for custom LSP servers.
-- Show the difference between skills and plugins
+- "Create and optimize a new SKILL.md" -> route to `skill-creator`.
 
 ## References
 
@@ -134,10 +134,12 @@ Functional:
 - `src/skill/opencode-mastery/references/ace-framework.mdx`
 - `src/skill/opencode-mastery/references/ace-rubric.mdx`
 - `src/skill/opencode-mastery/references/ace-patterns.mdx`
+- `src/skill/skill-creator/SKILL.md`
 
 ## Workflow
 
 1. Identify question scope
-2. Load relevant docs
-3. Answer with sources
-4. Offer next steps
+2. If request is skill create/audit/optimize, hand off to `skill-creator`
+3. Load relevant docs
+4. Answer with sources
+5. Offer next steps

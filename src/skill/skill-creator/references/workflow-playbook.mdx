@@ -1,0 +1,41 @@
+# Workflow Playbook
+
+This playbook defines the execution order for skill creation and optimization.
+
+## Modes
+
+- `plan`: produce a structured plan from a request without writing files.
+- `audit`: evaluate a skill against required sections and quality signals.
+- `create`: generate a new skill skeleton with references and registry.
+- `optimize`: improve an existing skill with merge-first updates and quality gate.
+
+## Standard Flow
+
+1. Intake request and determine mode.
+2. Validate required input fields.
+3. Run dry-run preview.
+4. Show planned writes and quality impact.
+5. Apply only after explicit confirmation.
+6. Re-audit and summarize outcomes.
+
+## Create Flow
+
+1. Build name, description, triggers, workflow, error handling, tests.
+2. Generate `SKILL.md`.
+3. Generate references and `references/registry.json`.
+4. Return planned file list.
+
+## Optimize Flow
+
+1. Read existing `SKILL.md`.
+2. Merge updates into sections without destructive replacement by default.
+3. Compute quality metrics before and after.
+4. Block apply if quality score drops (unless explicitly allowed).
+5. Return deltas and planned writes.
+
+## Quality Safeguards
+
+- Dry-run by default.
+- Quality-gate enabled by default.
+- Path safety enforced.
+- Reference registry kept consistent.

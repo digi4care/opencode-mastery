@@ -1,0 +1,28 @@
+# Quality Rubric
+
+Use this rubric to validate skill quality before applying changes.
+
+## Scoring Dimensions
+
+- Trigger quality: clear WHAT + WHEN + trigger phrases + negative triggers.
+- Structure quality: required sections present and concise.
+- Workflow specificity: explicit ordered steps.
+- Error handling: concrete failure cases and responses.
+- Test readiness: should-trigger, should-not-trigger, functional prompts.
+- Progressive disclosure: deep content moved to `references/`.
+
+## Pass Criteria
+
+- Required sections are present:
+  - `When to Use Me`
+  - `Workflow`
+  - `Error Handling`
+  - `Quick Tests`
+  - `References`
+- Quality score does not regress.
+- Word count stays within target constraints.
+
+## Gate Policy
+
+- If score improves or stays equal: apply can proceed.
+- If score drops: block apply and return before/after diagnostics.

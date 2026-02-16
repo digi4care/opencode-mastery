@@ -32,6 +32,11 @@ Start
   |
   |-- Does this need to auto-trigger based on user input?
   |      -> Yes: create a skill
+  |          |
+  |          |-- Is this request about skill lifecycle work
+  |          |   (create/audit/optimize/refactor SKILL.md)?
+  |          |      -> Yes: route to skill-creator
+  |          |      -> No: continue with meta-agent skill selection support
   |      -> No:
   |
   |-- Do we need custom tools, event hooks, or SDK access?
@@ -52,3 +57,4 @@ Choose MCP when you must call an external service. Choose a plugin when you need
 - If the user says "tool", ask whether they mean a command, a skill, or a plugin tool.
 - Skills are best when the instruction is stable and should auto-trigger.
 - Commands are best when the user wants explicit control.
+- If the request explicitly asks to create or optimize a SKILL.md, hand off to `src/skill/skill-creator/SKILL.md`.
