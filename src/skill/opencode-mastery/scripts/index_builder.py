@@ -181,8 +181,8 @@ def build_index(
     custom_refs_data = None
     registry = None
 
-    # Process official OpenCode docs
-    for doc in docs_path.glob("*.mdx"):
+    # Process official OpenCode docs (sorted for consistent order)
+    for doc in sorted(docs_path.glob("*.mdx")):
         if not doc.is_file():
             continue
 
@@ -190,6 +190,10 @@ def build_index(
 
         content = doc.read_text()
         keywords = extract_keywords(content)
+
+        # Add doc filename (without extension) as keyword for better discovery
+        # e.g., "acp.mdx" -> keyword "acp" points to acp.mdx
+        keywords.append(doc.stem)
 
         doc_sections = extract_sections(content, doc.name)
         sections.extend(doc_sections)
