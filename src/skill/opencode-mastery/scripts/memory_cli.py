@@ -230,28 +230,20 @@ def _extract_session_context(project_root: Path) -> str | None:
         if result.returncode == 0 and result.stdout.strip():
             commits = result.stdout.strip().split("\n")
             if commits:
-                context_parts.append(f"Recent work: {commits[0]}")
+                # Clean up commit message: remove conventional commit prefixes
+                msg = commits[0]
+                for prefix in ["fix: ", "feat: ", "refactor: ", "docs: ", "chore: "]:
+                    if msg.startswith(prefix):
+                        msg = msg[len(prefix) :]
+                        break
+                context_parts.append(msg)
     except (subprocess.SubprocessError, FileNotFoundError):
         pass
 
-    # 2. Try recent daily log
-    daily_dir = project_root / ".memory" / "daily"
-    if daily_dir.exists():
-        try:
-            daily_files = sorted(daily_dir.glob("*.md"), reverse=True)
-            if daily_files:
-                content = daily_files[0].read_text()[:500]
-                if content.strip():
-                    # Extract key terms from log
-                    lines = [
-                        l.strip("- []\n") for l in content.split("\n") if l.strip()
-                    ]
-                    if lines:
-                        context_parts.append(f"Session: {lines[0][:80]}")
-        except Exception:
-            pass
+    # 2. Skip daily logs - too noisy (contains compaction markers, etc.)
 
-    return " | ".join(context_parts) if context_parts else None
+    # Return clean context without "Session:" prefix
+    return context_parts[0] if context_parts else None
 
 
 def _scan_for_duplicates(
@@ -345,8 +337,9 @@ def cmd_remember(args):
         session_context = _extract_session_context(project_root)
 
         if session_context:
-            # Found context - suggest enriched text
-            enriched_text = f"{text} ({session_context})"
+            # Build clean enriched text: use git commit as the actual content
+            # Format: "test workflow: [actual context from commit]"
+            enriched_text = f"{text}: {session_context}"
             print(f"\n💡 Context extracted from session:")
             print(f'   Input:   "{text}"')
             print(f'   Enriched: "{enriched_text}"')
