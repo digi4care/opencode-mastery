@@ -12,9 +12,27 @@ GLOBAL_META="$HOME/.config/opencode/skill/meta-agent"
 GLOBAL_SKILL_CREATOR="$HOME/.config/opencode/skill/skill-creator"
 GLOBAL_MEMORY="$HOME/.config/opencode/skill/opencode-memory"
 GLOBAL_PLUGIN="$HOME/.config/opencode/plugin"
+GLOBAL_COMMANDS="$HOME/.config/opencode/commands"
 GLOBAL_SCRIPTS="$HOME/.ai_docs/opencode/scripts"
 
-if [ ! -d "$GLOBAL_MASTERY" ] && [ ! -d "$GLOBAL_META" ] && [ ! -d "$GLOBAL_SKILL_CREATOR" ] && [ ! -d "$GLOBAL_MEMORY" ] && [ ! -d "$GLOBAL_PLUGIN" ]; then
+# Files we installed (to remove individually)
+PLUGIN_FILES=("skill-creator.ts" "notify.ts")
+COMMAND_FILES=("memory.md" "ace-reflect.md" "skill-creator-plan.md" "skill-creator-create.md" "skill-creator-optimize.md" "skill-creator-audit.md")
+
+# Check if any of our files exist
+FOUND=false
+for skill in "$GLOBAL_MASTERY" "$GLOBAL_META" "$GLOBAL_SKILL_CREATOR" "$GLOBAL_MEMORY"; do
+    [ -d "$skill" ] && FOUND=true
+done
+for plugin in "${PLUGIN_FILES[@]}"; do
+    [ -f "$GLOBAL_PLUGIN/$plugin" ] && FOUND=true
+done
+for cmd in "${COMMAND_FILES[@]}"; do
+    [ -f "$GLOBAL_COMMANDS/$cmd" ] && FOUND=true
+done
+[ -d "$GLOBAL_SCRIPTS" ] && FOUND=true
+
+if [ "$FOUND" = false ]; then
     echo "❌ No OpenCode installation found."
     echo ""
     echo "Checked:"
@@ -22,7 +40,9 @@ if [ ! -d "$GLOBAL_MASTERY" ] && [ ! -d "$GLOBAL_META" ] && [ ! -d "$GLOBAL_SKIL
     echo "  - $GLOBAL_META"
     echo "  - $GLOBAL_SKILL_CREATOR"
     echo "  - $GLOBAL_MEMORY"
-    echo "  - $GLOBAL_PLUGIN"
+    echo "  - $GLOBAL_PLUGIN/{skill-creator.ts,notify.ts}"
+    echo "  - $GLOBAL_COMMANDS/{memory.md,ace-reflect.md,skill-creator-*.md}"
+    echo "  - $GLOBAL_SCRIPTS/*.py"
     exit 1
 fi
 
@@ -77,6 +97,28 @@ if [ -d "$GLOBAL_MEMORY" ]; then
     rm -rf "$GLOBAL_MEMORY"
     echo "Removed: $GLOBAL_MEMORY/"
 fi
+
+echo ""
+echo "Removing plugin files..."
+for plugin in "${PLUGIN_FILES[@]}"; do
+    if [ -f "$GLOBAL_PLUGIN/$plugin" ]; then
+        rm -f "$GLOBAL_PLUGIN/$plugin"
+        echo "Removed: $GLOBAL_PLUGIN/$plugin"
+    fi
+done
+# Remove plugin dir if empty
+rmdir "$GLOBAL_PLUGIN" 2>/dev/null && echo "Removed empty: $GLOBAL_PLUGIN/" || true
+
+echo ""
+echo "Removing command files..."
+for cmd in "${COMMAND_FILES[@]}"; do
+    if [ -f "$GLOBAL_COMMANDS/$cmd" ]; then
+        rm -f "$GLOBAL_COMMANDS/$cmd"
+        echo "Removed: $GLOBAL_COMMANDS/$cmd"
+    fi
+done
+# Remove commands dir if empty
+rmdir "$GLOBAL_COMMANDS" 2>/dev/null && echo "Removed empty: $GLOBAL_COMMANDS/" || true
 
 if [ -d "$GLOBAL_SCRIPTS" ]; then
     rm -f "$GLOBAL_SCRIPTS"/*.py
