@@ -20,6 +20,7 @@ echo "This package includes:"
 echo "  • opencode-mastery - Complete OpenCode knowledge base"
 echo "  • meta-agent       - Generate commands, skills, and agents"
 echo "  • skill-creator    - Create, audit, and optimize skills"
+echo "  • opencode-memory  - Memory plugin with tools and hooks"
 echo ""
 echo "Installing globally (available in all projects)..."
 echo ""
@@ -28,6 +29,7 @@ INSTALL_DIR="$HOME/.ai_docs/opencode"
 MASTERY_SKILL_DIR="$HOME/.config/opencode/skill/opencode-mastery"
 META_AGENT_SKILL_DIR="$HOME/.config/opencode/skill/meta-agent"
 SKILL_CREATOR_SKILL_DIR="$HOME/.config/opencode/skill/skill-creator"
+MEMORY_SKILL_DIR="$HOME/.config/opencode/skill/opencode-memory"
 COMMANDS_DIR="$HOME/.config/opencode/commands"
 
 SCRIPTS_DIR="$INSTALL_DIR/scripts"
@@ -36,11 +38,12 @@ META_AGENT_SKILL_FILE="$META_AGENT_SKILL_DIR/SKILL.md"
 
 echo ""
 echo "Installing to:"
-echo "  Docs/Scripts:   $INSTALL_DIR"
+echo "  Docs/Scripts:    $INSTALL_DIR"
 echo "  opencode-mastery: $MASTERY_SKILL_DIR"
 echo "  meta-agent:       $META_AGENT_SKILL_DIR"
-echo "  skill-creator:    $SKILL_CREATOR_SKILL_DIR"
-echo "  commands:         $COMMANDS_DIR"
+echo "  skill-creator:   $SKILL_CREATOR_SKILL_DIR"
+echo "  opencode-memory: $MEMORY_SKILL_DIR"
+echo "  commands:        $COMMANDS_DIR"
 echo ""
 
 # Skip confirmation if -y flag provided
@@ -63,6 +66,7 @@ mkdir -p "$INSTALL_DIR/cache/github"
 mkdir -p "$MASTERY_SKILL_DIR"
 mkdir -p "$META_AGENT_SKILL_DIR"
 mkdir -p "$SKILL_CREATOR_SKILL_DIR"
+mkdir -p "$MEMORY_SKILL_DIR"
 mkdir -p "$SCRIPTS_DIR"
 mkdir -p "$COMMANDS_DIR"
 
@@ -102,9 +106,19 @@ if ! cp -r "$TEMP_DIR/src/skill/skill-creator/"* "$SKILL_CREATOR_SKILL_DIR/"; th
 fi
 
 echo ""
+echo "📋 Copying opencode-memory skill..."
+if ! cp -r "$TEMP_DIR/src/skill/opencode-memory/"* "$MEMORY_SKILL_DIR/"; then
+    echo "❌ Failed to copy opencode-memory skill directory"
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+
+echo ""
 echo "🗑️  Removing scripts from skill directories (kept globally)..."
 rm -rf "$MASTERY_SKILL_DIR/scripts" 2>/dev/null || true
 rm -rf "$META_AGENT_SKILL_DIR/scripts" 2>/dev/null || true
+rm -rf "$SKILL_CREATOR_SKILL_DIR/scripts" 2>/dev/null || true
+rm -rf "$MEMORY_SKILL_DIR/scripts" 2>/dev/null || true
 
 echo ""
 echo "📋 Copying commands..."
@@ -121,6 +135,7 @@ echo "✓ Scripts copied to:         $SCRIPTS_DIR"
 echo "✓ opencode-mastery copied to: $MASTERY_SKILL_DIR"
 echo "✓ meta-agent copied to:       $META_AGENT_SKILL_DIR"
 echo "✓ skill-creator copied to:    $SKILL_CREATOR_SKILL_DIR"
+echo "✓ opencode-memory copied to:   $MEMORY_SKILL_DIR"
 
 echo ""
 echo "📜 Making scripts executable..."
@@ -148,14 +163,15 @@ echo ""
 echo "  4. Run: /skill skill-creator"
 echo "     → Create, audit, and optimize skills!"
 echo ""
-echo "  5. Run: /ace-reflect"
-echo "     → Analyze sessions and improve prompts!"
+echo "  5. Run: /skill opencode-memory"
+echo "     → Memory plugin with tools and hooks!"
 echo ""
 echo "📍 Files installed at:"
 echo "  - Scripts:          $SCRIPTS_DIR"
 echo "  - opencode-mastery: $MASTERY_SKILL_DIR"
 echo "  - meta-agent:       $META_AGENT_SKILL_DIR"
 echo "  - skill-creator:    $SKILL_CREATOR_SKILL_DIR"
+echo "  - opencode-memory:  $MEMORY_SKILL_DIR"
 echo "  - Commands:         $COMMANDS_DIR"
 echo "  - Docs:             $INSTALL_DIR/docs"
 echo "  - Memory:           $INSTALL_DIR/memory"

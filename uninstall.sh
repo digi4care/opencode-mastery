@@ -10,15 +10,17 @@ echo ""
 GLOBAL_MASTERY="$HOME/.config/opencode/skill/opencode-mastery"
 GLOBAL_META="$HOME/.config/opencode/skill/meta-agent"
 GLOBAL_SKILL_CREATOR="$HOME/.config/opencode/skill/skill-creator"
+GLOBAL_MEMORY="$HOME/.config/opencode/skill/opencode-memory"
 GLOBAL_SCRIPTS="$HOME/.ai_docs/opencode/scripts"
 
-if [ ! -d "$GLOBAL_MASTERY" ] && [ ! -d "$GLOBAL_META" ] && [ ! -d "$GLOBAL_SKILL_CREATOR" ]; then
+if [ ! -d "$GLOBAL_MASTERY" ] && [ ! -d "$GLOBAL_META" ] && [ ! -d "$GLOBAL_SKILL_CREATOR" ] && [ ! -d "$GLOBAL_MEMORY" ]; then
     echo "❌ No OpenCode installation found."
     echo ""
     echo "Checked:"
     echo "  - $GLOBAL_MASTERY"
     echo "  - $GLOBAL_META"
     echo "  - $GLOBAL_SKILL_CREATOR"
+    echo "  - $GLOBAL_MEMORY"
     exit 1
 fi
 
@@ -28,6 +30,7 @@ echo "This will remove:"
 echo "  - $GLOBAL_MASTERY/ (skill directory)"
 echo "  - $GLOBAL_META/ (skill directory)"
 echo "  - $GLOBAL_SKILL_CREATOR/ (skill directory)"
+echo "  - $GLOBAL_MEMORY/ (skill directory)"
 echo "  - $GLOBAL_SCRIPTS/*.py (scripts)"
 echo ""
 echo "These will NOT be removed (your data):"
@@ -65,6 +68,11 @@ fi
 if [ -d "$GLOBAL_SKILL_CREATOR" ]; then
     rm -rf "$GLOBAL_SKILL_CREATOR"
     echo "Removed: $GLOBAL_SKILL_CREATOR/"
+fi
+
+if [ -d "$GLOBAL_MEMORY" ]; then
+    rm -rf "$GLOBAL_MEMORY"
+    echo "Removed: $GLOBAL_MEMORY/"
 fi
 
 if [ -d "$GLOBAL_SCRIPTS" ]; then
