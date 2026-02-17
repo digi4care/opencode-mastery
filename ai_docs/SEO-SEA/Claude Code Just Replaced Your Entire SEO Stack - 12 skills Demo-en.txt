@@ -1,0 +1,374 @@
+[0.2s] If you're still struggling with your SEO
+[1.8s] in 2026, don't worry, I got you. This is
+[5.4s] Cloudy SEO. It's a skill I built for
+[7.7s] cloud code. This isn't one tool, it's
+[9.9s] 12. 12 specialized skills that know what
+[12.4s] they're doing. Here we're talking about
+[14.6s] SEO audit, which is a full website
+[16.6s] audit. We have SEO page, which is a deep
+[18.7s] single page analysis. We have SEO
+[20.8s] sitemap, which is analyzes existing XML
+[22.8s] sitemap. SEO sitemap generation. SEO
+[25.3s] schema, which detects, validates, and
+[27.0s] generates schema. We have SEO images
+[29.0s] which is image optimization analysis,
+[31.0s] technical SEO, content SEO which is eat
+[34.1s] and content quality analysis. My
+[35.7s] personal favorite which is SEO GEO based
+[38.4s] on generative engine optimization. So if
+[40.2s] you have any specific content pages or
+[41.9s] blogs that you want them to be optimized
+[43.7s] in a specific structure. So it will help
+[45.7s] you optimize those pages. So the content
+[48.5s] will be cited by AI like GBT, Gemini,
+[51.2s] Cloud or Pacity. We have also SEO plan
+[53.8s] which is a strategic SEO planning. We
+[56.1s] have programmatic SEO, classic
+[57.7s] programmatic SEO. We have competitor
+[59.4s] pages, which is competitive, comparison,
+[61.5s] page generation, and also our SEO Href
+[64.1s] lang. So for let me show you exactly how
+[66.0s] this skill works and how it can help
+[67.4s] optimize your page so you can be seen by
+[69.8s] the world. Let's dive right into it.
+[71.8s] Going to run a pull website audit. Just
+[74.0s] watch what happens. I'm going to put
+[75.4s] forward slash here. SEO audit. I'm going
+[77.5s] to put my page run kenstein.pro. I'm
+[79.9s] going to press on enter. And that's it.
+[82.6s] Right now, the agent knows exactly what
+[84.2s] he's doing. uh he will start identifying
+[86.6s] the the page itself. I'm going to just
+[88.1s] choose this to bypass permission right
+[89.6s] here. So he's forming a plan. He already
+[91.4s] knows exactly what to do. Um he will
+[93.9s] pull first the homepage which is ranking
+[96.1s] standard pro as you see right here. So
+[97.9s] he's identifying right here what sort of
+[99.6s] business it is. Is it a SAS? Is it a
+[101.4s] local business or anything else? Then he
+[103.4s] is pulling the site map and robust text
+[106.0s] right here. So why sitemap is required.
+[109.0s] So it checks all the all the pages that
+[111.6s] we have. And now he going to audit each
+[113.3s] and every one of them one by one. He
+[115.2s] also as you can see right here he has
+[117.4s] also a to-dos list. So first he fetched
+[120.0s] the homepage as I mentioned before so he
+[121.5s] can identify exactly what sort of
+[123.0s] mission business it is. Next we have the
+[125.0s] crawl site structure internal links. So
+[127.2s] checks all the pages. It runs the
+[129.1s] technical SEO analysis. Then it runs the
+[131.7s] schema structure data analysis
+[134.2s] performance analysis visual and mobile
+[136.3s] analysis. So he will also use playright.
+[138.3s] It's a tool that lets AI to visually
+[141.4s] view your page in a way and he will
+[143.8s] identify also that and then in the end
+[146.2s] he will generate an SEO health score and
+[148.6s] final report. That's it. And afterwards
+[151.7s] I can just ask hey listen craft for me
+[153.7s] uh prompt for my other agent that will
+[156.0s] do the fixes let's say for my page or at
+[158.3s] the same time if I wants for a deeper
+[159.9s] review I'll just ask hey generate for me
+[161.7s] a PDF I want to have a PDF with visuals
+[164.3s] and uh he will do that. Then I want to
+[166.5s] analyze and we'll even look right here.
+[168.4s] He's running one, two, three, four, five
+[170.6s] agents in a parallel that are doing all
+[172.6s] this job. So it doesn't take you hours.
+[174.1s] It doesn't take you, let's say, 10 or 20
+[175.7s] minutes. It will take you maybe no more
+[177.4s] than two or 3 minutes for you to fully
+[180.1s] analyze your page, which is damn
+[182.0s] fantastic. So I'm going to fast forward
+[183.9s] this till he finishes. I'm going to show
+[185.4s] you the results and afterwards I'll try
+[186.9s] to generate a PDF so you can also view
+[188.6s] exactly what sort of report he is
+[190.2s] crafting. So maybe if you want you can
+[191.4s] share with your clients or with your
+[192.6s] partners or even for yourselves so you
+[193.8s] can use for reference to make relevant
+[196.1s] updates so your page can rank. So just 3
+[199.0s] minutes has passed here. He scraped all
+[201.4s] the pages. I would say here depends a
+[203.2s] lot on how many pages your website has.
+[204.7s] So if it has more than 100 pages maybe
+[206.6s] it'll take a little bit longer. But
+[208.1s] overall look at this. We have the full
+[209.8s] SEO audit report. We have the overall
+[212.1s] SEO health score currently which is
+[213.9s] quite bad by the way. It's a 57 out of
+[216.0s] 100 because we're currently just
+[217.1s] building the website right. We just uh
+[218.6s] indexed it maybe like one week ago and
+[220.3s] we're working right now on the SEO cuz
+[221.9s] that's one point that why I introduced
+[224.4s] this skill, why why this skill was
+[225.8s] created. So it will help me with
+[227.3s] everything SEO related. Yeah, even right
+[229.6s] now we have the score breakdown which is
+[231.0s] technical SEO, content quality, onpage
+[233.2s] SEO. I will even zoom it so you'll be
+[235.0s] able to see. Oh, not this like this.
+[237.4s] I'll be able to zoom it so you'll be
+[238.6s] able to see. So we have here the
+[241.0s] technical SEO score right here. We have
+[243.2s] the content quality. We have the on page
+[245.4s] SEO score, the schema structure,
+[247.1s] performance, images, and also AI search
+[249.0s] readiness, which is quite quite bad. And
+[251.0s] now my mission will be just to work on
+[252.6s] that and make the improvements. We also
+[254.1s] came here with a full audit report. If
+[255.9s] we're going to open this, you have also
+[257.5s] here the full audit report of our
+[259.4s] specific website right now. Yeah,
+[260.6s] structure quality. We have also the on
+[262.4s] page SEO score. If you scroll down, so
+[264.5s] everything needed for us to be free to
+[267.5s] improve our website because that's the
+[269.0s] point of this skill is to make sure that
+[270.9s] the world's see you, right? And uh here
+[273.6s] we have also an action plan. So we can
+[275.5s] even feed this to the agent. So I can
+[277.2s] just even copy this and I can paste it
+[278.7s] inside my Renstein uh agent. And also
+[281.4s] here we have screenshots. And now I can
+[283.1s] even ask like hey listen uh based on
+[286.4s] your overall audit please craft for me a
+[289.4s] PDF document well arranged and set so I
+[292.3s] can use for reference. Before that I'm
+[294.9s] going to press on compact and then I'm
+[296.4s] going to press on send this message.
+[298.0s] Your PDF is ready at here. Boom. And
+[301.4s] this is the PDF that it crafted. Let me
+[303.3s] try even to magnify it a bit so you'll
+[305.0s] be able to see exactly what it crafted
+[306.6s] because it's damn fantastic. Here we
+[308.1s] have a comprehensive SEO audit report
+[309.8s] for ranking standard pro. Here we have
+[311.6s] the overall health score. If I'm going
+[313.3s] to scroll down, we have also the table
+[315.0s] of content. We have the executive
+[317.0s] summary of everything. The technical
+[318.4s] SEO, content quality, onpage SEO,
+[320.5s] schema, performance, images, AI search
+[322.4s] and overall score for the SEO. We have
+[324.9s] top five critical issues. We have
+[326.5s] technical SEO, security headers, open
+[329.0s] graph and social media tags. We have the
+[331.0s] content quality. We have the blog
+[332.4s] content analysis, the critical content
+[334.0s] issues and much more. And now let me
+[337.3s] show you exactly another skill that will
+[339.1s] definitely save you a lot of time. So
+[341.0s] the the second skill we're going to try
+[342.4s] right now going to be the SEO schema. So
+[343.8s] I'm going to push here forward/ SEO and
+[346.3s] I'm going to write here schema, right?
+[348.6s] You know here you need to give it your
+[350.2s] one of the pages yours. So maybe we're
+[351.9s] going to enter here a website my
+[353.8s] website. Let's say for example in this
+[355.0s] case I'm going to go for
+[355.8s] rankingstein.pro. Maybe we're going to
+[357.6s] choose the about page right now. So just
+[359.2s] to check the schema of the about page,
+[361.0s] copying it, going back, pasting it, send
+[363.7s] right now. So what it will do right now,
+[365.8s] it will scan the page. It will find
+[367.5s] every piece of structure uh that we have
+[370.3s] on the page like uh the JSON LD, the
+[373.3s] micro data, the RDFA and validates all
+[376.6s] of it. Yeah. And tells us exactly what
+[379.3s] is missing in regards to our page
+[381.1s] structure. And it knows what's
+[382.7s] duplicated, by the way, because it has
+[384.2s] those system prompts. And that skill is
+[385.9s] specifically made for schema. So let's
+[389.0s] wait for it to finish. I'm just going to
+[390.4s] even also again fast forward it. I'm
+[392.2s] going to show you exactly the results
+[393.3s] which are happening. And that's done.
+[396.0s] It's just again it took around 1 minute
+[398.1s] and 20 seconds uh to do everything.
+[400.1s] Start with scheme analysis for
+[401.3s] Raenstein. Pro about for example current
+[404.0s] health is four out of 10 which is three
+[405.8s] JSON blocks found all identical homepage
+[408.1s] and pricing right now. Yeah. So here
+[410.2s] also what's wrong and also at the same
+[411.8s] time files generated the schema report.
+[413.6s] We have also full schema report that I
+[415.3s] can just easily copy once again and put
+[417.1s] it in my own agent that will going to
+[418.4s] help me optimize this page. Also have
+[420.5s] generated schema JSON. So here we have
+[422.2s] already ready to build schema that we
+[424.4s] can use for our website. So I can just
+[425.8s] even copy this hole. I can just uh go to
+[428.5s] my Rankenstein SEO assistant and I will
+[431.7s] just uh paste the schema right here and
+[433.2s] say hey listen apply the same schema
+[435.4s] right there. Yep. Now going back here
+[437.8s] I'm going to also show you another one
+[439.6s] very important skill. As I mentioned
+[441.7s] before it's my favorite. So I'm going to
+[442.9s] just put forward slash SEO
+[445.8s] geo and then I'm going to just put also
+[448.5s] exact same page and uh this is
+[451.8s] fantastic. So it will analyze also how
+[454.0s] visible our content is to AI searches
+[456.6s] like hey can uh chbt crawlb bot or cloud
+[460.8s] crawl or capacity crawl your pages you
+[463.0s] know and do you have any limits like or
+[465.7s] do you have at least those let's say
+[467.7s] llm's text files or are your paragraph
+[470.1s] the right length to be cited because
+[473.1s] there's a sweet spot if really between
+[475.5s] 134 to 167 per passage and if you're
+[478.7s] outside that AI agents will skip you
+[480.7s] because AIs are quite quite lazy. Okay.
+[483.4s] And right now it's fetching our page.
+[486.0s] And again, I'm going to just fast
+[487.3s] forward this. I want to show you exactly
+[488.4s] the results of this skill. Also, so the
+[490.7s] agent just now finished. And goodness,
+[493.2s] I'm looking right here at this score.
+[494.9s] I'm like, okay, now this is exactly what
+[497.1s] I'm going to be working after this
+[498.3s] video. Uh cuz right now our page is very
+[500.6s] new, our website, our platform. Cuz I've
+[502.7s] been working on this with my partner uh
+[504.2s] Benjamin. We're creating Rankenstein. So
+[505.8s] if you don't know what Rankenstein is,
+[507.4s] you can just, you know, Google it or you
+[509.8s] can just search for it. I'm going to
+[510.7s] even put the link in the description cuz
+[512.0s] it's a content creator, the best content
+[514.4s] creator in the world. Anyway, my point
+[517.2s] right now is I'm going to turn this from
+[519.1s] a 27 at least uh into u 85 out of 100.
+[523.4s] I'm going to make sure that this whole
+[524.6s] page is optimized. And how I can do
+[526.1s] that? I can just ask Cloudy, hey,
+[527.8s] listen, craft from me prompt for my AI
+[530.0s] agent. Additionally, I can just take
+[531.4s] this report and I can just feed it to my
+[533.7s] current uh clot agent right here. That
+[535.7s] will take care of everything. Yeah,
+[537.4s] because this is my mission right now.
+[538.4s] Hey, I want my website to be found by
+[541.0s] people. I want it to be crawled so it'll
+[543.4s] be recommended also in EI searches and
+[545.1s] that will be my my next missions mission
+[547.6s] I would say. And listen guys uh just for
+[549.6s] information we do have a few guardrails
+[551.0s] here. So if I'm going to go back to the
+[553.7s] um to the GitHub here even put quality
+[556.3s] gates. I'm going to just tell you around
+[557.6s] here. So the quality gates warning at
+[560.2s] 100 pages. So let's say if you're
+[563.0s] because it's a lot of context you know
+[564.2s] for AI. So it will stop let's say
+[566.2s] warning at 30 location pages. So it will
+[568.7s] give you also quality gates. So to make
+[570.4s] sure that hey all the pages are proper
+[571.7s] and also the system is properly
+[573.0s] processing all of your pages to provide
+[575.0s] you that specific uh data based on the
+[577.4s] audit that it's currently doing. And uh
+[579.8s] I would say basically that's it. This is
+[581.1s] cloud SEO. It's our beautiful ultimate
+[585.0s] mega cloud code skill for everything SEO
+[587.4s] related. We're going to work more more
+[589.0s] on it. Maybe future going to apply also
+[590.8s] more updates as we go. But it does its
+[592.8s] job well. It crafts this beautiful,
+[595.0s] beautiful uh reports and uh yeah, it's
+[598.3s] doing everything I said related. I think
+[600.1s] now you don't need to use any more five
+[602.2s] different SEO tools. Everything is
+[603.5s] covered into one and it's there. You can
+[605.4s] just download it, guys. Uh it's there in
+[607.7s] uh on GitHub. You're going to find the
+[609.1s] link down in the description and just
+[610.3s] let me show you how easy it is to set it
+[612.4s] up. So, let's say you enter this git
+[614.2s] which is github.com agricananiel cloud
+[617.2s] SEO. Yeah. And here you can just have
+[619.5s] one command to install on Unix, Mac OS
+[622.2s] or Linux. So I can just copy this. I can
+[624.4s] just open your own terminal. I will just
+[626.8s] even open it right here. And I can just
+[628.6s] paste this command and it will do
+[631.1s] everything and it will install
+[632.5s] everything. So usage cloud SEO audit.
+[634.9s] Now I can just write cloudy right here.
+[637.1s] Mr. Cloudy will appear and I just put
+[638.7s] SEO and I have here all the SEO needed.
+[641.5s] It's that simple. If it doesn't work,
+[643.4s] don't worry. Okay, you can just install
+[645.2s] cloudy inside your terminal or VS code
+[648.2s] and there uh you can just copy this
+[650.9s] whole git and just say like I'll just
+[652.9s] even open one cloud. So just to show
+[654.2s] right here like hey uh read this git and
+[657.5s] download you know and you can just put
+[659.0s] this link from GitHub and it will do
+[660.5s] everything for you guys. Uh one more
+[662.6s] thing if you if you want to use virtual
+[665.1s] visual studio code uh not in a terminal
+[667.4s] like as there are two ways to run this
+[669.2s] is either you can use uh terminal which
+[671.9s] not many people with programmatic
+[673.5s] capabilities can do it right uh or you
+[676.2s] can use visual studio code even for that
+[678.3s] I have prepared another repo so I'm
+[680.0s] going to also attach it inside the
+[681.6s] description I'm just going to close this
+[683.0s] so also there's another repo if you want
+[684.9s] that will install everything for you I'm
+[686.5s] going to just open it right here and
+[688.4s] here we have also where was it cloud
+[690.9s] code essential VS Code. So if you want
+[693.0s] to have the exact same setup as I'm
+[694.9s] having with Virtual Visual Studio Code
+[697.4s] right here, you can just also use this
+[699.6s] repo for reference, it will install uh
+[702.0s] everything in regards to VS Code and
+[704.4s] also cloud code totally. So same thing
+[707.0s] um if you don't know how to install it,
+[708.3s] you can just easily install it also with
+[710.5s] one command either on Windows, Mac OS or
+[713.4s] Linux. Yep. And guys, I would say
+[715.8s] basically that's it. This is Cloudy SEO.
+[718.3s] I'll open him in full so you'll be able
+[720.2s] to see our our dear Claudia SEO. I'm
+[724.3s] going to make myself also bigger and I'm
+[726.8s] going to make this on top and I'm
+[728.6s] putting myself here right there guys. Um
+[731.7s] this was Claudia SEO. Um it's it's an
+[734.7s] exceptional skill. It really does it job
+[736.4s] very well. Uh it follows best practices
+[739.4s] uh till the present day which is
+[741.8s] February 8, 2026. We're going to apply
+[744.2s] maybe some other updates in future as we
+[745.8s] go. But uh the job it does if really
+[748.4s] it's equal to one full SEO agency. So uh
+[752.2s] for anyone watching right now I want to
+[753.8s] say thank you for watching. I really
+[755.4s] appreciate it. You're the one that keeps
+[756.6s] me going guys. Um also if you want you
+[759.1s] can join our marketing hub community. I
+[761.0s] want to also put the link down in the
+[762.4s] description where you can keep yourself
+[764.1s] also up to date where you can find some
+[765.4s] really cool workloads that can help you
+[766.6s] also rank. And I would say basically
+[768.7s] that's it. Thank you for watching.
+[769.8s] Daniel checking out.

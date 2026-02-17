@@ -1,0 +1,609 @@
+[0.0s] A few weeks ago, the Enthropic team
+[1.9s] released a 33-page guide on the one
+[4.4s] feature that Cloud Code users either
+[6.6s] heavily underutilize or completely
+[8.6s] ignore with your skills. Now, I read the
+[11.1s] whole thing cover to cover, not just fed
+[12.9s] it to an LLM. And I'm going to walk you
+[14.7s] through every pattern, every nugget,
+[17.0s] every framework, and most importantly,
+[18.9s] every mistake that you can avoid, so you
+[20.9s] can get all the sauce from the six
+[22.4s] chapters without having to spend the
+[24.1s] time to read it yourself. But I didn't
+[26.2s] just summarize it. I diagrammed each and
+[28.6s] every concept across all six chapters.
+[31.0s] So by the end of this video, you'll
+[33.0s] never have a skill issue ever again.
+[35.4s] Let's dive in. So the six chapters that
+[37.6s] Anthropic goes through in this guide
+[39.5s] cover fundamentals, planning and design,
+[42.5s] testing and iteration, distribution and
+[45.0s] sharing, patterns and troubleshooting,
+[47.3s] and then they end off with resources and
+[49.6s] references. So a lot of our diagrams
+[51.6s] will follow the exact same flow. So if
+[53.8s] we pop into our beautiful Excel, this is
+[57.7s] the anatomy of what a skill looks like.
+[60.4s] So you have the skill.mmd file right
+[62.6s] here and it's supported by a series of
+[64.7s] scripts, references, and assets. But the
+[67.3s] most fundamental thing is having this
+[69.1s] markdown file. In this markdown file
+[71.3s] itself is a series of structures that
+[73.7s] inform Claude code if and when to use
+[76.5s] said skill. Now, if you're looking at
+[78.2s] this and you still don't really know
+[79.3s] what a skill is, the TLDDR is you can
+[81.8s] think of it as Claude's way of
+[83.8s] onboarding itself on your specific
+[86.1s] workflow. So, on its own, Claude code is
+[88.4s] already very smart. It can write, it can
+[90.4s] analyze, but it might not have your
+[92.7s] specific ways of doing things or
+[94.7s] approaching problems in its training
+[96.8s] data. So, these skills supplement its
+[99.8s] skill issues when it comes to your
+[101.8s] specific way of doing things. So you can
+[103.8s] think of a skill pretty much as an
+[105.5s] onboarding guide for cloud code for
+[107.6s] whatever it is you're trying to use.
+[109.5s] Whether it's a service, a process, a
+[112.2s] series of steps, you're going to be able
+[113.7s] to do everything you want. Now there's
+[115.5s] three different levels of magic behind
+[117.4s] the curtains of how a skill is used,
+[120.2s] observed, and executed. And most Claude
+[122.7s] Code users till this day don't know
+[124.6s] this. So at the very front, we have
+[127.0s] level one, which is called the YAML
+[129.2s] front matter. Now what the word YAML
+[131.2s] stands for doesn't really matter. just
+[133.0s] know that it denotes the first snippet
+[135.4s] of a skill file. And this really matters
+[137.9s] because it's always loaded in the system
+[140.2s] prompt whenever you have a brand new
+[142.2s] cloud code session. So just to show you
+[144.4s] more tangibly, if I show you an ongoing
+[146.7s] session that I have building something
+[148.2s] out, when I do /context right here, as
+[151.8s] of the recent updates, all the MCP tools
+[154.0s] are muted to preserve our context cuz
+[156.3s] you can see how many tools that I have
+[159.0s] and they're only invoked whenever
+[160.4s] they're needed. But when it comes to the
+[162.2s] skills, you'll see right here, all of
+[163.8s] them are actually included in context.
+[166.0s] But this is not the entire skill. This
+[168.2s] is a small tiny micro snippet of the
+[171.0s] skill. That's just enough to tell Claude
+[173.2s] Code, should I actually investigate to
+[175.3s] see what the skill is about and if we
+[177.5s] should invoke it. So level one basically
+[179.4s] just relies on the name and the
+[181.4s] description. Once we go to level two is
+[183.5s] where Cloud Code has more confidence
+[185.7s] that this skill might be a match for the
+[188.1s] particular task or project at hand. If
+[190.6s] so, we dive into level two. So, this is
+[193.2s] where it goes through all the procedural
+[195.2s] information and core instructions. And
+[197.6s] if it sees that in level two, yes, this
+[199.7s] is exactly what we need to do. That's
+[201.8s] where it goes down the tree to the
+[203.8s] linked files. So, all the Python
+[206.0s] scripts, everything associated with that
+[208.1s] skill that makes that skill tick. So,
+[210.6s] just in time means that they're only
+[212.4s] used in full when it feels like it's
+[214.7s] absolutely necessary to go down that
+[216.5s] full set of context. Now by using skills
+[219.4s] in many cases you can actually avoid
+[221.2s] having to even use MCP servers but there
+[223.8s] could be other scenarios where it makes
+[225.6s] sense to use both MCPs and skills
+[228.2s] together and that's where you can get
+[229.8s] some super power workflows where you can
+[232.2s] essentially think of MCP as providing
+[234.6s] claude code the tooling and then skills
+[237.3s] provide the recipe and procedure of
+[239.8s] executing said tooling. So, if I were to
+[241.8s] give you an analogous example to using
+[244.0s] MCPs and skills in a lot more of a
+[246.0s] tangible way, then if we were in a
+[247.9s] kitchen, you can think of MCPs being the
+[250.7s] hands that actually do the cooking,
+[252.3s] while the skills are the recipes that
+[254.2s] inform the hands exactly what
+[256.2s] ingredients to use, in what order, and
+[258.6s] in what amount. So, MCPs connect claw to
+[261.4s] different services and give the tools to
+[263.4s] have real time data access. And skills
+[266.1s] can be thought of teaching cloud code
+[268.2s] actual tangible workflows. So in many
+[270.6s] ways these Python files being invoked by
+[273.2s] the skills can be what used to be make
+[276.5s] or end workflows on their own which is
+[278.9s] why you would have seen so many YouTube
+[280.5s] videos saying is make.com dead is zap
+[283.4s] your dead is everything dead because a
+[285.9s] lot of these skills can pseudo function
+[288.6s] as these automated workflows from before
+[291.0s] now extending our kitchen analogy there
+[293.3s] are three core flavors of skills
+[295.6s] category one is document and asset
+[297.8s] creation and I use this quite a it for
+[300.1s] anything related to PDFs, PowerPoint
+[302.2s] presentations or Excel files. So this is
+[304.8s] meant to create consistent, predictable,
+[307.7s] highquality outputs. But the goal of a
+[310.2s] skill is that it evolves as your
+[311.9s] workflow evolves. And a good example of
+[314.2s] this is the skill creator skill, the
+[316.2s] meta skill. So giving Claude code the
+[318.7s] ability to know how to create a
+[321.0s] subsequent skill if you want to be able
+[322.9s] to crystallize a specific procedure or
+[325.6s] way of doing things. Category number
+[327.6s] three is heavily underutilized, which is
+[330.2s] getting the best out of MCP servers and
+[332.9s] leaving all the bloat by actually
+[334.6s] telling it how it should invoke the MCP
+[337.3s] server and which tools to use in what
+[339.4s] order. So instead of just yoloing the
+[341.9s] MCP server calls to let's say Superbase
+[344.5s] or Versel to create a database, edit a
+[347.3s] table and just have it figure it out
+[349.1s] along the way. Once you figure it out or
+[351.6s] it figures it out once you crystallize
+[354.3s] that process by doing basically a
+[356.2s] reverse metaprompt and saying you know
+[358.1s] what go through this whole process we
+[360.2s] went through crystallize exactly how you
+[362.3s] went from A to B. ignore all the noise
+[365.3s] and fix that all in a skill where you
+[367.7s] can always invoke that and know exactly
+[369.4s] what procedure you followed to get to
+[371.3s] that end point. So if we go back to our
+[373.4s] terminal example to these MCP servers
+[376.1s] instead of having it load the entire MCP
+[378.2s] server then iterate through each and
+[380.3s] every tool possible you can literally
+[382.5s] say when we invoke the superbase MCP
+[385.0s] server all I care about is for you to
+[387.0s] acquaint yourself with using create
+[389.0s] project list extension get logs etc. And
+[393.0s] this helps also scope down the usage of
+[396.1s] set MCP. So again, you can preserve that
+[398.6s] context window as much as possible. Now,
+[400.5s] a good example of this could be the
+[402.2s] sentry code review skill. And if you
+[404.2s] don't know what sentry is, it's
+[405.4s] basically a monitoring platform,
+[407.2s] especially for errors that happen in
+[409.1s] production with general applications.
+[411.1s] But you could create a sentry code
+[412.8s] review skill that always knows exactly
+[415.4s] when to go through Sentry to go through
+[417.8s] all the error logs and understand what
+[419.6s] happened and why. And you could apply
+[421.4s] this to all kinds of scenarios. The real
+[423.5s] goal here is not to just blindly call an
+[425.7s] MCP server. It's to add your expertise
+[428.4s] of exactly why you're using it and why
+[430.8s] it should focus on particular tools
+[432.5s] versus others. So this next section is
+[434.6s] probably the most important, which is
+[436.5s] where we double click on what we
+[437.9s] referred to before as the YAML front
+[440.3s] matter, which if you remember was level
+[442.5s] one of the three different levels of
+[444.3s] looking at a skill. And it's a section
+[446.2s] that Claude Code always looks at at all
+[448.8s] times. So the main two questions that
+[451.3s] this has to answer perfectly is one what
+[454.2s] does the skill do and number two when
+[456.7s] does it need to be invoked. So when we
+[458.8s] go into the details here if we zoom in
+[461.4s] you'll see this is written in what's
+[462.8s] called kebab case and kebab case is
+[465.4s] literally this lowercase dashepparated
+[468.2s] name and this should be a very
+[469.9s] descriptive one to fourword description.
+[472.8s] The core description though is where the
+[474.5s] magic lies. So this is where you explain
+[476.3s] what this is. In this case, it says
+[478.5s] manages linear project workflows
+[480.6s] including sprint planning, task
+[482.2s] creations, and status tracking. Then key
+[484.8s] extra gold nugget here is you should be
+[487.3s] able to give keywords or trigger words
+[490.2s] for the skill to be invoked. It's an
+[492.4s] added cheat sheet or hint for cloud code
+[495.0s] to really work off of. So in this case,
+[496.6s] you could say use when user mentions
+[499.3s] sprint, linear tasks, project planning,
+[502.5s] or asks to create tickets. And because
+[505.0s] cloud code is so smart, it can
+[506.9s] semantically also find something similar
+[509.6s] to create tickets. So if you said create
+[512.1s] tasks and log them, then most likely it
+[514.7s] will be the most semantically similar to
+[516.9s] this specific trigger word. But
+[518.5s] obviously if you use a trigger word,
+[519.7s] then you almost have a 100% chance of it
+[522.4s] invoking it. So beyond that, this is the
+[524.8s] part you really need to nail down
+[526.5s] because once you do that, as long as
+[528.0s] this is less than a thousand characters,
+[530.9s] everything else will be a matter of how
+[532.3s] you design the rest of the scripts and
+[534.6s] parts of the skill that matter. If you
+[536.1s] wrote helps with projects, well, pretty
+[538.8s] much every other skill could help with
+[540.6s] projects. If you say creates
+[542.8s] sophisticated multi-page documentation
+[545.3s] systems, there's no real triggers here
+[547.4s] as to exactly when this should be
+[549.5s] called. And the last one if you say
+[551.4s] implements the project entity model with
+[554.2s] hierarchal relationships. One very
+[556.7s] technical very buzzwordy and similar to
+[559.4s] a consultant from a very big end firm
+[562.2s] saying a bunch of words like a word
+[564.1s] salad but not actually saying anything.
+[566.2s] You want to make sure that your skill is
+[567.8s] very refined and to the point. So
+[569.8s] instead of helps with projects, you
+[571.7s] should say something like analyzes Figma
+[574.2s] design files and generates developer
+[576.8s] handoff documents. Use when user uploads
+[580.0s] fig files, ask for design specs or
+[582.8s] design to code handoffs. And here
+[584.8s] instead of saying create sophisticated
+[586.6s] systems, you could say manages linear
+[589.3s] project workflows including sprint
+[591.1s] planning. Use when user mentions the
+[593.7s] following. And last one implements the
+[595.7s] project identity model. We don't want
+[597.3s] that. You could say end toend customer
+[599.7s] onboarding for payflow. Use when user
+[602.3s] asks for this. So the more trigger words
+[604.9s] you have even for different parts of the
+[607.5s] skill process, the better. So the TLDDR
+[610.2s] of the TLDDR is what it does, when to
+[613.2s] use it, key trigger phrases equals
+[615.5s] perfect description. And obviously you
+[617.5s] don't have to write these yourself. You
+[619.2s] could just walk through in plain
+[620.8s] English, in slang, in whatever you
+[622.8s] speak, and ask it to create the skill
+[625.0s] itself because prompt engineering is now
+[627.4s] a fully solved problem. So if we take a
+[629.4s] look at some example files like I
+[631.4s] promised and we go to this comparison
+[633.8s] description right here. I already showed
+[636.1s] you pair one what that looks like. But
+[638.2s] if we take a look at pair two. So a bad
+[640.4s] description would say implements a
+[643.0s] sophisticated multi-paradigm data
+[645.7s] transformation pipe. And this would fail
+[647.3s] because it's not technical. No trigger
+[649.2s] words. And a good version would be
+[651.2s] cleans, validates, and transforms CSV
+[654.0s] files for analysis. use when a user
+[656.5s] says, "Clean the CSV, fix my data, or
+[659.4s] prepare the spreadsheet for analysis."
+[661.7s] Or a trigger could also be an event
+[664.5s] where if you upload a CSV, that could
+[667.2s] also be a trigger. So, that's an added
+[668.9s] nugget right there. It doesn't always
+[670.6s] have to be a textual trigger. It could
+[672.8s] be event-based as well. And I have a
+[674.7s] bunch of these in here that I'll make
+[676.0s] available to you in the second link in
+[677.5s] the description below. But this next one
+[679.2s] I want to touch on is this overt
+[681.0s] triggering. Now I have a bunch of other
+[682.7s] examples but I wanted to zero in on this
+[684.8s] one for a particular reason. You can
+[686.9s] also overt trigger based on events. So
+[689.4s] if you say processes documents and
+[691.4s] analyzes data for business use, this
+[693.8s] could be triggered for all kinds of
+[695.4s] different use cases. So you want to be
+[697.2s] as precise as possible. You would change
+[699.4s] this to say advanced statistical
+[701.0s] analysis for CSV data sets performs
+[703.3s] regression, clustering, hypothesis
+[705.3s] testing. It's a lot more specific on
+[707.1s] exactly what processing documents means
+[709.9s] because at some point your skill is
+[712.1s] useless. You're just basically relying
+[713.8s] on cloud code to interpret what is the
+[716.0s] best thing to do on that situation since
+[718.1s] you're not giving it any form of cheat
+[719.9s] sheet or guide or onboarding on how to
+[722.2s] do it itself. And if we take a look at
+[724.2s] an MCP-based example, a bad version of
+[727.2s] this would say works with Sentry to look
+[729.8s] at errors. Instead, you'd want to be way
+[732.2s] more specific. So, automatically
+[734.4s] analyzes and fixes detected bugs in
+[737.0s] GitHub pull requests using Sentry's
+[739.5s] error monitoring and then use when a
+[741.4s] user says the following. And now you
+[743.4s] have something even more useful. Now,
+[745.0s] you can even layer on which tools and
+[747.4s] subtools it should invoke from said MCP
+[750.1s] to keep it as focused as possible. Now,
+[752.2s] this next section is the most complex
+[754.1s] and intricate where anthropic walks
+[756.2s] through the five different design
+[757.7s] patterns where you can design a skill to
+[760.0s] execute in a certain way. So pattern one
+[762.5s] is the sequential workflow which is the
+[764.8s] most linear where you go from step one
+[767.0s] to step four in a very predictable
+[768.6s] manner. If we take a hypothetical use
+[770.5s] case of authentication, you would first
+[772.7s] go through and create an account, then
+[775.1s] set up payment, then create the
+[777.0s] subscription, then get some form of
+[779.0s] welcome email, and the dependency lies
+[781.4s] on actually getting the customer ID and
+[783.5s] information from step one. So this is
+[785.8s] pretty straightforward. If any step
+[787.4s] fails, then you roll back to prior
+[789.3s] steps. Number two though is where we get
+[791.7s] more complex where we get to multimcp
+[794.5s] coordination. So you can use this when
+[797.0s] you have workflows that span multiple
+[799.4s] services. So maybe in phase one you have
+[802.1s] the Figma MCP where you do the designing
+[805.0s] and then you upload it to the drive MCP.
+[807.5s] You create a project folder. Then you
+[809.4s] use the linear MCP to create tasks for
+[811.7s] your developers or yourself and then you
+[813.8s] hand it off to the Slack MCP for a full
+[816.6s] summary with a series of links. So this
+[818.8s] is a series of different MCPs
+[821.0s] orchestrated in a particular order and
+[823.3s] in this case you can't move from phase
+[825.3s] one to phase 2 until you have all the
+[827.3s] prerequisites. Now pattern three is
+[829.7s] iterative refinement and this is
+[831.5s] probably the most used one in my
+[833.5s] personal ecosystem and I use this even
+[836.0s] for thumbnail generation where I'll
+[838.4s] generate an initial thumbnail using an
+[840.6s] excellently
+[842.3s] what should be located on which part of
+[844.1s] the thumbnail. Then I'll go through and
+[846.0s] generate five 10 different versions
+[848.0s] using Nano Banana. Then I'll spin up a
+[850.6s] few agents to take a look at and audit
+[852.7s] it and roast the thumbnail. Then refine
+[855.0s] it and come back with the final five of
+[857.1s] the 10 15 generated through the whole
+[859.4s] process. So this part makes a lot of
+[861.4s] sense when you need to go through a
+[863.1s] couple different evolutions until you
+[865.3s] get to the final version of whatever it
+[867.1s] is you're trying to generate. So pattern
+[869.3s] 4 looks very similar to an NN workflow
+[872.5s] where you could have the same input
+[874.2s] which is an incoming file. Imagine you
+[876.4s] use the world of NADN and you have a
+[878.3s] form submission and you upload a file.
+[880.6s] If it's a PDF it's treated one way. If
+[883.1s] it's an Excel file, it's treated another
+[885.1s] way. You can design a skill in the exact
+[887.5s] same format where if you upload a file
+[890.1s] and then you check the file type and
+[892.2s] size and it realizes that it's a code
+[894.4s] file, maybe it it uses and invokes the
+[896.8s] GitHub MCP. Whereas if it's a
+[899.2s] collaborative doc like a docx or
+[901.5s] something similar, it uses the notion or
+[904.0s] docs MCP. So now you're orchestrating a
+[906.7s] couple different layers. You're
+[908.1s] orchestrating MCPs and you're
+[909.9s] orchestrating which different path the
+[912.5s] same skill goes down depending on the
+[915.5s] input. And the last pattern is really
+[917.7s] for enterprise where it's domain
+[919.8s] specific intelligence embedded into a
+[922.2s] skill. So imagine all the understanding
+[924.4s] of the code bases, the design of
+[926.4s] infrastructure, everything that makes a
+[928.8s] company tick on the IT side of things.
+[931.4s] So this is where you'd have embedded
+[933.0s] rules. You'd have a sanctions list.
+[935.3s] You'd have a jurisdiction verification.
+[937.7s] You'd have risk level assessments based
+[939.7s] on exactly what's happening. Then you'd
+[941.8s] have a series of decision logic. So all
+[944.1s] of this would be custom. If you're a
+[946.4s] business owner that runs on, let's say,
+[948.2s] AWS and you have a series of
+[950.2s] microservices and you have databases,
+[953.0s] then this skill would tell it
+[955.0s] specifically how you use those
+[957.0s] microservices, which ones are editable
+[959.5s] and how you can edit those services in a
+[961.5s] way that lines up to exactly what your
+[963.8s] normal procedure would be. So, whatever
+[965.4s] the SOP would be for a new hire would be
+[967.8s] the same SOP for this pattern. So, when
+[970.3s] it comes to good versus bad
+[972.0s] instructions, I have a few different
+[973.7s] examples. The one I'll show you right
+[975.4s] now is this bad one, which is very
+[977.2s] handwavy. That says, "Help the user with
+[979.8s] their data. Validate it and make sure
+[982.0s] everything looks good. That's awful.
+[984.1s] Process the data appropriately and
+[985.8s] handle any issues that come up. Make
+[987.8s] sure to check for errors and fix them if
+[989.5s] possible." Now, it's very clear that
+[990.9s] this is unbelievably vague. And the way
+[992.8s] you'd make this a lot more actionable is
+[994.9s] you literally structure it in steps. So
+[997.2s] many skills that I've seen and ones that
+[998.7s] I've designed for myself and my agency
+[1001.1s] and our clients all have this markdown
+[1003.8s] format where you have step one that says
+[1006.0s] inspect the data. Then you break down
+[1007.9s] exactly what does that look like to
+[1009.4s] inspect the data. Step two is you
+[1011.7s] identify the issues and then maybe you
+[1013.1s] can get the help of AI to create some
+[1015.4s] form of columnwise table that goes
+[1018.2s] through a decision framework or some
+[1020.1s] form of rubric. Then step three could be
+[1022.4s] apply the fixes. And then step four
+[1024.2s] could be export the clean data where you
+[1026.6s] tell it exactly what your expectations
+[1028.6s] are. So some name here, some dynamically
+[1030.8s] made name or cleaned.csv.
+[1033.6s] And this is where you have the balance
+[1035.4s] of being explicit while leaving slight
+[1038.0s] room for a dynamic nature of the task at
+[1040.2s] hand. So now you've built your skill.
+[1042.9s] How do you go about testing it? Well,
+[1045.2s] this section covers the three different
+[1046.9s] ways that you can do so. Number one is
+[1049.2s] what's called a triggering test where
+[1051.4s] you load a brand new terminal session
+[1053.8s] keyword new terminal session. You don't
+[1056.2s] want to use an existing one because it
+[1057.7s] could be muddied by the context and
+[1059.8s] accidentally invoke the skill just
+[1062.3s] because it knows that it should. And
+[1064.2s] just like Goldilocks would taste a very
+[1066.3s] hot soup and a very cold soup and find
+[1068.6s] the sweet spot for the perfectly testing
+[1071.3s] room temperature soup, you could have
+[1073.2s] the exact same scenario here where the
+[1075.3s] skill could be undertriggering or overt
+[1077.8s] triggering and ideally you have a sweet
+[1079.6s] spot where you have a very high hit rate
+[1082.2s] that invokes a skill when it makes sense
+[1084.4s] to. Now the second test you can run is
+[1086.5s] the functional test. So let's say it
+[1088.5s] triggers it after it goes through
+[1090.4s] everything. Do you actually get the
+[1092.5s] output you're expecting in the format
+[1094.6s] you're expecting deterministically every
+[1097.4s] single time? And a good use case would
+[1099.3s] be to try to battle test this one, four
+[1101.8s] or five times, then try it with maybe an
+[1104.2s] agent team or sub agents and see does
+[1106.5s] the behavior change in different
+[1108.2s] formats. If it doesn't, great. If it
+[1111.0s] does, then you can tell cloud code to
+[1113.0s] iterate and change the skill as needed
+[1115.4s] until you get the behavior you're
+[1116.7s] expecting. And this last test is likely
+[1119.1s] the one that many will ignore where
+[1121.4s] sometimes you get so committed to using
+[1123.4s] a skill that you overlook the fact that
+[1125.8s] based on this testing of one and two,
+[1128.5s] what if by at the end of all of that, it
+[1130.4s] would have been easier to not have the
+[1132.0s] skill at all and the skill actually adds
+[1134.6s] more error than it actually helps with.
+[1136.8s] So it's important to have some form of
+[1138.2s] benchmarking to know is this skill
+[1140.6s] valuable? If so, it should exist. If
+[1143.3s] not, maybe we created some form of
+[1145.2s] automated workflow or a cron job or a
+[1148.0s] Python file that does this entire
+[1150.1s] process in a very linear way. But
+[1152.2s] assuming that the skill is helpful, then
+[1154.4s] you want to make sure that the skill is
+[1155.8s] structured in the right format. So if we
+[1157.9s] take a look at the bad example here,
+[1160.0s] right here we have the name of the skill
+[1162.4s] and then we have the skill.md directly.
+[1164.8s] No references, no scripts, nothing. A
+[1168.0s] good version is something like this
+[1170.0s] where you have this CSV data pipeline.
+[1172.6s] Then you have this references that has
+[1174.2s] some form of markdown file that refers
+[1176.3s] to the different column types in the
+[1178.1s] CSV. Then you have the scripts folder
+[1180.6s] that has the Python files that are
+[1182.7s] invoked by the skill to execute whatever
+[1185.3s] it is. And then in the main folder is
+[1188.2s] this skillmd file. So these become the
+[1191.0s] dependencies right here. And the skill
+[1193.0s] MD is right there front and center. Once
+[1195.6s] you've solidified skills, my advice to
+[1197.6s] you is to not make a skill global until
+[1200.6s] you fully battle tested it. And battle
+[1202.7s] testing doesn't mean a couple of
+[1204.0s] minutes. It means run it for a month
+[1206.5s] maybe. And once it's good enough,
+[1208.6s] depending on where you're deploying
+[1209.8s] this, either personally or as an
+[1211.9s] organization, that's where it makes
+[1213.7s] sense to graduate to becoming a global
+[1216.0s] skill, something that you maybe commit
+[1217.7s] to a repo to be ingested and used
+[1220.2s] elsewhere. something you can use not
+[1222.1s] only in cloud but also claude co-work on
+[1225.6s] the front end or the cloud API with the
+[1228.0s] claude agent SDK. Now to bring
+[1230.4s] everything together from this journey of
+[1232.5s] creating a skill you have six different
+[1235.0s] chapters that we covered in the course
+[1236.8s] of this video. Number one is identifying
+[1239.0s] the use cases. So having two to three
+[1241.2s] concrete workflows that you create and
+[1243.4s] synthesize and crystallize as a skill.
+[1246.6s] Station two is planning and designing.
+[1248.6s] So creating the success criteria, the
+[1250.6s] PRDS, choosing which categories matter,
+[1253.5s] which MCPS if applicable matter and
+[1256.0s] planning the folder structure and then
+[1258.1s] station three is the most important part
+[1260.0s] which is the build section where you
+[1261.9s] want to perfect that YAML front matter
+[1264.2s] and crafting the perfect description
+[1266.3s] with the right trigger words. Then
+[1268.3s] station four to five are testing,
+[1271.4s] iterating, then distributing to make
+[1273.5s] sure it actually works well in
+[1274.8s] production and then monitoring and
+[1276.5s] evolving them over time. Usually a skill
+[1279.0s] will have to evolve over time as your
+[1281.6s] workflows or business or whatever it is
+[1283.9s] changes as well. So you can think of
+[1285.5s] skills as your ever living document
+[1287.7s] where you don't want to overbloat too
+[1289.4s] many skills. You want to be very
+[1291.0s] selective on what skills matter and how
+[1293.5s] well you can refine a single skill
+[1295.4s] before you go out and build even more.
+[1297.3s] And that pretty much synthesizes the
+[1299.0s] entire 33page document in a series of
+[1301.9s] diagrams. So hopefully this gives you
+[1303.9s] the bite-sized learnings to execute
+[1306.8s] everything and upskill your skill
+[1309.4s] creation to the next level. Now I'll
+[1311.6s] make all the examples of the good and
+[1313.7s] the bad when it comes to instructions,
+[1316.0s] descriptions, errors, everything
+[1318.4s] available to you in the second link in
+[1320.6s] the description below. And if you want
+[1321.9s] to take your general Claude code skill
+[1324.2s] set to brand new heights, then you want
+[1326.2s] to check out the first link in the
+[1327.5s] description below because we have a
+[1329.0s] brand new Claude zero to hero course.
+[1331.5s] And for the rest of you, if you found
+[1332.9s] this video helpful, please leave a like
+[1334.8s] and a comment on the video. It really
+[1336.3s] helps the video and helps the channel.

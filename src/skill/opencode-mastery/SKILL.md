@@ -131,6 +131,7 @@ Functional:
 - `src/skill/opencode-mastery/references/plugins-deep-dive.mdx`
 - `src/skill/opencode-mastery/references/tools-deep-dive.mdx`
 - `src/skill/opencode-mastery/references/local-plugins.mdx`
+- `src/skill/opencode-mastery/references/opencode-design-patterns.mdx`
 - `src/skill/opencode-mastery/references/ace-framework.mdx`
 - `src/skill/opencode-mastery/references/ace-rubric.mdx`
 - `src/skill/opencode-mastery/references/ace-patterns.mdx`

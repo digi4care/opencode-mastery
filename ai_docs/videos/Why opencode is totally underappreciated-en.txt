@@ -1,0 +1,349 @@
+[0.2s] Open code is a terminal application
+[2.0s] that's very much like cloud code except
+[4.2s] that it's more open. It lets you work
+[5.9s] with many different language models from
+[7.5s] many different providers. And frankly,
+[9.8s] it also just looks plain amazing in the
+[11.5s] terminal. Open code doesn't just look
+[13.1s] pretty though. It solves an actual
+[14.7s] problem. Thanks to open code, we
+[16.2s] actually have an insurance policy that
+[17.8s] will always let us leverage an open-
+[19.2s] source model just in case. If any of the
+[21.4s] large language model providers start to
+[23.0s] jack up their prices, we will have a
+[24.7s] compelling alternative to flip to. Open
+[26.6s] code can also run Olama models that you
+[28.6s] run locally on your own machine and it
+[30.4s] doesn't stop at the terminal either.
+[31.6s] Open code supports ACP which is a
+[34.0s] protocol that allows third party apps to
+[36.3s] integrate with it and that's great news
+[37.8s] for tools like MIMO. We have just added
+[40.2s] support for open code which means that
+[41.8s] if you have a Python notebook that you
+[43.4s] would like to edit you can actually get
+[45.2s] open code to help you with that. In this
+[47.0s] video I'm going to dive deeper into open
+[48.9s] code and generally I'm going to talk
+[50.6s] about how you can configure it.
+[51.8s] Specifically, I'm going to talk how you
+[53.3s] can configure Olama with it. And at the
+[54.9s] end, I'm also going to show you how you
+[56.2s] can use MIMO to connect to both. Okay,
+[59.4s] so let's do a very first demo. I
+[62.1s] downloaded Open Code beforehand. Uh here
+[64.3s] you can see me start it up. And this is
+[66.5s] what it looks like. I can also see it
+[68.2s] just uh completed an update
+[69.8s] automatically, which is very cool. Uh
+[71.8s] but let's configure a model before doing
+[73.9s] anything. So you can do back/model to
+[75.8s] list all the different models. Uh
+[77.6s] there's a few Olama models here. We'll
+[79.4s] get to that in just a bit. Uh but you
+[81.4s] can also see that there are models that
+[82.9s] I can connect to via this thing called
+[84.6s] open code zen. These open code zen
+[86.6s] models are models that the open code
+[88.4s] people host themselves. They also have
+[90.1s] the stamp of approval of working well
+[92.2s] with uh their stack. But uh you can also
+[94.6s] go for another provider. If I hit
+[96.4s] control A, you can see that there is a
+[98.2s] long list of models to go for here. Uh
+[100.6s] open router also is a nice provider.
+[103.0s] They basically host every open source
+[104.6s] model under the sun. But what I'm just
+[106.2s] going to go ahead and do is I'm just
+[107.4s] going to use the Kimmy K2 model from
+[109.3s] Open Code Zen. Going to hit enter. We
+[111.6s] can confirm that that's now selected.
+[113.4s] And yeah, I can uh type hello. We get a
+[115.8s] very quick response, which is really
+[117.2s] nice. Kim K2 is a relatively lightweight
+[119.5s] model. Uh and I can ask questions like
+[121.4s] what tools do you have access to?
+[124.6s] Question mark. And then here we can see
+[126.6s] that it's able to do code search. It's
+[128.5s] able to do some system stuff, some web
+[130.3s] stuff, project stuff, file operations.
+[132.6s] So these are all things that this LM can
+[134.6s] talk to. Another thing that I feel
+[136.2s] obliged to mention is that you can also
+[137.8s] just hit tab so you can switch between
+[140.0s] plan and build mode. Uh there's a lot of
+[141.8s] these things that you would expect from
+[143.0s] cloud code. These also exist in open
+[145.4s] code. But what we are interested in is
+[147.2s] running this together with Olama. And in
+[149.4s] order to do that, we are going to have
+[151.1s] to talk a little bit about Olama first.
+[153.4s] So I'm going to get out of this one. I'm
+[155.4s] going to hit Ctrl + C and then I'm just
+[157.2s] going to run Olama list. Now note I
+[159.8s] installed Olama beforehand. And here's
+[161.5s] just a list of models that I've got
+[163.4s] locally. And these are all models that I
+[165.4s] could go ahead and configure. But before
+[167.2s] you do that, there's this one setting
+[168.7s] you got to switch in Olama itself. So if
+[171.3s] you go and open the Olama app, then
+[174.1s] there are these settings that you can
+[175.5s] configure. And the one thing that you
+[177.1s] really want to do is you want to change
+[178.3s] this one default setting. By default,
+[180.3s] the context length is 4K. And that is
+[182.9s] something that Open Code cannot deal
+[185.0s] with. Instead, what you want to do is
+[186.2s] you want to set it quite a bit higher.
+[188.0s] For our demonstration purposes, I think
+[190.1s] uh 64K should suffice. But if you don't
+[193.0s] configure this, you're going to get into
+[194.9s] a pickle really quickly because Open
+[197.0s] Code is going to throw you a bunch of
+[198.4s] errors real quick. So that's the first
+[200.1s] setting we got to take care of. The next
+[201.6s] thing we got to do is uh you want to go
+[203.6s] to the Open Code configuration and that
+[206.3s] will be in theconfig/opencode
+[208.6s] and then I think there's an
+[209.6s] opencode.json file and that file on my
+[212.1s] machine looks a little bit like this.
+[214.4s] Now what you're able to do is you're
+[215.8s] able to configure a few providers
+[217.4s] manually. Here's a provider called
+[219.2s] Olama. You can see that it's using a npm
+[221.8s] package under the hood and it also has
+[223.8s] this base URL and I'm currently pointing
+[226.3s] it to a local host endpoint. So, it's
+[228.5s] running on this machine. You could
+[230.2s] theoretically also point it to another
+[232.0s] server. So, if you have a big machine
+[233.3s] somewhere with a big GPU, uh that's
+[235.0s] something you could also configure. But
+[236.4s] in this case, you know, pretty good Mac.
+[238.2s] So, I'm just going to use what I've got
+[239.3s] locally. And then once you've configured
+[241.2s] the general stuff for your Olama
+[243.4s] provider, next up, what you can do is
+[245.0s] you can configure your models. What's
+[247.3s] important here is that you check the
+[248.9s] names that you provide over here. So,
+[251.6s] for example, I've got gpt- oss colon
+[255.0s] 20b-cloud. This name has to actually
+[257.8s] correspond with a name that Olama likes
+[260.0s] to refer to. Inside of this little JSON
+[262.0s] blob after, you can give it another
+[263.4s] name. And this is the name that you're
+[264.5s] going to see in the menu. But this name
+[266.5s] really does need to correspond. So, if I
+[269.1s] were to go back to the terminal here, if
+[271.2s] I were to do lama list, right? Then
+[273.7s] these are the names that matter. So
+[275.4s] there's the Quen model that I just
+[276.8s] mentioned. There's the GPT open source
+[278.6s] model that I just mentioned. So in
+[280.1s] general, I would say do yourself a
+[281.4s] favor. Uh just copy this, make a hard
+[283.4s] copy, don't invite typos, and then
+[285.8s] you're good to go. There is another
+[287.0s] thing that you want to make sure of
+[288.4s] whenever you're using models from Olama.
+[290.7s] And let me just show that by copying
+[292.2s] this Gemma 31B model. And let me just
+[294.7s] add that model down over here. So that's
+[297.4s] now configured. And I just hit save. If
+[299.8s] I run now to start up open code and I
+[302.1s] hit back slashmodels once again, then
+[304.7s] you should see that indeed Gemma 1B is
+[307.4s] something I can now configure. But uh
+[309.8s] notice what happens when I actually
+[311.0s] select it. Gemma 1B is now selected down
+[313.5s] below over here. So that's cool. I'm
+[314.9s] going to type hello. And boom. We're
+[316.8s] going to get ourselves an error because
+[318.5s] it is saying that Gemma 31B does not
+[321.3s] support tools. To prevent this, I do
+[323.8s] have a bit of advice. If I look at the
+[325.7s] Gemma 3 models over here, you can see
+[327.2s] that it's indeed got vision
+[329.0s] capabilities. It's also available via
+[330.9s] the OAMA cloud, but you instead want to
+[333.4s] go for models that have tools available
+[335.0s] to it. So, if you're going to look for
+[336.4s] models, make sure that you select tools
+[338.5s] here. And then you start looking down
+[340.0s] from the list. It might still be the
+[341.4s] case that it's not fully compatible with
+[343.0s] Open Code. There's all sorts of models
+[344.7s] out there these days, so it's hard to
+[345.8s] give a hard guarantee, but you do want
+[347.4s] to make sure you've got a model that is
+[349.0s] able to call tools. Otherwise, open
+[351.0s] code's not going to be able to
+[352.2s] understand when the LLM wants to
+[353.8s] actually edit files. So, that's a thing
+[355.5s] that the model needs to be trained for.
+[357.0s] That's something you got to keep in the
+[358.0s] back of your mind. Finally, another
+[359.9s] thing that's also good to just uh point
+[361.8s] out, uh, Olama also has a cloud version
+[364.5s] these days. If I go to the terminal and
+[366.7s] if I type Lama list, you will see that
+[368.9s] indeed I have this one connection to a
+[370.7s] GPT model, the open source model that's
+[372.9s] hosted on the cloud. It doesn't have a
+[374.6s] file size because this is something that
+[375.8s] they host. This is really just kind of a
+[377.4s] router that I've downloaded. But if I
+[379.0s] now go to the configuration file again,
+[381.0s] I just have to refer to the name which
+[382.6s] is what I'm doing. And that also means
+[383.8s] that if I go to open code now and if I
+[385.9s] select the model that I'm also able to
+[388.0s] select that cloud model from Olama, I
+[390.3s] can type hello and I get a very quick
+[392.6s] reply back. Uh so that's all pretty cool
+[394.9s] and good too. So this is how you connect
+[397.4s] Olama models to open code. And again
+[399.4s] it's worth emphasizing uh you can
+[401.1s] configure all sorts of models. You don't
+[402.7s] have to necessarily go with Olama. You
+[405.0s] can also go with open router or open
+[407.2s] code zen. you don't have to run it
+[408.6s] locally. Uh but the fact that you can is
+[410.7s] definitely uh nice and also pretty fun.
+[412.9s] So at this point we have Olama talking
+[414.5s] to open code and the next thing that I
+[416.2s] would like to do is I would like to
+[417.4s] configure MIMO to also talk to open
+[419.2s] code. And to do that there is this one
+[420.6s] extra thing that I got to do. So I'm
+[422.0s] going to run Mimo with UVX. That way
+[424.2s] it's going to just start a notebook uh
+[425.7s] with its own little sandbox and I don't
+[427.4s] have to start a virtual environment or
+[428.7s] anything like that. I'm going to tell
+[430.0s] Mimo to edit a new notebook. I'm going
+[432.0s] to tell it to do this in sandbox mode.
+[433.9s] This is going to make a UV environment
+[435.4s] just for that notebook. But the final
+[437.0s] thing I want to do is I want to set the
+[438.3s] watch flag. With this watch flag set,
+[440.9s] the browser, the front end, that's going
+[442.8s] to auto update whenever it detects a
+[445.4s] file change. And that's going to make
+[446.6s] sure that I don't have to manually
+[448.0s] refresh the browser all the time. And uh
+[450.5s] yeah, let's just go for a fun little
+[452.2s] file here. I was working on this one
+[454.2s] little demo a little bit earlier. This
+[456.2s] Taylor series explainer. This was
+[457.9s] something that was generated with open
+[459.3s] code actually. But there you go. The
+[460.9s] notebook is now open. Uh we can now
+[462.7s] start exploring this with an agent that
+[464.3s] is using open code under the hood. Uh
+[466.4s] there are some things that I can slide
+[468.1s] around some UI elements. I can also run
+[469.9s] this in app mode and this is kind of
+[471.4s] like one of those math explainers. We
+[473.0s] can explain tailaylor series. Let's
+[474.9s] maybe just zoom out a smidge to explain
+[477.0s] that. I can specify a higher degree of a
+[479.7s] tailor approximation. We can see the
+[481.1s] charts update. So okay, that's a pretty
+[482.9s] fun notebook. But what I would like to
+[484.2s] do now though is edit this notebook with
+[486.6s] a open code agent. Now to do that what
+[489.4s] you got to do is you got to go to this
+[490.6s] chat and agents panel and in particular
+[494.8s] got to zoom out a little bit. We want to
+[496.2s] use this open code beta over here. You
+[498.3s] can hit this run in terminal button.
+[500.0s] That's going to open up this side panel
+[501.9s] over here that starts up a terminal and
+[504.1s] we are going to start this standard IO
+[506.6s] to websocket connection that is going to
+[508.9s] connect to open code. You don't really
+[511.0s] have to think too much about it. You
+[512.0s] just have to run it and once it starts
+[514.0s] listening then we can start a new
+[515.8s] session and we can start a new open code
+[517.9s] session. Uh it's going to take a small
+[519.5s] moment to uh make the connection but
+[521.4s] once it's made we are indeed good.
+[523.8s] Before typing anything to the agent
+[525.3s] there's a few things that we can
+[526.4s] configure from here. One thing is that
+[528.2s] we can say well let's start in plan mode
+[530.2s] as opposed to starting in build mode
+[531.8s] right away. Plan mode has a benefit that
+[533.7s] we can maybe confirm a plan before we
+[535.3s] actually start writing code. Uh but
+[536.7s] starting in build mode in this case I
+[538.2s] think it's just going to be fine. And
+[539.6s] another thing that we can do is we can
+[541.1s] change the model. And if we scroll all
+[542.9s] the way at the bottom here, we can see
+[544.2s] all the open code Zen models that are at
+[546.5s] our disposal. But if you were to scroll
+[549.0s] around here as well, you can also see
+[550.7s] that we have a Olama model at our
+[552.9s] disposal. So I can connect to my local
+[555.0s] Olama model, Quen 38B. Now, for this
+[558.2s] demo, what I think I'm just going to go
+[559.4s] ahead and do is I'm just going to go
+[560.6s] with an open code Zen model. And the
+[563.0s] main reason why I'm doing it is that I'm
+[564.3s] also recording something uh right now.
+[566.3s] But I just want to show you that this
+[567.8s] connection over here does work. And
+[569.8s] let's also say that I'm interested in
+[571.1s] making a very small change. Uh let's say
+[573.4s] that this function selector over here,
+[576.2s] let's update uh the function selector so
+[579.0s] it has more functions. Let's see what
+[581.5s] happens when I run this. When you run
+[583.4s] it, by the way, you should see a lot of
+[584.7s] things stream by down below over here in
+[586.6s] the terminal. I can also confirm by
+[588.5s] reading here that it's reading something
+[590.1s] and that it's making some edits. You can
+[592.0s] also see it make some tool calls which
+[593.5s] are visible uh in between segments here.
+[596.2s] You can also see that it's thinking and
+[597.8s] plotting and I think it even spotted a
+[599.4s] mistake that it's trying to fix because
+[600.9s] watch mode is turned on. You can also
+[602.3s] see some of the coding updates appear
+[603.9s] live. But at the end it's saying it's
+[605.8s] done. It's added a few new functions. So
+[607.4s] let's run the notebook. Let's go to this
+[609.5s] dropdown. I can indeed see that there
+[611.3s] are more functions that have been added.
+[613.8s] And when I scroll down to the plot I can
+[615.6s] also see that indeed there has been a
+[618.1s] update. And if I'm not mistaken, I can
+[620.1s] also change the slider here. And yeah,
+[622.6s] let's move this little terminal thing
+[623.9s] down. But as I move around over here, I
+[626.4s] can also see the chart update just from
+[628.5s] eyeballing this. Uh, this looks correct.
+[630.9s] So there you go. Open code gives you a
+[632.9s] lot of freedom when it comes to picking
+[634.2s] different models. And again, because
+[635.8s] Open Code can handle the agentic parts
+[637.8s] like tool calling for you, it really
+[639.4s] gives you a compelling alternative to
+[641.1s] tools like Open Code, especially if you
+[643.1s] have a beefy machine at home that might
+[644.5s] run O Lama that can work out especially
+[646.3s] nice for you. But there are lots of
+[647.8s] other providers these days for these
+[649.0s] open models that you can consider as
+[651.0s] well. So, if you're keen to use open
+[652.6s] models more, just know that in Mimo we
+[654.6s] have an ACP connection, so you can use
+[656.6s] it right away

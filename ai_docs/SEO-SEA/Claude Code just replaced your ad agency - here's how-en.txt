@@ -1,0 +1,356 @@
+[0.2s] If you're struggling with your ads,
+[2.0s] don't worry. I got you. Meet Claudy Ads,
+[5.6s] a comprehensive paid advertising audit
+[7.7s] optimization skill for cloud code. It
+[10.1s] covers Google Ads, Meta, YouTube,
+[12.6s] LinkedIn, Tik Tok, and Microsoft ads
+[14.6s] with over 190 audit checks, industry
+[17.4s] specific templates, and also parallel
+[19.4s] sub agent delegation. Quite easy to
+[21.8s] install. You can just copy this. You can
+[23.4s] open your terminal. You can just paste
+[24.8s] it here. Boom. And done. Let me show you
+[27.6s] how it works. Start. It's very easy
+[30.2s] guys. Check it out. After you install
+[31.7s] the skill and you need to launch cloud
+[33.6s] code in any of your IDE that being
+[35.7s] cursor, anti-gravity, warp or even your
+[38.2s] terminal as you see right here. Yeah,
+[39.9s] I'm going to just put here forward slash
+[41.8s] ads for example. My goodness ads right
+[44.2s] here. And I'm going to choose let's say
+[45.9s] ads plan for the sake of this demo. So
+[48.2s] right now what will happen? I'm going to
+[49.5s] plan an ad for let's say for my SAS uh
+[52.9s] for ranking standard pro because it's
+[54.7s] brand new. It's there and I would like
+[56.6s] to promote it. I want to build that
+[58.3s] brand awareness. So here I'm going to
+[60.4s] just even zoom in so you'll be able to
+[61.6s] see like it's asking what type of
+[63.4s] business are you you're are you planning
+[66.2s] ads for SAS e-commerce local B2B. I
+[69.2s] would choose because it's a SAS
+[70.2s] Frankenstein is a SAS. What is your
+[71.8s] primary advertising goal here? I would
+[73.6s] choose brand awareness because it's it's
+[75.0s] it's just brand new. Yeah, it's asking
+[77.5s] also what is your advertising budget
+[79.6s] range under 5K over 20 or 100? We're
+[82.5s] going to just choose other. I'm going to
+[83.8s] put here 1,00 100 $1,000 for example per
+[88.4s] month here. Are you currently running
+[89.7s] any paid ads? No. Starting fresh. Submit
+[92.2s] answer. And that's it. Right now, oh my
+[94.3s] goodness. Right now the the agent is uh
+[97.4s] is running. I just I just pressed the
+[99.2s] wrong button, guys. So right now the
+[100.9s] agent is running and straight away it's
+[102.2s] asking, hey, can I read these? Yes. Yes.
+[103.8s] Yes. We're just going to put even this.
+[105.0s] I'm going to change to bypass permission
+[107.0s] right here. So don't need to always
+[108.2s] press on accept. So he's reading these
+[111.0s] files basically the skills. How can I
+[112.7s] just show right here? So he's reading
+[114.3s] the SAS MD file, the budget allocation
+[116.7s] and also conversion tracking. Yeah, cuz
+[118.9s] before he asked us some questions, we
+[120.5s] answer. We just press yes, no, yes, no,
+[122.3s] maybe, perhaps. And then afterwards, he
+[124.0s] checked his skills. He's like, uh-huh.
+[125.5s] Okay, so it's a SAS. He has a budget
+[127.4s] over one one around $1,000, give or
+[130.5s] take, and other questions. Right now,
+[132.4s] straight away, he's asking another list
+[134.2s] of questions right now. Yeah. So, is
+[135.8s] your SAS product at B2B selling uh to
+[138.3s] businesses or B2C selling to consumers?
+[140.9s] So we're going to put here both PLG. No,
+[143.0s] hey, can you produce short video
+[144.2s] content? So hey, can you or you cannot I
+[146.3s] mean anyone can build can create short
+[148.4s] videos but uh some of them maybe cannot.
+[151.2s] Maybe they're too shy to speak back
+[152.6s] right now. Yeah. So let's say here I'm
+[154.2s] going to choose yes in house I can
+[155.9s] create videos for internal sources. Next
+[157.6s] is choosing what does your SAS product
+[159.2s] do and who is the ideal customer. So
+[162.3s] here I'm going to just put here uh check
+[164.5s] rankenstein.pro
+[166.2s] website. Yeah because this is the
+[167.9s] website of rankenstein.pro. I mean it's
+[170.2s] more than enough in this case scenario
+[171.2s] if let's say if you're a plumber or if
+[173.0s] you have plumber or some local other
+[174.7s] local service or maybe an e-commerce
+[176.1s] site you can just put your website link
+[177.9s] and as you can see right now here you
+[180.0s] can see that hey it's web patching right
+[181.5s] now running pro which is the website
+[183.3s] itself then he's thinking so here you
+[185.7s] can see like hey now I have all the data
+[188.1s] now I have all the data I need let me
+[189.7s] craft a realistic honest strategy for
+[191.9s] SAS company with $1,000 per month budget
+[194.1s] focused on brand awareness starting
+[195.6s] fresh yeah based on the questions that
+[197.5s] we answered before and here is key
+[199.0s] consideration s 1,000 per month brand
+[201.3s] awareness starting fresh need to be very
+[203.6s] focused one platform max maybe maybe two
+[205.9s] of them right now yeah so with 1k per
+[208.0s] month for sales brand awareness so
+[209.5s] LinkedIn is too expensive Google search
+[211.4s] is conversion focused meta Facebook
+[213.5s] Instagram is the best for awareness and
+[215.0s] low budgets and YouTube could work for
+[217.0s] awareness but needs video content Tik
+[218.8s] Tok will work if they have video content
+[221.0s] capability right now yeah this is also
+[223.5s] based on his internal knowledge and now
+[225.8s] he's starting crafting the ads for us so
+[228.2s] look at that So even he's thinking I'm
+[229.8s] going to even again zoom in so we be
+[231.0s] able to see. So now I have a clear
+[232.5s] picture ranking pro a SEO content
+[235.0s] engine. So if I'm going to go right now
+[236.7s] to rankstein pro just going show you
+[238.7s] around. So I'm going to go here ranking
+[240.8s] pro. This is one of the ses we're
+[242.7s] currently building me and Benjamin. Um
+[244.6s] it's basically it's a blog creator right
+[246.3s] now. Yeah. So he scripted the site. So
+[248.3s] he enter on this website. He checked the
+[250.0s] homepage. He already got exactly what
+[251.9s] this business is about and then he
+[253.7s] started crafting the the ads plan for
+[256.4s] us. I'm going to zoom in back so I'll be
+[258.0s] able to see exactly his thinking because
+[259.8s] it's very important guys. Uh maybe if
+[261.9s] you're used let's say to these workflows
+[264.2s] perhaps. Yes. Nan is also amazing. I
+[266.2s] will not deny it. But here I mean if you
+[268.2s] want to go to the new age cuz I would
+[270.1s] say these agentic workflows they're
+[271.8s] fantastic if you know exactly how to set
+[273.7s] them up. Yeah. So he created a plan for
+[275.8s] us. So he's like hey update to create an
+[278.2s] ad strategy uh campaign architecture
+[281.2s] create a budget plan and then a creative
+[283.9s] brief right here. So maybe let's say you
+[285.8s] don't want to go for LinkedIn. Maybe you
+[287.3s] want to go for let's say YouTube only
+[289.8s] YouTube. You can definitely just say to
+[291.6s] a message, hey listen, I want to go only
+[293.4s] for YouTube. I'm damn all in on YouTube
+[296.4s] for example. Right now you or maybe if
+[297.5s] you want to go only for Google ads it's
+[299.2s] just a matter of sentence if it's just a
+[301.2s] matter of thoughts a pro a prompt
+[303.1s] really. So just put a prompt anything
+[305.0s] you want you can do that. Also if you
+[306.9s] want to have a PDF you can do PDF. If
+[309.2s] you want to connect it through an MCP
+[311.0s] server strapped away to Google Analytics
+[312.9s] you can also do that. So you can easily
+[315.0s] just build on top of this uh cloudy ads
+[318.2s] skill with ease. So anything you want
+[320.6s] can be done only if you request it
+[323.0s] properly. So for that it's required a
+[324.7s] little bit of content engineering but I
+[326.4s] think anyone can do that because I think
+[328.2s] you're texting every day right on
+[329.4s] WhatsApp or messengers or Instagram. So
+[331.6s] definitely you can do that. You just
+[333.1s] give it some time. you just uh check
+[335.3s] here and there and it going to give for
+[337.0s] you the perfect perfect plan and so you
+[341.2s] can create the best performing ads right
+[344.6s] so I'm going to just stop right now I'm
+[345.8s] going to fast forward so we're going to
+[347.4s] see the results okay guys so currently
+[350.1s] he has finished and let's see exactly
+[351.8s] what he crafted right here I'm going to
+[353.4s] even zoom in right now and here we have
+[355.0s] a strategy overview here is platform
+[356.8s] meta only Facebook and Instagram the
+[358.6s] right call at $1,000 per month so he
+[361.8s] thought about our let's say budget In
+[364.0s] this case scenario was 1,000 cuz if I
+[365.8s] would have provided let's say maybe
+[366.9s] 2,000 3,000 or 4,000 of course he would
+[369.2s] recommend maybe Google ads or any other
+[370.9s] ads and Google search 1.5k if you want
+[374.2s] to go but are too expensive for this
+[375.9s] budget. So expected results at 1K per
+[378.5s] month is 70 80,000 impressions per
+[380.9s] month. 11K video views okay per per
+[384.4s] month uh 200 400 website visits per
+[386.6s] month and also cost per 1k reaches
+[388.7s] around $25 to $33 which is quite well
+[391.8s] you know so deliverable created but here
+[393.4s] we have the ad strategy it's a full
+[395.1s] strategic plan so competitive landscape
+[397.7s] platform rational. So if I'm going to
+[398.8s] open this right now here you can see
+[400.5s] it's a markdown file by the way because
+[402.7s] Claudia he likes markdown. He's digging
+[404.7s] markdown like crazy. Even his skills are
+[406.5s] in markdown. But let's say maybe for you
+[408.6s] cuz maybe you're a nontechnical person.
+[410.3s] You don't like markdown. Guys, don't
+[411.7s] worry. You just close this. You go here
+[413.8s] and say, "Hey, I want to have a PDF well
+[417.6s] set and designed with graphs for example
+[421.1s] right now." Yeah. And that's it. Right
+[423.7s] now, we can just wait for it to craft a
+[425.0s] PDF. So, it's going to be easier for us
+[426.9s] to read it. And if you want to have
+[428.8s] anything else except the images and
+[430.6s] videos because cloud cannot generate
+[432.3s] those images yet. or if you want to
+[434.1s] maybe connect an MCP server to it or
+[436.5s] maybe some API keys to generate those
+[438.0s] videos even you can do that here. The
+[440.6s] only limit is your imagination. So let's
+[443.0s] wait for a bit. If you want to convert
+[444.4s] now everything into a well set uh PDF
+[447.0s] and I'm going to show you in a bit. Okay
+[449.2s] guys, so the agent just now finished and
+[450.9s] let me show you exactly what I popped.
+[452.2s] But before that, let's see through his
+[454.2s] thinking for you to understand exactly
+[455.8s] how he generated the PDF. I'm going to
+[457.7s] try to zoom in. So let me show you just
+[459.3s] around. So here he's like hey I'll
+[461.0s] create a professional design HTML report
+[462.6s] charts and convert it to PDF right here.
+[465.0s] So he's going he's doing his thinking
+[466.8s] he's analyzing and then he's creating
+[468.7s] the Python script by the way uh for the
+[471.7s] PDF uh generation and then he's
+[473.8s] generating the PDF report with charts.
+[475.9s] Going more down he has created the PDF
+[478.0s] and then he's generating the PDF with
+[479.6s] charts and then he's reading each and
+[481.8s] every part of PDFs right here. If you
+[483.7s] want to open even he created here the
+[485.0s] the charts etc. So he's like, "Oh
+[486.6s] wait a moment. Uh there are a few stuff
+[488.2s] which are not proper, not well arranged.
+[490.0s] Let me fix that." And then he checked
+[491.6s] those and he fixed those by himself. I
+[494.0s] was not here at all. So this whole
+[495.8s] process took like around how long? Maybe
+[498.6s] 3 minutes I would say for him to
+[500.3s] generate this full PDF. So let me try to
+[502.4s] open it right here. Where was it? Right
+[505.4s] here. This is exactly what sort report
+[508.4s] he has created even in the style of
+[509.8s] Frankenstein. So let's see around. So
+[511.5s] paid advertising strategy. Super ranking
+[513.4s] standard pro AI SEO content engine
+[516.3s] strategic plan right monthly budget
+[518.8s] platform meta goal awareness timeline 12
+[521.6s] weeks cool cool nice prepare for Daniel
+[524.4s] and Benjamin here we go right now so
+[527.0s] here we have the executive summary for
+[528.4s] the rockenstein bud budget reality right
+[530.4s] now he's also competitive landscape he
+[532.4s] checked for competitors guys how cool is
+[535.0s] that so he's not just fluffing here not
+[537.0s] just oh my goodness he researched online
+[540.2s] the internet he checked for competitors
+[542.6s] And beautiful you got we got also
+[544.7s] information about the competitors also
+[546.3s] right here and going more down messaging
+[549.0s] wedge. So the only AI content engine
+[550.6s] that starts with SER research, not the
+[553.4s] blank prompt because that's correct. And
+[555.6s] we have the overall ads plan right now
+[558.2s] even with charts even in our own style
+[560.4s] if really okay launch now lowest CPM is
+[563.4s] in January January March. So let's say
+[565.9s] it want to start right now. Um do wow
+[568.4s] wow I mean beautiful beautiful report
+[571.2s] beautiful charts if really I mean this
+[573.5s] is mostly like what a what an ad agency
+[575.5s] is doing and afterwards I can just build
+[579.1s] on top of that we have a full plan of
+[581.4s] action in regards to advertisement is
+[583.8s] giving us metrics is giving us what to
+[585.5s] do I'm like and of course if you want
+[587.2s] something else maybe you want to go for
+[588.6s] meta you can just easily say hey listen
+[590.7s] I don't want to go for meta but I want
+[592.3s] to go for Google ads with YouTube I'm
+[594.6s] going to make a lot of shorts and I want
+[596.3s] to do it for 2 weeks. Let's plan that.
+[598.9s] Of course, you can do that one also. As
+[600.6s] I mentioned before, your only limit is
+[602.7s] your imagination. So, with that, let's
+[604.6s] say if you have maybe some existing ads,
+[606.6s] maybe I'll even I'll try the way even to
+[608.7s] launch this on the current ads video.
+[611.0s] So, I'm going to use cloudy ads to run
+[613.0s] ads on this video. So, if you've seen
+[614.6s] this video through an ad, I mean, you
+[616.1s] can see exactly it targeted you in a
+[619.2s] way. But, uh just saying you like, hey,
+[621.8s] everything is possible. It's not like,
+[623.4s] oh my goodness, it's put in stone. I
+[625.0s] will do only these. Uh if you want to
+[627.0s] have anything else, maybe you want to
+[628.3s] have some feedback on the ads that
+[629.9s] you're currently creating or the you the
+[631.8s] videos on Tik Tok or whatever you're
+[633.5s] doing, even pictures. And if you want to
+[635.4s] have maybe some text, some titles, some
+[637.0s] descriptions, some research in regards
+[638.6s] to those ads, Cloudy Ads can do that for
+[641.0s] you. So even now, I say like, hey, I
+[642.3s] want to go for YouTube. How should we
+[643.6s] speed the $1,000 between Google search
+[645.6s] and YouTube? Right now, yeah, let's go
+[646.9s] for 6040 recommended as per cloudy code.
+[649.4s] He has that knowledge because his whole
+[651.7s] base knowledge I'm going to show right
+[653.0s] here. It's based on the search. Here we
+[655.1s] have four documents. Again, I'm going to
+[657.0s] zoom in. So, four documents right here
+[659.8s] that uh this whole agent skill was
+[662.6s] created from. It's over 2,500 websites
+[666.1s] by the way, give or take, in regards to
+[667.8s] the best ads practices. And again, of
+[670.2s] course, it's in markdown because Cloudy
+[671.5s] likes markdown. And guys, this is just
+[673.7s] one example how I'm planning ads with
+[675.9s] cloud ads. But of course, you can do a
+[678.9s] lot more. I will even try to zoom in
+[681.5s] this part right here. You can also read
+[683.2s] the git. So you can go once again to the
+[684.7s] git, try to install these ads if you
+[686.8s] want to run any sort of ads. You don't
+[688.1s] need to have a budget for,000 just for
+[689.5s] information. You can do even for $50 or
+[692.0s] $100 if you want to bring some more
+[693.7s] clients. But I know for sure that this
+[695.8s] scale will definitely help you in the
+[697.8s] long run. So I'm going to make myself a
+[699.1s] little bit bigger right here. Almost
+[701.4s] almost almost almost maybe here like
+[703.1s] this and like this guys once again this
+[705.8s] is cloudy ads as you see right here it's
+[708.6s] the ultimate ads agency skill you can
+[711.6s] say for cloudy code uh you can just
+[714.6s] download it is there for free for you
+[717.1s] guys so uh you can run it you can test
+[719.6s] it you can make it even better try to
+[721.0s] fork it try to maybe make some
+[722.4s] improvements maybe not only Python maybe
+[724.3s] you can add also here some MCP servers
+[726.6s] but it's there and I hope you're going
+[728.6s] to like it drop a like drop a comment
+[731.0s] and see you next time.
