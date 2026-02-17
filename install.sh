@@ -31,6 +31,7 @@ META_AGENT_SKILL_DIR="$HOME/.config/opencode/skill/meta-agent"
 SKILL_CREATOR_SKILL_DIR="$HOME/.config/opencode/skill/skill-creator"
 MEMORY_SKILL_DIR="$HOME/.config/opencode/skill/opencode-memory"
 COMMANDS_DIR="$HOME/.config/opencode/commands"
+PLUGIN_DIR="$HOME/.config/opencode/plugin"
 
 SCRIPTS_DIR="$INSTALL_DIR/scripts"
 MASTERY_SKILL_FILE="$MASTERY_SKILL_DIR/SKILL.md"
@@ -44,6 +45,7 @@ echo "  meta-agent:       $META_AGENT_SKILL_DIR"
 echo "  skill-creator:   $SKILL_CREATOR_SKILL_DIR"
 echo "  opencode-memory: $MEMORY_SKILL_DIR"
 echo "  commands:        $COMMANDS_DIR"
+echo "  plugin:          $PLUGIN_DIR"
 echo ""
 
 # Skip confirmation if -y flag provided
@@ -69,6 +71,7 @@ mkdir -p "$SKILL_CREATOR_SKILL_DIR"
 mkdir -p "$MEMORY_SKILL_DIR"
 mkdir -p "$SCRIPTS_DIR"
 mkdir -p "$COMMANDS_DIR"
+mkdir -p "$PLUGIN_DIR"
 
 echo "📥 Downloading latest version from GitHub..."
 TEMP_DIR=$(mktemp -d)
@@ -129,6 +132,15 @@ else
     echo "ℹ️  No commands to install"
 fi
 
+echo ""
+echo "📋 Copying plugin..."
+if [ -d "$TEMP_DIR/src/plugin" ]; then
+    cp -r "$TEMP_DIR/src/plugin/"* "$PLUGIN_DIR/" 2>/dev/null || true
+    echo "✓ Plugin copied to:         $PLUGIN_DIR"
+else
+    echo "ℹ️  No plugin to install"
+fi
+
 rm -rf "$TEMP_DIR"
 
 echo "✓ Scripts copied to:         $SCRIPTS_DIR"
@@ -172,6 +184,7 @@ echo "  - opencode-mastery: $MASTERY_SKILL_DIR"
 echo "  - meta-agent:       $META_AGENT_SKILL_DIR"
 echo "  - skill-creator:    $SKILL_CREATOR_SKILL_DIR"
 echo "  - opencode-memory:  $MEMORY_SKILL_DIR"
+echo "  - Plugin:           $PLUGIN_DIR"
 echo "  - Commands:         $COMMANDS_DIR"
 echo "  - Docs:             $INSTALL_DIR/docs"
 echo "  - Memory:           $INSTALL_DIR/memory"
