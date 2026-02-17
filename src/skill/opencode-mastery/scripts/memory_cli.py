@@ -17,6 +17,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import subprocess
 import sys
 from pathlib import Path
 
@@ -213,8 +214,93 @@ def cmd_compact(args):
     return 0
 
 
+def _extract_session_context(project_root: Path) -> str | None:
+    """Extract context from recent session activity (git commits, daily logs)"""
+    context_parts = []
+
+    # 1. Try recent git commits
+    try:
+        result = subprocess.run(
+            ["git", "log", "-3", "--oneline", "--format=%s"],
+            capture_output=True,
+            text=True,
+            cwd=project_root,
+            timeout=5,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            commits = result.stdout.strip().split("\n")
+            if commits:
+                context_parts.append(f"Recent work: {commits[0]}")
+    except (subprocess.SubprocessError, FileNotFoundError):
+        pass
+
+    # 2. Try recent daily log
+    daily_dir = project_root / ".memory" / "daily"
+    if daily_dir.exists():
+        try:
+            daily_files = sorted(daily_dir.glob("*.md"), reverse=True)
+            if daily_files:
+                content = daily_files[0].read_text()[:500]
+                if content.strip():
+                    # Extract key terms from log
+                    lines = [
+                        l.strip("- []\n") for l in content.split("\n") if l.strip()
+                    ]
+                    if lines:
+                        context_parts.append(f"Session: {lines[0][:80]}")
+        except Exception:
+            pass
+
+    return " | ".join(context_parts) if context_parts else None
+
+
+def _scan_for_duplicates(
+    memory_file: Path, text: str, threshold: int = 80
+) -> str | None:
+    """Scan memory for duplicate or similar entries using fuzzy matching"""
+    if not memory_file.exists():
+        return None
+
+    try:
+        post = frontmatter.load(str(memory_file))
+        content = post.content
+
+        # Extract existing entries
+        import re
+
+        entries = re.findall(r"- \[\d{4}-\d{2}-\d{2}\] [A-Z]+: (.+)", content)
+
+        # Simple similarity check (no rapidfuzz dependency)
+        text_lower = text.lower()
+        text_words = set(text_lower.split())
+
+        for entry in entries:
+            entry_lower = entry.lower()
+            entry_words = set(entry_lower.split())
+
+            # Calculate word overlap
+            common_words = text_words & entry_words
+            if not common_words:
+                continue
+
+            # Check for high overlap
+            overlap_ratio = len(common_words) / max(
+                len(text_words), len(entry_words), 1
+            )
+            if overlap_ratio > 0.7:
+                return entry
+
+            # Check if one contains the other
+            if text_lower in entry_lower or entry_lower in text_lower:
+                return entry
+
+        return None
+    except Exception:
+        return None
+
+
 def cmd_remember(args):
-    """Remember something - interactive mode for better context"""
+    """Remember something - with session context extraction and duplicate detection"""
     project_root = Path.cwd()
     memory_file = project_root / ".memory.md"
 
@@ -237,27 +323,63 @@ def cmd_remember(args):
         "n": ("NOTE", "General note or observation"),
     }
 
-    # Check if context is too short
     MIN_CONTEXT_LENGTH = 30
-    needs_more_context = len(text) < MIN_CONTEXT_LENGTH
 
-    if needs_more_context:
-        print(f"\n⚠️  Context too short ({len(text)} chars, need {MIN_CONTEXT_LENGTH}+)")
-        print(f'   Current: "{text}"')
-        print("\n   Please provide more context:")
-        print("   - What is this about?")
-        print("   - Why is it important?")
-        print("   - When should this be used?")
+    # Step 1: Check for duplicates first
+    duplicate = _scan_for_duplicates(memory_file, text)
+    if duplicate:
+        print(f"\n⚠️  Similar memory already exists:")
+        print(f"   → {duplicate[:100]}...")
         print()
         try:
-            additional = input("   Extended description: ").strip()
-            if additional:
-                text = f"{text}: {additional}"
+            confirm = input("   Save anyway? [y/N]: ").strip().lower()
+            if confirm != "y":
+                print("   Skipped - no duplicate saved")
+                return 0
         except (EOFError, KeyboardInterrupt):
-            print("\n   Cancelled")
-            return 1
+            print("\n   Skipped")
+            return 0
 
-    # Ask for category
+    # Step 2: If context too short, try to extract from session
+    if len(text) < MIN_CONTEXT_LENGTH:
+        session_context = _extract_session_context(project_root)
+
+        if session_context:
+            # Found context - suggest enriched text
+            enriched_text = f"{text} ({session_context})"
+            print(f"\n💡 Context extracted from session:")
+            print(f'   Input:   "{text}"')
+            print(f'   Enriched: "{enriched_text}"')
+            print()
+            try:
+                use_enriched = input("   Use enriched context? [Y/n]: ").strip().lower()
+                if use_enriched != "n":
+                    text = enriched_text
+            except (EOFError, KeyboardInterrupt):
+                text = enriched_text
+
+        # Still too short and no session context?
+        if len(text) < MIN_CONTEXT_LENGTH:
+            print(
+                f"\n⚠️  Context too short ({len(text)} chars, need {MIN_CONTEXT_LENGTH}+)"
+            )
+            print(f'   Current: "{text}"')
+            print("\n   Please provide more context:")
+            print("   - What is this about?")
+            print("   - Why is it important?")
+            print()
+            try:
+                additional = input("   Extended description: ").strip()
+                if additional:
+                    text = f"{text}: {additional}"
+                if len(text) < MIN_CONTEXT_LENGTH:
+                    print("   Still too short - cancelled")
+                    return 1
+            except (EOFError, KeyboardInterrupt):
+                print("\n   Cancelled")
+                return 1
+
+    # Step 3: Ask for category
     print("\n   Select category:")
     for key, (cat_name, cat_desc) in CATEGORIES.items():
         print(f"   [{key}] {cat_name} - {cat_desc}")
@@ -271,13 +393,12 @@ def cmd_remember(args):
 
     category = CATEGORIES.get(choice, CATEGORIES["n"])[0]
 
-    # Format entry
+    # Step 4: Save to memory
     from datetime import datetime
 
     timestamp = datetime.now().isoformat().split("T")[0]
     formatted_entry = f"\n- [{timestamp}] {category}: {text}"
 
-    # Save to memory file
     post = frontmatter.load(str(memory_file))
     post.content = post.content + formatted_entry
     frontmatter.dump(post, str(memory_file))
