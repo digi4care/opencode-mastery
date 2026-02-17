@@ -214,7 +214,7 @@ def cmd_compact(args):
 
 
 def cmd_remember(args):
-    """Remember something"""
+    """Remember something - interactive mode for better context"""
     project_root = Path.cwd()
     memory_file = project_root / ".memory.md"
 
@@ -228,15 +228,61 @@ def cmd_remember(args):
         print("No .memory.md found. Run: memory on")
         return 1
 
+    # Categories for organizing memory
+    CATEGORIES = {
+        "w": ("WORKFLOW", "Process or sequence of steps"),
+        "c": ("CONVENTION", "Project-specific rule or pattern"),
+        "b": ("BUGFIX", "Bug and its solution"),
+        "t": ("TECHNICAL", "Technical detail or implementation"),
+        "n": ("NOTE", "General note or observation"),
+    }
+
+    # Check if context is too short
+    MIN_CONTEXT_LENGTH = 30
+    needs_more_context = len(text) < MIN_CONTEXT_LENGTH
+
+    if needs_more_context:
+        print(f"\n⚠️  Context too short ({len(text)} chars, need {MIN_CONTEXT_LENGTH}+)")
+        print(f'   Current: "{text}"')
+        print("\n   Please provide more context:")
+        print("   - What is this about?")
+        print("   - Why is it important?")
+        print("   - When should this be used?")
+        print()
+        try:
+            additional = input("   Extended description: ").strip()
+            if additional:
+                text = f"{text}: {additional}"
+        except (EOFError, KeyboardInterrupt):
+            print("\n   Cancelled")
+            return 1
+
+    # Ask for category
+    print("\n   Select category:")
+    for key, (cat_name, cat_desc) in CATEGORIES.items():
+        print(f"   [{key}] {cat_name} - {cat_desc}")
+    print()
+
+    try:
+        choice = input("   Category [w/c/b/t/n] (default: n): ").strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        print("\n   Cancelled")
+        return 1
+
+    category = CATEGORIES.get(choice, CATEGORIES["n"])[0]
+
+    # Format entry
     from datetime import datetime
 
     timestamp = datetime.now().isoformat().split("T")[0]
+    formatted_entry = f"\n- [{timestamp}] {category}: {text}"
 
+    # Save to memory file
     post = frontmatter.load(str(memory_file))
-    entry = f"\n- [{timestamp}] {text}"
-    post.content = post.content + entry
+    post.content = post.content + formatted_entry
     frontmatter.dump(post, str(memory_file))
-    print(f"Remembered: {text}")
+
+    print(f"\n✓ Remembered: [{category}] {text}")
     return 0
 
 
