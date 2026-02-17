@@ -95,29 +95,22 @@ Shows current memory status including:
 
 ```bash
 cd /media/digi4care/ExtDrive/projects/ai/opencode-mastery
-python src/skill/opencode-mastery/scripts/memory_cli.py <command>
+uv run ~/.ai_docs/opencode/scripts/memory_cli.py <command>
 ```
 
 Example:
 
-- `python src/skill/opencode-mastery/scripts/memory_cli.py status`
-- `python src/skill/opencode-mastery/scripts/memory_cli.py compact`
-- `python src/skill/opencode-mastery/scripts/memory_cli.py remember mijn tekst`
+- `uv run ~/.ai_docs/opencode/scripts/memory_cli.py status`
+- `uv run ~/.ai_docs/opencode/scripts/memory_cli.py compact`
+- `uv run ~/.ai_docs/opencode/scripts/memory_cli.py remember mijn tekst`
 
 ## Memory System Location
 
-**Scripts**: `src/skill/opencode-mastery/scripts/memory/`
-
-**Key files**:
-
-- `project_memory_manager.py` - Per-project .memory.md
-- `global_manager.py` - Global memory
-- `compaction_engine.py` - Compaction
-- `mechanisms/` - 4 mechanisms
+**Scripts**: `~/.ai_docs/opencode/scripts/`
 
 **Project memory**:
 
-- `.memory.md` - Config & semantic memory
+- `.memory.md` - Config & semantic memory (in project root)
 - `.memory/daily/` - Daily logs
 - `.memory/snapshots/` - Session snapshots
 
