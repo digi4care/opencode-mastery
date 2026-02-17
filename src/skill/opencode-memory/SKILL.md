@@ -1,9 +1,35 @@
 ---
 name: opencode-memory
 description: Persistent memory system with .memory.md, compaction, and cross-project sync
+triggers:
+  - "memory"
+  - ".memory.md"
+  - "onthouden"
+  - "remember"
+  - "persistent memory"
+  - "context onthouden"
+  - "wat weet je"
+  - "remember this"
+  - "tell me about"
 ---
 
 # OpenCode Memory System
+
+## Auto-Activation
+
+**When `.memory.md` exists in project root → I activate automatically!**
+
+```
+project/
+├── .memory.md    → Memory plugin activates
+└── src/
+```
+
+If a `.memory.md` file exists in your project root, I will:
+
+1. Automatically load on session start
+2. Enable all memory features
+3. Show "Memory: Enabled" in status
 
 ## What I Do
 
@@ -89,21 +115,22 @@ When you invoke memory commands, use these:
 /what do you know about <topic> # Query memory
 ```
 
-### 4. Memory Scripts Location
+### 4. Memory Plugin Location
 
 The memory system is located at:
 
 ```
-src/skill/opencode-mastery/scripts/memory/
+src/skill/opencode-memory/src/
 ```
 
 Key modules:
 
-- `project_memory_manager.py` - Manages .memory.md files
-- `global_manager.py` - Global memory at ~/.ai_docs/opencode/memory
-- `compaction_engine.py` - Compaction strategies
-- `plugin_adapter.py` - Plugin/hook system
-- `mechanisms/` - 4 mechanisms (bootstrap, compaction, snapshot, user_request)
+- `index.ts` - Main plugin entry (oh-my-opencode pattern)
+- `tools/memory-tool.ts` - AI callable memory tools
+- `hooks/memory-bootstrap.ts` - Session start → load .memory.md
+- `hooks/memory-compaction.ts` - Context 80% → flush to daily log
+- `hooks/memory-snapshot.ts` - Session end → save snapshot
+- `hooks/memory-intent.ts` - LLM-powered intent detection (multi-language)
 
 ## How to Use Me
 
@@ -144,14 +171,14 @@ User: "The context is getting full, compact now"
 
 ### Session Lifecycle Hooks
 
-The memory system integrates at these points:
+The memory system integrates at these points (oh-my-opencode pattern):
 
-| Hook          | Action               | Script                             |
-| ------------- | -------------------- | ---------------------------------- |
-| Session Start | Bootstrap loading    | mechanisms/bootstrap.py            |
-| Context 80%   | Pre-compaction flush | mechanisms/compaction_mechanism.py |
-| Session End   | Snapshot creation    | mechanisms/snapshot.py             |
-| User Request  | Remember/query       | mechanisms/user_request.py         |
+| Hook Event                        | Action                 | TypeScript File            |
+| --------------------------------- | ---------------------- | -------------------------- |
+| `session.created`                 | Bootstrap loading      | hooks/memory-bootstrap.ts  |
+| `experimental.session.compacting` | Pre-compaction flush   | hooks/memory-compaction.ts |
+| `session.deleted`                 | Snapshot creation      | hooks/memory-snapshot.ts   |
+| `tool.execute.before`             | Intent detection (LLM) | hooks/memory-intent.ts     |
 
 ### File Locations
 

@@ -12,6 +12,7 @@ metadata:
     memory: ~/.ai_docs/opencode/memory
     scripts: ~/.ai_docs/opencode/scripts
     references: src/skill/opencode-mastery/references
+    skill_references: src/skill/opencode-memory
 ---
 
 # OpenCode Mastery Skill
