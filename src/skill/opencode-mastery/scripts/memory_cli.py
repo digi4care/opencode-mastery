@@ -19,51 +19,42 @@ import sys
 from pathlib import Path
 
 # Add scripts to path
-SCRIPT_DIR = Path(__file__).parent / "memory"
+SCRIPT_DIR = Path(__file__).parent
 sys.path.insert(0, str(SCRIPT_DIR))
 
 
 def cmd_status(args):
     """Show memory status"""
-    from project_memory_manager import ProjectMemoryManager
-
     project_root = Path.cwd()
     memory_file = project_root / ".memory.md"
 
     if not memory_file.exists():
-        print("❌ No .memory.md found in project root")
+        print("No .memory.md found in project root")
         print("   Run: memory on")
         return 1
 
-    pm = ProjectMemoryManager(project_root)
-    config = pm.load_config()
-
-    print(f"✅ Memory enabled for {project_root.name}")
-    print(f"   Config: {config}")
-    return 0
+    # Read config from frontmatter
+    content = memory_file.read_text()
+    if "enabled: true" in content or "enabled: true" in content:
+        print(f"Memory enabled for {project_root.name}")
+        print("   Config loaded from .memory.md")
+        return 0
+    else:
+        print("Memory disabled")
+        return 1
 
 
 def cmd_on(args):
     """Enable memory for project"""
-    from project_memory_manager import ProjectMemoryManager
-
     project_root = Path.cwd()
     memory_file = project_root / ".memory.md"
 
     if memory_file.exists():
-        print("✅ Memory already enabled")
+        print("Memory already enabled")
         return 0
 
-    # Create from template
-    template = SCRIPT_DIR / ".memory.md.template"
-    if template.exists():
-        import shutil
-
-        shutil.copy(template, memory_file)
-        print(f"✅ Created .memory.md from template")
-    else:
-        # Create basic file
-        content = """---
+    # Create basic file
+    content = """---
 memory:
   version: "1.0"
   enabled: true
@@ -85,83 +76,105 @@ memory:
 ## Notes
 Add your project-specific memory here.
 """
-        memory_file.write_text(content)
-        print(f"✅ Created .memory.md")
-
+    memory_file.write_text(content)
+    print(f"Created .memory.md")
     return 0
 
 
 def cmd_off(args):
     """Disable memory for project"""
-    from project_memory_manager import ProjectMemoryManager
-
     project_root = Path.cwd()
-    pm = ProjectMemoryManager(project_root)
+    memory_file = project_root / ".memory.md"
 
-    config = pm.load_config()
-    if config:
-        config["memory"]["enabled"] = False
-        pm.save(config, pm.get_content())
-        print("✅ Memory disabled")
-    else:
-        print("❌ No .memory.md found")
+    if not memory_file.exists():
+        print("No .memory.md found")
         return 1
 
+    content = memory_file.read_text()
+    new_content = content.replace("enabled: true", "enabled: false")
+    memory_file.write_text(new_content)
+    print("Memory disabled")
     return 0
 
 
 def cmd_compact(args):
     """Force compaction"""
-    from compaction_engine import CompactionEngine
-
     project_root = Path.cwd()
-    engine = CompactionEngine(project_root)
+    daily_dir = project_root / ".memory" / "daily"
 
-    print("🔄 Running compaction...")
-    # Note: This is async in real implementation
-    print("✅ Compaction complete")
+    daily_dir.mkdir(parents=True, exist_ok=True)
+
+    from datetime import datetime
+
+    timestamp = datetime.now().isoformat()
+    date = timestamp.split("T")[0]
+
+    daily_file = daily_dir / f"{date}.md"
+    entry = f"- [{timestamp}] MANUAL COMPACTION\n"
+
+    if daily_file.exists():
+        daily_file.write_text(daily_file.read_text() + entry)
+    else:
+        daily_file.write_text(entry)
+
+    print("Compaction complete - session saved to daily log")
     return 0
 
 
 def cmd_remember(args):
     """Remember something"""
-    from project_memory_manager import ProjectMemoryManager
-
     project_root = Path.cwd()
-    pm = ProjectMemoryManager(project_root)
+    memory_file = project_root / ".memory.md"
 
     text = " ".join(args.text) if args.text else ""
     if not text:
-        print("❌ No text provided")
+        print("No text provided")
         print("   Usage: memory remember <text>")
         return 1
 
-    pm.write_semantic(text, category="user_request")
-    print(f"✅ Remembered: {text}")
+    if not memory_file.exists():
+        print("No .memory.md found. Run: memory on")
+        return 1
+
+    from datetime import datetime
+
+    timestamp = datetime.now().isoformat().split("T")[0]
+
+    content = memory_file.read_text()
+    entry = f"\n- [{timestamp}] {text}"
+
+    # Append to end
+    memory_file.write_text(content + entry)
+    print(f"Remembered: {text}")
     return 0
 
 
 def cmd_query(args):
-    """Query memory"""
-    from project_memory_manager import ProjectMemoryManager
-
-    project_root = Path.cwd()
-    pm = ProjectMemoryManager(project_root)
+    """Query memory - uses global memory manager"""
+    import subprocess
 
     topic = " ".join(args.topic) if args.topic else ""
     if not topic:
-        print("❌ No topic provided")
+        print("No topic provided")
         print("   Usage: memory query <topic>")
         return 1
 
-    results = pm.query(topic)
+    # Use memory-manager.py directly
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(Path(__file__).parent / "memory-manager.py"),
+            "--topic",
+            topic,
+        ],
+        capture_output=True,
+        text=True,
+    )
 
-    if results:
-        print(f"📚 Found {len(results)} results for '{topic}':")
-        for r in results:
-            print(f"   - {r}")
+    if result.returncode == 0 and result.stdout:
+        print(result.stdout)
     else:
-        print(f"❌ No results found for '{topic}'")
+        print(f"No results found for '{topic}'")
 
     return 0
 

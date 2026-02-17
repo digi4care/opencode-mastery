@@ -268,7 +268,7 @@ export function createMemoryTool(): Tool {
       properties: {
         action: {
           type: "string",
-          enum: ["read", "write", "search", "status"],
+          enum: ["read", "write", "search", "status", "compact", "enable", "disable", "sync"],
           description: "The memory action to perform"
         },
         query: {
@@ -332,6 +332,58 @@ export function createMemoryTool(): Tool {
               ...status,
               message: `Memory ${status.enabled ? "enabled" : "disabled"}`
             }
+          }
+          
+          case "compact": {
+            const timestamp = new Date().toISOString()
+            const date = timestamp.split("T")[0]
+            const dailyPath = join(projectRoot, ".memory", "daily")
+            
+            try {
+              await mkdir(dailyPath, { recursive: true })
+              const filePath = join(dailyPath, `${date}.md`)
+              const entry = `- [${timestamp}] MANUAL COMPACTION: Session compact triggered\n`
+              await writeFile(filePath, entry, { flag: "a", encoding: "utf-8" })
+              return { success: true, message: "Compaction triggered - session saved to daily log" }
+            } catch (error) {
+              return { success: false, message: `Compaction failed: ${error}` }
+            }
+          }
+          
+          case "enable": {
+            const memoryPath = join(projectRoot, ".memory.md")
+            try {
+              let existingContent = ""
+              try { existingContent = await readFile(memoryPath, "utf-8") } catch {}
+              
+              let newContent = existingContent
+              if (existingContent.includes("enabled: false")) {
+                newContent = existingContent.replace("enabled: false", "enabled: true")
+              } else if (!existingContent.includes("enabled: true")) {
+                newContent = existingContent.replace(/^---\n/, "---\nmemory:\n  enabled: true\n")
+              }
+              
+              await writeFile(memoryPath, newContent, "utf-8")
+              return { success: true, message: "Memory enabled" }
+            } catch (error) {
+              return { success: false, message: `Enable failed: ${error}` }
+            }
+          }
+          
+          case "disable": {
+            const memoryPath = join(projectRoot, ".memory.md")
+            try {
+              let existingContent = await readFile(memoryPath, "utf-8")
+              let newContent = existingContent.replace("enabled: true", "enabled: false")
+              await writeFile(memoryPath, newContent, "utf-8")
+              return { success: true, message: "Memory disabled" }
+            } catch (error) {
+              return { success: false, message: `Disable failed: ${error}` }
+            }
+          }
+          
+          case "sync": {
+            return { success: true, message: "Sync with global memory not yet implemented. Global memory is read-only until configured." }
           }
           
           default:

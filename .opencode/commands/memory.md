@@ -91,20 +91,18 @@ Shows current memory status including:
 7. **For `/what do you know about <topic>`**: Extract topic and search
 8. **For `/memory sync`**: Trigger sync
 
-**Execute appropriate action using the memory scripts:**
-
-The memory scripts are at:
-
-```
-src/skill/opencode-mastery/scripts/memory/
-```
-
-Use Python to execute:
+**Execute using the memory CLI script:**
 
 ```bash
 cd /media/digi4care/ExtDrive/projects/ai/opencode-mastery
-uv run python -c "from scripts.memory import *; ..."
+python src/skill/opencode-mastery/scripts/memory_cli.py <command>
 ```
+
+Example:
+
+- `python src/skill/opencode-mastery/scripts/memory_cli.py status`
+- `python src/skill/opencode-mastery/scripts/memory_cli.py compact`
+- `python src/skill/opencode-mastery/scripts/memory_cli.py remember mijn tekst`
 
 ## Memory System Location
 

@@ -43,8 +43,10 @@ uv run ~/.ai_docs/opencode/scripts/download-docs.py --verbose
 # Rebuild search index
 uv run ~/.ai_docs/opencode/scripts/index_builder.py --rebuild
 
-# View session history
-uv run ~/.ai_docs/opencode/scripts/memory-manager.py --history
+# Memory commands
+uv run ~/.ai_docs/opencode/scripts/memory_cli.py status
+uv run ~/.ai_docs/opencode/scripts/memory_cli.py compact
+uv run ~/.ai_docs/opencode/scripts/memory_cli.py remember <text>
 ```
 
 ## Uninstall

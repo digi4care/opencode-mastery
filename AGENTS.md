@@ -82,6 +82,44 @@ bun run test                    # Run tests
 | Command        | Doel                                              |
 | -------------- | ------------------------------------------------- |
 | `/ace-reflect` | Analyseer sessies en genereer verbeter suggesties |
+| `/memory`      | Memory management (status, on, off, compact)      |
+| `/remember`    | Onthoud informatie voor toekomstige sessies       |
+
+## Memory Commands
+
+```
+/memory                    Show status
+/memory on                 Enable voor project
+/memory off                Disable voor project
+/memory compact            Forceer compaction
+/remember <text>           Onthoud dit
+/what do you know about X  Query memory
+```
+
+Of via CLI:
+
+```bash
+uv run ~/.ai_docs/opencode/scripts/memory_cli.py status
+uv run ~/.ai_docs/opencode/scripts/memory_cli.py compact
+uv run ~/.ai_docs/opencode/scripts/memory_cli.py remember <text>
+```
+
+/memory Show status
+/memory on Enable voor project
+/memory off Disable voor project
+/memory compact Forceer compaction
+/remember <text> Onthoud dit
+/what do you know about X Query memory
+
+````
+
+Of via CLI:
+
+```bash
+~/.ai_docs/opencode/scripts/memory_cli.py status
+~/.ai_docs/opencode/scripts/memory_cli.py compact
+~/.ai_docs/opencode/scripts/memory_cli.py remember <text>
+````
 
 ## Package Managers
 
