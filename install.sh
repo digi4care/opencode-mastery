@@ -122,8 +122,8 @@ rm -rf "$MEMORY_SKILL_DIR/scripts" 2>/dev/null || true
 
 echo ""
 echo "📋 Copying commands..."
-if [ -d "$TEMP_DIR/.opencode/commands" ]; then
-    cp -r "$TEMP_DIR/.opencode/commands/"* "$COMMANDS_DIR/" 2>/dev/null || true
+if [ -d "$TEMP_DIR/src/commands" ]; then
+    cp -r "$TEMP_DIR/src/commands/"* "$COMMANDS_DIR/" 2>/dev/null || true
     echo "✓ Commands copied to:       $COMMANDS_DIR"
 else
     echo "ℹ️  No commands to install"
