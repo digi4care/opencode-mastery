@@ -7,35 +7,78 @@ Command-line interface for the OpenCode memory system.
 Usage:
     python memory_cli.py status              # Show memory status
     python memory_cli.py on                  # Enable memory for project
-    python memory_cli.py off                # Disable memory for project
+    python memory_cli.py off                 # Disable memory for project
     python memory_cli.py compact             # Force compaction
     python memory_cli.py remember <text>     # Remember something
     python memory_cli.py query <topic>       # Query memory
     python memory_cli.py sync                # Sync with global
 """
 
+from __future__ import annotations
+
 import argparse
 import sys
 from pathlib import Path
+
+import frontmatter
 
 # Add scripts to path
 SCRIPT_DIR = Path(__file__).parent
 sys.path.insert(0, str(SCRIPT_DIR))
 
 
-def _get_enabled_status(content: str) -> bool | None:
-    """Parse enabled status from YAML frontmatter.
+def _get_memory_config(memory_file: Path) -> dict | None:
+    """Parse memory config from YAML frontmatter.
 
     Returns:
-        True if enabled: true, False if enabled: false, None if not found
+        Dict with memory config or None if not found/invalid
     """
-    import re
+    if not memory_file.exists():
+        return None
 
-    # Match 'enabled: true' or 'enabled: false' in YAML frontmatter
-    match = re.search(r"^enabled:\s*(true|false)", content, re.MULTILINE)
-    if match:
-        return match.group(1).lower() == "true"
-    return None
+    try:
+        post = frontmatter.load(str(memory_file))
+        return post.metadata.get("memory", {})
+    except Exception:
+        return None
+
+
+def _set_enabled(memory_file: Path, enabled: bool) -> bool:
+    """Set enabled status in YAML frontmatter.
+
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        post = frontmatter.load(str(memory_file))
+        if "memory" not in post.metadata:
+            post.metadata["memory"] = {}
+        post.metadata["memory"]["enabled"] = enabled
+        frontmatter.dump(post, str(memory_file))
+        return True
+    except Exception as e:
+        print(f"Error updating config: {e}")
+        return False
+
+
+def _ensure_memory_dirs(memory_dir: Path) -> None:
+    """Ensure memory directories exist."""
+    daily_dir = memory_dir / "daily"
+    snapshots_dir = memory_dir / "snapshots"
+
+    created = []
+    if not memory_dir.exists():
+        memory_dir.mkdir(parents=True)
+        created.append(".memory/")
+    if not daily_dir.exists():
+        daily_dir.mkdir(parents=True)
+        created.append(".memory/daily/")
+    if not snapshots_dir.exists():
+        snapshots_dir.mkdir(parents=True)
+        created.append(".memory/snapshots/")
+
+    if created:
+        print(f"Created directories: {', '.join(created)}")
 
 
 def cmd_status(args):
@@ -48,51 +91,47 @@ def cmd_status(args):
         print("   Run: memory on")
         return 1
 
-    # Read config from frontmatter
-    content = memory_file.read_text()
-    enabled = _get_enabled_status(content)
+    config = _get_memory_config(memory_file)
 
-    if enabled is True:
+    if config is None:
+        print("Could not parse .memory.md frontmatter")
+        return 1
+
+    enabled = config.get("enabled", False)
+
+    if enabled:
         print(f"Memory enabled for {project_root.name}")
         print("   Config loaded from .memory.md")
         return 0
-    elif enabled is False:
+    else:
         print("Memory disabled")
         print("   Run: memory on to enable")
-        return 1
-    else:
-        print("Memory config not found in frontmatter")
         return 1
 
 
 def cmd_on(args):
     """Enable memory for project"""
-    import re
-
     project_root = Path.cwd()
     memory_file = project_root / ".memory.md"
     memory_dir = project_root / ".memory"
 
-    # Check if already enabled
+    # Check if file exists
     if memory_file.exists():
-        content = memory_file.read_text()
-        enabled = _get_enabled_status(content)
+        config = _get_memory_config(memory_file)
 
-        if enabled is True:
+        if config is None:
+            print("Could not parse .memory.md - recreating with valid config")
+        elif config.get("enabled", False):
             print("Memory already enabled")
-            # Still ensure directories exist
             _ensure_memory_dirs(memory_dir)
             return 0
-        elif enabled is False:
-            # Enable it - replace enabled: false with enabled: true
-            new_content = re.sub(
-                r"^enabled:\s*false", "enabled: true", content, flags=re.MULTILINE
-            )
-            memory_file.write_text(new_content)
-            print("Memory enabled (updated .memory.md)")
-            # Ensure directories exist
-            _ensure_memory_dirs(memory_dir)
-            return 0
+        else:
+            # Enable it
+            if _set_enabled(memory_file, True):
+                print("Memory enabled (updated .memory.md)")
+                _ensure_memory_dirs(memory_dir)
+                return 0
+            return 1
 
     # Create basic file
     content = """---
@@ -125,30 +164,8 @@ Add your project-specific memory here.
     return 0
 
 
-def _ensure_memory_dirs(memory_dir: Path) -> None:
-    """Ensure memory directories exist."""
-    daily_dir = memory_dir / "daily"
-    snapshots_dir = memory_dir / "snapshots"
-
-    created = []
-    if not memory_dir.exists():
-        memory_dir.mkdir(parents=True)
-        created.append(".memory/")
-    if not daily_dir.exists():
-        daily_dir.mkdir(parents=True)
-        created.append(".memory/daily/")
-    if not snapshots_dir.exists():
-        snapshots_dir.mkdir(parents=True)
-        created.append(".memory/snapshots/")
-
-    if created:
-        print(f"Created directories: {', '.join(created)}")
-
-
 def cmd_off(args):
     """Disable memory for project"""
-    import re
-
     project_root = Path.cwd()
     memory_file = project_root / ".memory.md"
 
@@ -156,20 +173,20 @@ def cmd_off(args):
         print("No .memory.md found")
         return 1
 
-    content = memory_file.read_text()
-    enabled = _get_enabled_status(content)
+    config = _get_memory_config(memory_file)
 
-    if enabled is False:
+    if config is None:
+        print("Could not parse .memory.md")
+        return 1
+
+    if not config.get("enabled", True):
         print("Memory already disabled")
         return 0
 
-    # Use regex to properly replace in YAML frontmatter
-    new_content = re.sub(
-        r"^enabled:\s*true", "enabled: false", content, flags=re.MULTILINE
-    )
-    memory_file.write_text(new_content)
-    print("Memory disabled")
-    return 0
+    if _set_enabled(memory_file, False):
+        print("Memory disabled")
+        return 0
+    return 1
 
 
 def cmd_compact(args):
@@ -215,11 +232,10 @@ def cmd_remember(args):
 
     timestamp = datetime.now().isoformat().split("T")[0]
 
-    content = memory_file.read_text()
+    post = frontmatter.load(str(memory_file))
     entry = f"\n- [{timestamp}] {text}"
-
-    # Append to end
-    memory_file.write_text(content + entry)
+    post.content = post.content + entry
+    frontmatter.dump(post, str(memory_file))
     print(f"Remembered: {text}")
     return 0
 
@@ -256,8 +272,8 @@ def cmd_query(args):
 
 def cmd_sync(args):
     """Sync with global memory"""
-    print("🔄 Syncing with global memory...")
-    print("✅ Sync complete")
+    print("Syncing with global memory...")
+    print("Sync complete")
     return 0
 
 
