@@ -1,0 +1,249 @@
+[0.9s] Out of the box, AI agents have no
+[2.7s] memory. Every conversation starts with a
+[4.8s] blank slate. Most people think that you
+[6.9s] need a vector database, complex
+[8.4s] retrieval pipelines, or specialized
+[10.2s] memory to handle this. But OpenClaus
+[13.1s] solved it with markdown files and four
+[14.9s] mechanisms that fire at the right
+[16.5s] moments in a conversation. I'll show you
+[19.0s] exactly how it works. AI models are
+[21.9s] inherently stateless. There's no memory
+[24.2s] between calls. Your conversation is an
+[26.5s] increasingly long context window that
+[28.4s] gets passed on each turn of the
+[29.8s] conversation. This is why without some
+[32.1s] kind of memory system, each new
+[33.8s] conversation starts without any context
+[35.8s] of the previous one. So how does an
+[38.5s] agent memory system actually work?
+[41.4s] Memory systems can be broken up into two
+[43.2s] pieces, the session and longerterm
+[45.8s] memory. The session can be thought of as
+[48.2s] a history of a single conversation with
+[50.0s] an LLM. During the conversation, the
+[52.5s] state of it needs to be saved somewhere.
+[54.6s] This conversation history needs to be
+[56.2s] passed on each subsequent call you make
+[58.2s] to the LLM for it to remember and
+[60.1s] understand the current point of the
+[61.6s] conversation. There's a problem though.
+[64.3s] LMS have a finite context window.
+[66.8s] Because of this, as you approach the
+[68.3s] limits of your context window, a process
+[70.2s] called compaction kicks in. Compaction
+[73.0s] is the act of taking the session's
+[74.5s] conversation history and breaking it
+[76.2s] down into the most important relevant
+[78.0s] information in order to allow the
+[79.8s] conversation to continue without losing
+[81.8s] all of the details of the session.
+[84.1s] There are three different strategies for
+[85.5s] triggering compaction. First is
+[87.8s] countbased. This is when you compact a
+[90.2s] conversation once it's exceeded a
+[91.9s] certain token size or a certain turn
+[93.9s] count in the conversation.
+[96.2s] Second is timebased. This is triggered
+[98.8s] when the user stops interacting for a
+[100.5s] certain period of time. Compaction is
+[102.5s] then triggered in the background. Third
+[104.4s] is event-based or semantic. Here an
+[107.0s] agent triggers compaction when it has
+[109.0s] detected that a particular task or topic
+[111.5s] has concluded. It's the most intelligent
+[113.7s] version of compaction, but also the most
+[115.4s] difficult to implement accurately
+[117.8s] because of the context window limit. We
+[119.6s] can't just persist and pass entire old
+[121.5s] conversations into a new conversation
+[123.3s] with an LLM. That is where long-term
+[126.0s] memory comes in. The memory is what
+[128.1s] survives at the end of a session.
+[130.7s] Imagine a session as a messy desk for a
+[132.6s] current project. You might have various
+[134.5s] notes and documents scattered around
+[136.0s] your desk. Then you might have a filing
+[138.5s] cabinet where things are categorized and
+[140.3s] stored. This is the memory. There's a
+[143.8s] great framework for thinking about
+[145.0s] memory. Google published a white paper
+[146.6s] in November of 2025 titled context
+[149.0s] engineering sessions and memory. In it,
+[151.3s] they break down agent memory into three
+[153.4s] types. The first type is episodic.
+[156.8s] Episodic memory covers things like what
+[158.9s] happened in our last conversation. These
+[160.7s] are events or interactions you might
+[162.2s] have had with the LM. Second is
+[164.0s] semantic. Semantic memory are pure facts
+[166.6s] or user preferences. Think what do I the
+[169.2s] LM know about you the user or the topic.
+[172.1s] Third is procedural. Procedural memory
+[174.5s] covers things like workflows and learned
+[176.1s] routines or how do I accomplish this
+[178.1s] task. All of these come together to form
+[181.0s] a memory for an agent. In order for the
+[183.0s] memory system to be effective, it must
+[185.0s] have a solid method of extracting key
+[186.9s] details from a conversation in order to
+[189.0s] persist them. Part of this is
+[191.0s] understanding what is worth remembering.
+[193.0s] Not every detail of a conversation is
+[195.0s] going to be important. Targeted
+[196.8s] filtering is needed in order for the
+[198.3s] memory to be effective. Just like a
+[200.6s] human's memory where we may not remember
+[202.6s] full details of something. Instead, we
+[204.6s] remember key concepts and facts. In
+[207.5s] addition to this, it must also be able
+[209.3s] to consolidate items in memory. For
+[211.8s] example, imagine a user tells agent that
+[214.3s] I prefer dark mode in one conversation.
+[216.9s] In a later conversation, it says I don't
+[219.0s] like dark mode anymore. And in another,
+[221.4s] it says I switched to dark mode. Without
+[224.2s] consolidation, all three entries sit in
+[226.5s] the memory saying essentially the same
+[228.0s] thing. A good memory system collapses
+[230.6s] those into a single entity. User prefers
+[233.5s] dark mode. It also must be able to
+[236.2s] overwrite previous decisions or
+[237.6s] determinations. Something that might be
+[239.8s] true today may not necessarily be true
+[241.8s] tomorrow. The memory system must be able
+[243.8s] to differentiate and update its memory
+[245.8s] knowledge bank. Without this, the memory
+[248.1s] can become noisy and contradictory.
+[251.0s] These are both typically handled by
+[252.6s] another LLM instance that takes a
+[254.5s] conversation and handles this extraction
+[256.5s] and consolidation.
+[258.7s] There are different ways you can store
+[260.2s] memory from simple solutions such as
+[262.5s] markdown files for a local agent to
+[264.7s] specialized databases like vector
+[266.3s] storage that can be searched for
+[267.5s] relevant data when appropriate. Let's
+[269.8s] take a look at a real world example of
+[271.4s] this system in place. Open clause memory
+[274.6s] model is a great example of agent memory
+[276.6s] in practice. I recently did a video
+[278.6s] explaining the underlying system of
+[280.2s] OpenClaw at a high level. Let's take a
+[282.5s] closer look at how its memory works. The
+[285.1s] OpenClaw memory system has three core
+[287.3s] components. The first component is the
+[289.2s] memory MD file. This is the semantic
+[292.2s] memory store for Open Claw. It includes
+[294.6s] stable facts, preferences, and
+[296.3s] information about your identity. This is
+[298.7s] loaded into every single prompt and has
+[300.4s] a recommended 200line cap. The memory is
+[303.4s] broken up into structured sections.
+[306.3s] Second are daily logs. Daily logs are
+[309.3s] one of open clause implementations of
+[311.1s] episodic memory. It contains recent
+[313.3s] context organized by day. These memory
+[316.3s] files are appended only which means that
+[318.2s] new memory entries are continually added
+[320.3s] but nothing gets removed.
+[323.0s] Third are session snapshots. Session
+[325.6s] snapshots are the second implementation
+[327.4s] of episodic memory by openclaw. These
+[330.0s] are triggered by the session memory hook
+[331.8s] that fires when a new session is started
+[333.8s] via the slashnew or slashreset command.
+[336.8s] The snapshot captures the last 15
+[338.9s] meaningful messages from your
+[340.1s] conversation. These are filtered to only
+[342.0s] user and assistant messages. That means
+[344.2s] things like tool calls and system
+[345.7s] messages and slash commands are all
+[347.4s] excluded. It's not a generated summary,
+[349.5s] but it's actually the raw conversation
+[351.2s] text saved as a markdown file with a
+[353.4s] descriptive name. So at its core, open
+[355.8s] clause memory is just markdown files.
+[358.1s] That's straightforward enough, but it
+[359.8s] turns out that these files are only half
+[361.2s] the story. Without something that reads
+[363.0s] and writes them at the right times,
+[364.6s] they're just sitting there doing
+[365.7s] nothing. Remember the desk and the
+[367.8s] filing cabinet? The files are the filing
+[370.2s] cabinet. And what we're about to look at
+[371.9s] are the mechanisms that move the things
+[373.8s] from the desk to the cabinet at the
+[375.7s] right moments. The first mechanism,
+[378.2s] bootstrap loading at the session start.
+[380.6s] For every new conversation, the memory
+[382.6s] MD is automatically injected into the
+[384.6s] prompt. The agent always has it. On top
+[387.8s] of that, the agent's instructions tell
+[389.3s] it to read today and yesterday's daily
+[391.3s] logs for recent context. So the memory
+[394.2s] MD is injected by the system and the
+[396.3s] daily logs are loaded by the agent
+[397.8s] itself following its own instructions.
+[400.2s] This is the simplest pattern and the
+[402.2s] most important one. The second mechanism
+[404.6s] is the pre-ompaction flush. Open claw
+[407.5s] takes a count-based approach towards
+[409.0s] compaction. When a session nears the
+[411.3s] context window limit, open claw injects
+[413.4s] a silent agentic turn that is invisible
+[415.5s] to the user. It instructs the LLM that
+[417.7s] you're near compaction and it needs to
+[419.4s] save anything that's important. Now,
+[421.5s] when the agent sees this message, it
+[423.4s] writes to the daily log. This serves as
+[425.5s] a checkpoint for the conversation. This
+[428.0s] turns a destructive operation such as
+[429.8s] losing context into a checkpoint. It
+[431.9s] follows a common database pattern or
+[433.5s] write ahead log, saving memory before
+[435.5s] it's lost. The third mechanism fires
+[438.4s] when you start a new session, the
+[440.1s] session snapshot. Session snapshots are
+[442.8s] saved whenever a new session is started,
+[444.6s] whether that's via the /new or/reset
+[446.7s] command. As I mentioned in the previous
+[448.5s] video, sessions are per channel. A hook
+[451.1s] grabs the last chunk of your previous
+[452.7s] conversation, filters to meaningful
+[454.8s] messages only, and the LM generates a
+[457.0s] descriptive slug for the file name. It's
+[459.0s] not a summary, it's a snapshot of what
+[460.9s] you were talking about, saved before the
+[462.8s] slate gets wiped. And finally, the
+[465.4s] simplest mechanism, the user just asks.
+[467.4s] If a user says something like remember
+[469.5s] this, the agent determines whether it
+[471.7s] belongs in the semantic memory or memory
+[474.1s] MD file or the daily log as episodic
+[477.0s] memory. No special hook is needed. The
+[479.1s] agent just has file writing capabilities
+[480.9s] and its instructions tell it how to
+[482.4s] route the information. And that's it.
+[485.0s] Open Claw's entire memory system comes
+[486.8s] down to markdown files and knowing when
+[488.6s] to write to them. semantic memory in the
+[491.0s] memory MD file, episodic memory in daily
+[493.9s] logs and session snapshots, and four
+[496.0s] mechanisms that fire at the right
+[497.4s] moments in the conversation's life
+[498.9s] cycle. And these patterns aren't just an
+[501.0s] open claw. Claude Code recently shipped
+[503.2s] the memory feature, and it uses markdown
+[505.1s] files as well. You don't need a complex
+[507.0s] setup to give an agent memory. You just
+[509.1s] need clear instructions to three
+[510.7s] questions. What's worth remembering?
+[513.1s] Where does it go? And when does it get
+[515.3s] written? If you want to go deeper into
+[517.4s] agent architecture and patterns like
+[518.9s] this, I write a weekly newsletter
+[520.5s] covering AI augmented engineering and
+[522.5s] building with LLM. Link is in the
+[524.6s] description.
