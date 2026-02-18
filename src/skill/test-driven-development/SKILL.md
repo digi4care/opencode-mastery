@@ -1,31 +1,6 @@
 ---
 name: test-driven-development
-description: Enforce Test-Driven Development discipline. Write failing test first, then minimal code, then refactor.
-triggers:
-  - write production code
-  - add feature
-  - implement
-  - TDD
-  - new function
-  - create endpoint
-  - add method
-  - bug fix
-  - fix this
-  - implement this
-  - write code for
-negativeTriggers:
-  - debug
-  - investigate
-  - analyze error
-  - refactor without changing behavior
-  - documentation
-  - configuration
-  - setup
-  - explore
-  - spike
-  - general programming questions
-  - installation or troubleshooting
-  - framework-agnostic code help
+description: Enforce Test-Driven Development discipline. Write failing test first, then minimal code, then refactor. Use when writing production code or implementing features. Do not use for debugging, documentation, or configuration tasks.
 license: MIT
 compatibility: opencode
 metadata:

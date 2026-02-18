@@ -1,63 +1,12 @@
 ---
 name: shadcn-svelte
-description: Provide guidance for shadcn-svelte UI component installation, configuration, and usage. Use when installing or troubleshooting shadcn-svelte components.
+description: Provide guidance for shadcn-svelte UI component installation, configuration, and usage. Use when installing or troubleshooting shadcn-svelte components. Do not use for general Svelte questions, vanilla CSS, or non-shadcn component libraries.
 license: MIT
 compatibility: opencode
 metadata:
   author: OpenCode Community
   version: 1.0.0
   source: shadcn-svelte documentation
-  last_updated: "2026-01-22"
-triggers:
-  - shadcn-svelte
-  - install component
-  - add button
-  - add dialog
-  - UI component
-  - tailwind component
-  - bits-ui
-  - dark mode
-  - mode-watcher
-  - component library
-  - shadcn init
-  - accordion
-  - alert
-  - card
-  - dropdown
-  - modal
-  - popover
-  - sheet
-  - tabs
-  - form component
-  - select
-  - checkbox
-  - radio
-  - input
-  - textarea
-  - calendar
-  - table
-  - badge
-  - avatar
-  - breadcrumb
-  - navigation
-  - tooltip
-negativeTriggers:
-  - svelte only
-  - vanilla css
-  - bootstrap
-  - material-ui
-  - chakra
-  - general css
-  - sveltekit routing
-  - svelte stores
-  - svelte context
-  - svelte transitions
-  - svelte animations
-  - plain html
-  - css framework
-  - not shadcn
-  - general svelte questions
-  - non-shadcn components
 ---
 
 # shadcn-svelte

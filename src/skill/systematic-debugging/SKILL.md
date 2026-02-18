@@ -1,30 +1,6 @@
 ---
 name: systematic-debugging
-description: Enforce systematic debugging to find root causes. Always investigate before fixing. Prevents symptom fixes and random changes.
-triggers:
-  - fix bug
-  - debug
-  - test failing
-  - error
-  - unexpected behavior
-  - not working
-  - investigate
-  - why is this broken
-  - what's wrong
-  - trace this
-  - find the cause
-negativeTriggers:
-  - write test first
-  - TDD
-  - already investigated
-  - clear solution
-  - quick fix
-  - just try this
-  - I know the fix
-  - questions about systematic debugging itself
-  - explaining debugging concepts
-  - debugging educational examples
-  - demo or teaching
+description: Enforce systematic debugging to find root causes. Always investigate before fixing. Prevents symptom fixes and random changes. Use when debugging errors or investigating failures. Do not use when already investigated or for TDD/test-first development.
 license: MIT
 compatibility: opencode
 metadata:
