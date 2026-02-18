@@ -1,0 +1,15 @@
+name: "Shadcn-Svelte"
+description: "Beautifully designed, accessible UI components built with Svelte 5 and Bits UI"
+version: "1.0.0"
+trigger_keywords:
+  - "shadcn-svelte"
+  - "shadcn"
+  - "ui components"
+  - "bits ui"
+  - "svelte components"
+context_priority: "high"
+context_horizon:
+  max_tokens: 12000
+  priority: ["components", "installation", "theming", "accessibility"]
+author: "digi4care"
+category: "development"

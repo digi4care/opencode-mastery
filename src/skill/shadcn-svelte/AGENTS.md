@@ -211,8 +211,8 @@ export default {
 
 - **SKILL.md** - Complete documentation (85 pages)
 - **references/** - Additional guides
-- **Official Site**: https://www.shadcn-svelte.com/
-- **GitHub**: https://github.com/huntabyte/shadcn-svelte
+- **Official Site**: <https://www.shadcn-svelte.com/>
+- **GitHub**: <https://github.com/huntabyte/shadcn-svelte>
 
 ---
 

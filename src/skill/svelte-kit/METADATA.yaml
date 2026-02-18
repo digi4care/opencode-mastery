@@ -1,0 +1,15 @@
+name: "SvelteKit"
+description: "SvelteKit framework - routing, load functions, server endpoints, adapters, SSR"
+version: "1.0.0"
+trigger_keywords:
+  - "sveltekit"
+  - "svelte-kit"
+  - "svelte routing"
+  - "svelte load"
+  - "svelte server"
+context_priority: "high"
+context_horizon:
+  max_tokens: 15000
+  priority: ["routing", "load-functions", "endpoints", "adapters", "ssr"]
+author: "digi4care"
+category: "development"

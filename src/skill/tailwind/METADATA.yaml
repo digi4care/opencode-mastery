@@ -1,0 +1,17 @@
+name: "Tailwind CSS"
+description: "Comprehensive Tailwind CSS v4 expertise - utilities, CSS-first configuration, grid layouts, container queries, and framework integration"
+version: "1.0.0"
+trigger_keywords:
+  - "tailwind"
+  - "tailwindcss"
+  - "tailwind css"
+  - "utility classes"
+  - "grid layout"
+  - "container queries"
+  - "css-first"
+context_priority: "high"
+context_horizon:
+  max_tokens: 12000
+  priority: ["utilities", "configuration", "grid", "container-queries", "migration"]
+author: "digi4care"
+category: "development"

@@ -1,0 +1,15 @@
+name: "Svelte MCP"
+description: "Svelte Model Context Protocol server - documentation access, code analysis, playground links"
+version: "1.0.0"
+trigger_keywords:
+  - "svelte mcp"
+  - "mcp server"
+  - "svelte-autofixer"
+  - "playground"
+  - "ai-assisted svelte"
+context_priority: "medium"
+context_horizon:
+  max_tokens: 8000
+  priority: ["documentation", "analysis", "playground", "autofixer"]
+author: "digi4care"
+category: "development"

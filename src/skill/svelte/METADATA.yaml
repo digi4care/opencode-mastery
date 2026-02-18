@@ -1,0 +1,15 @@
+name: "Svelte"
+description: "Complete Svelte and SvelteKit knowledge - components, reactivity (runes), routing, SSR, and framework internals"
+version: "1.0.0"
+trigger_keywords:
+  - "svelte"
+  - "svelte component"
+  - "svelte reactivity"
+  - "svelte runes"
+  - "svelte store"
+context_priority: "high"
+context_horizon:
+  max_tokens: 15000
+  priority: ["components", "reactivity", "runes", "stores", "lifecycle"]
+author: "digi4care"
+category: "development"

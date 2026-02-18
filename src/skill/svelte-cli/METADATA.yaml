@@ -1,0 +1,15 @@
+name: "Svelte CLI"
+description: "Svelte command line interface - project scaffolding, dev/build workflows, commands"
+version: "1.0.0"
+trigger_keywords:
+  - "svelte cli"
+  - "sv"
+  - "npm create svelte"
+  - "svelte project"
+  - "svelte scaffolding"
+context_priority: "medium"
+context_horizon:
+  max_tokens: 8000
+  priority: ["commands", "scaffolding", "project", "build"]
+author: "digi4care"
+category: "development"
