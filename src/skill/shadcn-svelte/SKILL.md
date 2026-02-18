@@ -1,6 +1,6 @@
 ---
 name: shadcn-svelte
-description: Use when working with shadcn-svelte UI components - covers component installation, usage patterns, registry system, accessibility features, and theming with Tailwind CSS.
+description: shadcn-svelte component library - install Button, Card, Dialog, Form, Table components with shadcn design tokens. Use for pre-built accessible UI components. For raw Tailwind CSS use tailwind skill. For UX design principles use frontend-design skill.
 license: MIT
 compatibility: opencode
 metadata:

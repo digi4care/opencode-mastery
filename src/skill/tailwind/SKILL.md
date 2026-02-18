@@ -1,6 +1,6 @@
 ---
 name: tailwind
-description: Use when styling with Tailwind CSS v4 - covers CSS-first configuration (@theme, @utility, @plugin), grid layouts, container queries, custom utilities, and framework integration (SvelteKit, Next.js, Vite, React)
+description: Tailwind CSS v4 utility classes - @theme, @utility, @plugin, grid, container queries, flexbox, spacing, responsive design. Use for CSS-only styling with Tailwind utilities. For pre-built components use shadcn-svelte skill. For UX principles use frontend-design skill.
 license: MIT
 compatibility: opencode
 metadata:

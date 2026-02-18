@@ -1,277 +1,86 @@
 # AGENTS.md - SvelteKit Skill
 
-This file provides guidance to AI agents when working with the SvelteKit skill.
+**Skill:** SvelteKit - Full-stack web framework met SSR, routing, en server endpoints
 
 ## Overview
 
-**Comprehensive SvelteKit framework knowledge** - Full-stack web applications with SSR, routing, load functions, and server endpoints.
+File-based routing, load functions, server endpoints, SSR, en deployment adapters.
 
-## Skill Invocation
-
-```text
-\skill:svelte-kit
-```
-
-Use this skill when you need knowledge about SvelteKit framework.
-
-## Key Topics
-
-### Routing
-
-- **File-based routing** - Automatic route generation
-- **Nested routes** - Hierarchical structure
-- **Dynamic routes** - [param] segments
-- **Catch-all routes** - [...slug] segments
-
-### Data Loading
-
-- **Load functions** - Fetch data for pages
-- **Layout load** - Shared data
-- **Error handling** - Load errors
-- **Streaming** - Progressive loading
-
-### Server Endpoints
-
-- **REST API** - GET/POST/PUT/DELETE
-- **Request handling** - Body parsing
-- **Response types** - JSON, HTML, files
-- **WebSockets** - Real-time
-
-### SSR & Hydration
-
-- **Server-side rendering** - Initial HTML
-- **Client hydration** - Reactivity
-- **Streaming SSR** - Progressive
-- **Selective hydration** - Islands
-
-## Common Use Cases
-
-### Getting Started
-
-```text
-\skill:svelte-kit How do I create a SvelteKit app?
-\skill:svelte-kit What's the project structure?
-\skill:svelte-kit How do routes work?
-```
-
-### Data Fetching
-
-```text
-\skill:svelte-kit How do I fetch data for a page?
-\skill:svelte-kit How do load functions work?
-\skill:svelte-kit How do I handle errors?
-```
-
-### API Development
-
-```text
-\skill:svelte-kit How do I create an API endpoint?
-\skill:svelte-kit How do I handle POST requests?
-\skill:svelte-kit How do I implement WebSockets?
-```
-
-### SSR & Deployment
-
-```text
-\skill:svelte-kit How does SSR work?
-\skill:svelte-kit How do I deploy my app?
-\skill:svelte-kit What adapters are available?
-```
-
-### Advanced Patterns
-
-```text
-\skill:svelte-kit How do I use layouts?
-\skill:svelte-kit How do I implement authentication?
-\skill:svelte-kit How do I optimize performance?
-```
-
-## Quick Reference
-
-### Project Structure
+## Project Structure
 
 ```
 src/
 ├── routes/
-│   ├── +page.svelte      # Page
+│   ├── +page.svelte      # Page component
+│   ├── +page.ts          # Load function
 │   ├── +layout.svelte    # Layout
-│   ├── +page.ts          # Page load
 │   └── api/
-│       └── +server.ts    # Endpoint
-├── lib/
-└── app.html
+│       └── +server.ts    # API endpoint
+├── lib/                  # Shared code
+└── app.html              # HTML template
 ```
 
-### Basic Page
-
-```svelte
-<!-- src/routes/+page.svelte -->
-<script>
-  export let data;
-</script>
-
-<h1>{data.title}</h1>
-```
+## Key Patterns
 
 ### Load Function
 
 ```typescript
-// src/routes/+page.ts
-export async function load({ fetch }) {
-  const response = await fetch("/api/data");
-  return { data: await response.json() };
+// +page.ts
+export async function load({ fetch, params }) {
+  const res = await fetch(`/api/${params.slug}`);
+  return { data: await res.json() };
 }
 ```
 
 ### API Endpoint
 
 ```typescript
-// src/routes/api/data/+server.ts
+// +server.ts
 import { json } from "@sveltejs/kit";
 
 export async function GET() {
-  return json({ message: "Hello!" });
-}
-
-export async function POST({ request }) {
-  const body = await request.json();
-  return json({ received: body });
+  return json({ message: "Hello" });
 }
 ```
 
-## Routing Patterns
+### Page Component
 
-### Dynamic Routes
+```svelte
+<script>
+  let { data } = $props();
+</script>
 
-```typescript
-// src/routes/blog/[slug]/+page.ts
-export async function load({ params }) {
-  return { slug: params.slug };
-}
+<h1>{data.title}</h1>
 ```
 
-### Nested Routes
+## Anti-Patterns
 
-```
-routes/
-├── +layout.svelte
-├── admin/
-│   └── users/
-│       └── +page.svelte
-```
-
-### Catch-all
-
-```typescript
-// src/routes/[...slug]/+page.ts
-export async function load({ params }) {
-  return { segments: params.slug.split("/") };
-}
-```
+| Niet doen                         | Wel doen                  |
+| --------------------------------- | ------------------------- |
+| Client-side fetch in +page.svelte | Gebruik `load` function   |
+| `export let data` in Svelte 5     | `let { data } = $props()` |
+| Hardcoded API URLs                | Relative paths gebruiken  |
 
 ## Deployment Adapters
 
-### Node.js
-
-```js
-// svelte.config.js
-import adapter from "@sveltejs/adapter-node";
-```
-
-### Vercel
-
-```js
-import adapter from "@sveltejs/adapter-vercel";
-```
-
-### Netlify
-
-```js
-import adapter from "@sveltejs/adapter-netlify";
-```
-
-### Static
-
-```js
-import adapter from "@sveltejs/adapter-static";
-```
+- `@sveltejs/adapter-node` - Node.js
+- `@sveltejs/adapter-vercel` - Vercel
+- `@sveltejs/adapter-netlify` - Netlify
+- `@sveltejs/adapter-static` - Static sites
 
 ## When to Use
 
-**Use this skill when user asks about:**
-
-- SvelteKit fundamentals
-- Routing and data loading
-- Server endpoints and APIs
-- SSR implementation
-- Deployment strategies
-- Framework architecture
-- Performance optimization
-
-**Invoke with:**
-
-```text
-\skill:svelte-kit How do I create a route?
-\skill:svelte-kit How do I fetch data?
-\skill:svelte-kit How do I deploy my app?
-```
-
-## Hooks
-
-### Server Hooks
-
-```typescript
-// src/hooks.server.ts
-export async function handle({ event, resolve }) {
-  // Modify event
-  const response = await resolve(event);
-  return response;
-}
-```
-
-### Error Handling
-
-```typescript
-export function handleError({ error, event }) {
-  return { message: "Error occurred" };
-}
-```
-
-## Best Practices
-
-### Data Loading
-
-- Use `load` for server-side data
-- Implement proper error handling
-- Cache data appropriately
-- Use streaming for large datasets
-
-### Performance
-
-- Lazy load routes
-- Optimize images
-- Use proper caching
-- Minimize bundle size
-
-### Security
-
-- Validate inputs
-- Use CSRF protection
-- Implement authentication
-- Sanitize outputs
+- SvelteKit routing en data loading
+- Server endpoints en APIs
+- SSR configuratie
+- Deployment setup
 
 ## Related Skills
 
 - **svelte** - Core framework
 - **svelte-cli** - Project scaffolding
-- **svelte-mcp** - AI-assisted development
 
-## Additional Resources
+## Resources
 
-- **SKILL.md** - Complete framework guide
-- **references/** - Official docs
-- **Kit.svelte.dev**: https://kit.svelte.dev/docs
-
----
-
-_For core Svelte help: Use `\skill:svelte`_
+- **SKILL.md** → Complete framework guide
+- **Official Docs**: https://kit.svelte.dev/docs

@@ -1,6 +1,6 @@
 ---
 name: svelte-cli
-description: Use when creating or managing Svelte/SvelteKit projects with the sv CLI - covers project scaffolding, add-ons (ESLint, Drizzle, MCP, mdsvex), dev/build workflows, and type checking.
+description: Svelte CLI (sv) - project scaffolding, add-ons installation, dev/build commands. Use when creating new Svelte/SvelteKit projects or adding features via CLI. For Svelte code questions use svelte skill. For SvelteKit routing use svelte-kit skill.
 license: MIT
 compatibility: opencode
 metadata:

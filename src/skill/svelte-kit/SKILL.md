@@ -1,6 +1,6 @@
 ---
 name: svelte-kit
-description: Use when building full-stack SvelteKit applications. Covers file-based routing, load functions, server endpoints, form actions, hooks, adapters, SSR/SSG, and deployment patterns.
+description: SvelteKit framework - file-based routing, load functions, server endpoints, form actions, hooks, adapters, SSR/SSG, and deployment. Use for SvelteKit-specific features. For Svelte reactivity/components use svelte skill. For project scaffolding use svelte-cli skill.
 license: MIT
 compatibility: opencode
 metadata:

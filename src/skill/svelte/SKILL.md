@@ -1,6 +1,6 @@
 ---
 name: svelte
-description: Complete Svelte and SvelteKit knowledge base combining official documentation and GitHub repositories. Use when building Svelte components, working with reactivity, stores, animations, or SvelteKit applications.
+description: Svelte core concepts - reactivity ($state, $derived, $effect), components, stores, transitions, and animations. Use for Svelte language questions. For SvelteKit routing/server features use svelte-kit skill. For CLI/scaffolding use svelte-cli skill.
 license: MIT
 compatibility: opencode
 metadata:

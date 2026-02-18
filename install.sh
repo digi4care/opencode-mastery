@@ -16,45 +16,67 @@ REPO_URL="https://github.com/digi4care/opencode-mastery"
 
 echo "🚀 OpenCode Mastery Skills Installer"
 echo ""
-echo "This package includes:"
+echo "This package includes 16 skills:"
+echo ""
+echo "  Core Skills:"
 echo "  • opencode-mastery      - Complete OpenCode knowledge base"
 echo "  • meta-agent            - Generate commands, skills, and agents"
 echo "  • skill-creator         - Create, audit, and optimize skills"
 echo "  • opencode-memory       - Memory plugin with tools and hooks"
+echo ""
+echo "  Development Skills:"
 echo "  • test-driven-development - Enforce TDD discipline"
 echo "  • systematic-debugging  - Methodical debugging framework"
 echo "  • playwright-cli        - Browser automation and visual testing"
 echo ""
+echo "  Frontend Skills:"
+echo "  • frontend-design       - UI/UX guidelines for developers"
+echo "  • tailwind              - Tailwind CSS v4 styling"
+echo "  • shadcn-svelte         - shadcn-svelte component library"
+echo ""
+echo "  Svelte Skills:"
+echo "  • svelte                - Svelte 5 core knowledge"
+echo "  • svelte-cli            - Svelte CLI commands"
+echo "  • svelte-kit            - Full-stack SvelteKit"
+echo "  • svelte-mcp            - Svelte MCP server"
+echo ""
+echo "  Database Skills:"
+echo "  • database-architect    - Database design patterns"
+echo "  • postgresql            - PostgreSQL table design"
+echo ""
 echo "Installing globally (available in all projects)..."
 echo ""
 
+# Directories
 INSTALL_DIR="$HOME/.ai_docs/opencode"
-MASTERY_SKILL_DIR="$HOME/.config/opencode/skill/opencode-mastery"
-META_AGENT_SKILL_DIR="$HOME/.config/opencode/skill/meta-agent"
-SKILL_CREATOR_SKILL_DIR="$HOME/.config/opencode/skill/skill-creator"
-MEMORY_SKILL_DIR="$HOME/.config/opencode/skill/opencode-memory"
-TDD_SKILL_DIR="$HOME/.config/opencode/skill/test-driven-development"
-DEBUG_SKILL_DIR="$HOME/.config/opencode/skill/systematic-debugging"
-PLAYWRIGHT_SKILL_DIR="$HOME/.config/opencode/skill/playwright-cli"
+SCRIPTS_DIR="$INSTALL_DIR/scripts"
 COMMANDS_DIR="$HOME/.config/opencode/commands"
 PLUGIN_DIR="$HOME/.config/opencode/plugin"
 
-SCRIPTS_DIR="$INSTALL_DIR/scripts"
-MASTERY_SKILL_FILE="$MASTERY_SKILL_DIR/SKILL.md"
-META_AGENT_SKILL_FILE="$META_AGENT_SKILL_DIR/SKILL.md"
+# Skill directories
+SKILLS_DIR="$HOME/.config/opencode/skill"
+MASTERY_SKILL_DIR="$SKILLS_DIR/opencode-mastery"
+META_AGENT_SKILL_DIR="$SKILLS_DIR/meta-agent"
+SKILL_CREATOR_SKILL_DIR="$SKILLS_DIR/skill-creator"
+MEMORY_SKILL_DIR="$SKILLS_DIR/opencode-memory"
+TDD_SKILL_DIR="$SKILLS_DIR/test-driven-development"
+DEBUG_SKILL_DIR="$SKILLS_DIR/systematic-debugging"
+PLAYWRIGHT_SKILL_DIR="$SKILLS_DIR/playwright-cli"
+FRONTEND_SKILL_DIR="$SKILLS_DIR/frontend-design"
+TAILWIND_SKILL_DIR="$SKILLS_DIR/tailwind"
+SHADCN_SKILL_DIR="$SKILLS_DIR/shadcn-svelte"
+SVELTE_SKILL_DIR="$SKILLS_DIR/svelte"
+SVELTE_CLI_SKILL_DIR="$SKILLS_DIR/svelte-cli"
+SVELTE_KIT_SKILL_DIR="$SKILLS_DIR/svelte-kit"
+SVELTE_MCP_SKILL_DIR="$SKILLS_DIR/svelte-mcp"
+DB_ARCHITECT_SKILL_DIR="$SKILLS_DIR/database-architect"
+POSTGRESQL_SKILL_DIR="$SKILLS_DIR/postgresql"
 
-echo ""
 echo "Installing to:"
 echo "  Docs/Scripts:             $INSTALL_DIR"
-echo "  opencode-mastery:         $MASTERY_SKILL_DIR"
-echo "  meta-agent:               $META_AGENT_SKILL_DIR"
-echo "  skill-creator:            $SKILL_CREATOR_SKILL_DIR"
-echo "  opencode-memory:          $MEMORY_SKILL_DIR"
-echo "  test-driven-development:  $TDD_SKILL_DIR"
-echo "  systematic-debugging:     $DEBUG_SKILL_DIR"
-echo "  playwright-cli:           $PLAYWRIGHT_SKILL_DIR"
-echo "  commands:                 $COMMANDS_DIR"
-echo "  plugin:                   $PLUGIN_DIR"
+echo "  Skills:                   $SKILLS_DIR"
+echo "  Plugin:                   $PLUGIN_DIR"
+echo "  Commands:                 $COMMANDS_DIR"
 echo ""
 
 # Skip confirmation if -y flag provided
@@ -74,16 +96,18 @@ echo "📥 Creating directories..."
 mkdir -p "$INSTALL_DIR/docs"
 mkdir -p "$INSTALL_DIR/memory"
 mkdir -p "$INSTALL_DIR/cache/github"
-mkdir -p "$MASTERY_SKILL_DIR"
-mkdir -p "$META_AGENT_SKILL_DIR"
-mkdir -p "$SKILL_CREATOR_SKILL_DIR"
-mkdir -p "$MEMORY_SKILL_DIR"
-mkdir -p "$TDD_SKILL_DIR"
-mkdir -p "$DEBUG_SKILL_DIR"
-mkdir -p "$PLAYWRIGHT_SKILL_DIR"
 mkdir -p "$SCRIPTS_DIR"
 mkdir -p "$COMMANDS_DIR"
 mkdir -p "$PLUGIN_DIR"
+
+# Create all skill directories
+for skill_dir in "$MASTERY_SKILL_DIR" "$META_AGENT_SKILL_DIR" "$SKILL_CREATOR_SKILL_DIR" \
+                 "$MEMORY_SKILL_DIR" "$TDD_SKILL_DIR" "$DEBUG_SKILL_DIR" "$PLAYWRIGHT_SKILL_DIR" \
+                 "$FRONTEND_SKILL_DIR" "$TAILWIND_SKILL_DIR" "$SHADCN_SKILL_DIR" \
+                 "$SVELTE_SKILL_DIR" "$SVELTE_CLI_SKILL_DIR" "$SVELTE_KIT_SKILL_DIR" \
+                 "$SVELTE_MCP_SKILL_DIR" "$DB_ARCHITECT_SKILL_DIR" "$POSTGRESQL_SKILL_DIR"; do
+    mkdir -p "$skill_dir"
+done
 
 echo "📥 Downloading latest version from GitHub..."
 TEMP_DIR=$(mktemp -d)
@@ -103,64 +127,46 @@ if ! cp "$TEMP_DIR/src/skill/opencode-mastery/scripts/"*.py "$SCRIPTS_DIR/"; the
 fi
 
 echo ""
-echo "📋 Copying skill directories (excluding scripts)..."
-if ! cp -r "$TEMP_DIR/src/skill/opencode-mastery/"* "$MASTERY_SKILL_DIR/"; then
-    echo "❌ Failed to copy opencode-mastery skill directory"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
-if ! cp -r "$TEMP_DIR/src/skill/meta-agent/"* "$META_AGENT_SKILL_DIR/"; then
-    echo "❌ Failed to copy meta-agent skill directory"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
-if ! cp -r "$TEMP_DIR/src/skill/skill-creator/"* "$SKILL_CREATOR_SKILL_DIR/"; then
-    echo "❌ Failed to copy skill-creator skill directory"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
+echo "📋 Copying skill directories..."
 
-echo ""
-echo "📋 Copying opencode-memory skill..."
-if ! cp -r "$TEMP_DIR/src/skill/opencode-memory/"* "$MEMORY_SKILL_DIR/"; then
-    echo "❌ Failed to copy opencode-memory skill directory"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
+# Copy all skills
+copy_skill() {
+    local skill_name=$1
+    local target_dir=$2
+    echo "  Copying $skill_name..."
+    if ! cp -r "$TEMP_DIR/src/skill/$skill_name/"* "$target_dir/"; then
+        echo "❌ Failed to copy $skill_name skill directory"
+        rm -rf "$TEMP_DIR"
+        exit 1
+    fi
+}
 
-echo ""
-echo "📋 Copying test-driven-development skill..."
-if ! cp -r "$TEMP_DIR/src/skill/test-driven-development/"* "$TDD_SKILL_DIR/"; then
-    echo "❌ Failed to copy test-driven-development skill directory"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
-
-echo ""
-echo "📋 Copying systematic-debugging skill..."
-if ! cp -r "$TEMP_DIR/src/skill/systematic-debugging/"* "$DEBUG_SKILL_DIR/"; then
-    echo "❌ Failed to copy systematic-debugging skill directory"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
-
-echo ""
-echo "📋 Copying playwright-cli skill..."
-if ! cp -r "$TEMP_DIR/src/skill/playwright-cli/"* "$PLAYWRIGHT_SKILL_DIR/"; then
-    echo "❌ Failed to copy playwright-cli skill directory"
-    rm -rf "$TEMP_DIR"
-    exit 1
-fi
+copy_skill "opencode-mastery" "$MASTERY_SKILL_DIR"
+copy_skill "meta-agent" "$META_AGENT_SKILL_DIR"
+copy_skill "skill-creator" "$SKILL_CREATOR_SKILL_DIR"
+copy_skill "opencode-memory" "$MEMORY_SKILL_DIR"
+copy_skill "test-driven-development" "$TDD_SKILL_DIR"
+copy_skill "systematic-debugging" "$DEBUG_SKILL_DIR"
+copy_skill "playwright-cli" "$PLAYWRIGHT_SKILL_DIR"
+copy_skill "frontend-design" "$FRONTEND_SKILL_DIR"
+copy_skill "tailwind" "$TAILWIND_SKILL_DIR"
+copy_skill "shadcn-svelte" "$SHADCN_SKILL_DIR"
+copy_skill "svelte" "$SVELTE_SKILL_DIR"
+copy_skill "svelte-cli" "$SVELTE_CLI_SKILL_DIR"
+copy_skill "svelte-kit" "$SVELTE_KIT_SKILL_DIR"
+copy_skill "svelte-mcp" "$SVELTE_MCP_SKILL_DIR"
+copy_skill "database-architect" "$DB_ARCHITECT_SKILL_DIR"
+copy_skill "postgresql" "$POSTGRESQL_SKILL_DIR"
 
 echo ""
 echo "🗑️  Removing scripts from skill directories (kept globally)..."
-rm -rf "$MASTERY_SKILL_DIR/scripts" 2>/dev/null || true
-rm -rf "$META_AGENT_SKILL_DIR/scripts" 2>/dev/null || true
-rm -rf "$SKILL_CREATOR_SKILL_DIR/scripts" 2>/dev/null || true
-rm -rf "$MEMORY_SKILL_DIR/scripts" 2>/dev/null || true
-rm -rf "$TDD_SKILL_DIR/scripts" 2>/dev/null || true
-rm -rf "$DEBUG_SKILL_DIR/scripts" 2>/dev/null || true
-rm -rf "$PLAYWRIGHT_SKILL_DIR/scripts" 2>/dev/null || true
+for skill_dir in "$MASTERY_SKILL_DIR" "$META_AGENT_SKILL_DIR" "$SKILL_CREATOR_SKILL_DIR" \
+                 "$MEMORY_SKILL_DIR" "$TDD_SKILL_DIR" "$DEBUG_SKILL_DIR" "$PLAYWRIGHT_SKILL_DIR" \
+                 "$FRONTEND_SKILL_DIR" "$TAILWIND_SKILL_DIR" "$SHADCN_SKILL_DIR" \
+                 "$SVELTE_SKILL_DIR" "$SVELTE_CLI_SKILL_DIR" "$SVELTE_KIT_SKILL_DIR" \
+                 "$SVELTE_MCP_SKILL_DIR" "$DB_ARCHITECT_SKILL_DIR" "$POSTGRESQL_SKILL_DIR"; do
+    rm -rf "$skill_dir/scripts" 2>/dev/null || true
+done
 
 echo ""
 echo "📋 Copying commands..."
@@ -172,24 +178,19 @@ else
 fi
 
 echo ""
-echo "📋 Copying plugin..."
-if [ -d "$TEMP_DIR/src/plugin" ]; then
-    cp -r "$TEMP_DIR/src/plugin/"* "$PLUGIN_DIR/" 2>/dev/null || true
-    echo "✓ Plugin copied to:         $PLUGIN_DIR"
+echo "📋 Copying plugins..."
+if [ -d "$TEMP_DIR/.opencode/plugin" ]; then
+    cp -r "$TEMP_DIR/.opencode/plugin/"* "$PLUGIN_DIR/" 2>/dev/null || true
+    echo "✓ Plugins copied to:        $PLUGIN_DIR"
 else
-    echo "ℹ️  No plugin to install"
+    echo "ℹ️  No plugins to install"
 fi
 
 rm -rf "$TEMP_DIR"
 
+echo ""
 echo "✓ Scripts copied to:              $SCRIPTS_DIR"
-echo "✓ opencode-mastery copied to:     $MASTERY_SKILL_DIR"
-echo "✓ meta-agent copied to:           $META_AGENT_SKILL_DIR"
-echo "✓ skill-creator copied to:        $SKILL_CREATOR_SKILL_DIR"
-echo "✓ opencode-memory copied to:      $MEMORY_SKILL_DIR"
-echo "✓ test-driven-development copied: $TDD_SKILL_DIR"
-echo "✓ systematic-debugging copied:    $DEBUG_SKILL_DIR"
-echo "✓ playwright-cli copied:          $PLAYWRIGHT_SKILL_DIR"
+echo "✓ 16 skills copied to:            $SKILLS_DIR"
 
 echo ""
 echo "📜 Making scripts executable..."
@@ -206,38 +207,25 @@ python3 "$SCRIPTS_DIR/index_builder.py"
 echo ""
 echo "✅ Installation complete!"
 echo ""
-echo "Next steps:"
-echo "  1. Start OpenCode"
-echo "  2. Run: /skill opencode-mastery"
-echo "     → Ask anything about OpenCode!"
+echo "Quick Start:"
+echo "  /skill opencode-mastery     - Ask anything about OpenCode"
+echo "  /skill test-driven-development - Enforce TDD automatically"
+echo "  /skill systematic-debugging - Debug methodically"
+echo "  /skill frontend-design      - UI/UX for developers"
 echo ""
-echo "  3. Run: /skill meta-agent"
-echo "     → Create commands, skills, and agents!"
-echo ""
-echo "  4. Run: /skill skill-creator"
-echo "     → Create, audit, and optimize skills!"
-echo ""
-echo "  5. Run: /skill opencode-memory"
-echo "     → Memory plugin with tools and hooks!"
-echo ""
-echo "  6. Run: /skill test-driven-development"
-echo "     → Enforce TDD discipline automatically!"
-echo ""
-echo "  7. Run: /skill systematic-debugging"
-echo "     → Methodical debugging framework!"
-echo ""
-echo "  8. Run: /skill playwright-cli"
-echo "     → Browser automation for web testing!"
+echo "All Skills:"
+echo "  /skill opencode-mastery     /skill meta-agent"
+echo "  /skill skill-creator        /skill opencode-memory"
+echo "  /skill test-driven-development /skill systematic-debugging"
+echo "  /skill playwright-cli       /skill frontend-design"
+echo "  /skill tailwind             /skill shadcn-svelte"
+echo "  /skill svelte               /skill svelte-cli"
+echo "  /skill svelte-kit           /skill svelte-mcp"
+echo "  /skill database-architect   /skill postgresql"
 echo ""
 echo "📍 Files installed at:"
 echo "  - Scripts:                 $SCRIPTS_DIR"
-echo "  - opencode-mastery:        $MASTERY_SKILL_DIR"
-echo "  - meta-agent:              $META_AGENT_SKILL_DIR"
-echo "  - skill-creator:           $SKILL_CREATOR_SKILL_DIR"
-echo "  - opencode-memory:         $MEMORY_SKILL_DIR"
-echo "  - test-driven-development: $TDD_SKILL_DIR"
-echo "  - systematic-debugging:    $DEBUG_SKILL_DIR"
-echo "  - playwright-cli:          $PLAYWRIGHT_SKILL_DIR"
+echo "  - Skills:                  $SKILLS_DIR"
 echo "  - Plugin:                  $PLUGIN_DIR"
 echo "  - Commands:                $COMMANDS_DIR"
 echo "  - Docs:                    $INSTALL_DIR/docs"

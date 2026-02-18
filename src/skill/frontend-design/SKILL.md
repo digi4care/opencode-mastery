@@ -1,6 +1,6 @@
 ---
 name: frontend-design
-description: UI/UX guidance for developers. Apply design principles, accessibility (WCAG), component states, interaction patterns, and responsive design. Use when building or reviewing user interfaces, forms, layouts, dashboards, or landing pages.
+description: UI/UX design principles for developers - visual hierarchy, spacing, contrast, accessibility (WCAG), component states, interaction patterns, forms, mobile UX. Use for design decisions and UX guidance. For Tailwind CSS use tailwind skill. For shadcn components use shadcn-svelte skill.
 license: MIT
 compatibility: opencode
 metadata:

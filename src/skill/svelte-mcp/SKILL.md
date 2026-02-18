@@ -1,6 +1,6 @@
 ---
 name: svelte-mcp
-description: Use when working with the Svelte MCP server for AI-assisted Svelte development. Provides documentation access, code analysis via svelte-autofixer, and playground link generation.
+description: Svelte MCP server - AI-assisted Svelte development with documentation access, svelte-autofixer analysis, and playground links. Use specifically for MCP server features. For Svelte code use svelte skill. For SvelteKit use svelte-kit skill.
 license: MIT
 compatibility: opencode
 metadata:
