@@ -1,6 +1,12 @@
 ---
 name: tailwind
 description: Use when styling with Tailwind CSS v4 - covers CSS-first configuration (@theme, @utility, @plugin), grid layouts, container queries, custom utilities, and framework integration (SvelteKit, Next.js, Vite, React)
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "2.0"
+  source: https://tailwindcss.com/docs
 ---
 
 # Tailwind CSS v4
@@ -9,15 +15,15 @@ Comprehensive Tailwind CSS skill covering v4's CSS-first configuration, utilitie
 
 ## 📋 Quick Summary
 
-| Feature | Syntax | Description |
-|---------|--------|-------------|
-| **v4 Import** | `@import "tailwindcss"` | Replaces `@tailwind` directives |
-| **Theme** | `@theme { --color-*: ... }` | CSS variables for customization |
-| **Custom Utilities** | `@utility name { ... }` | Define utilities in CSS |
-| **Plugins** | `@plugin "@tailwindcss/forms"` | Load plugins in CSS |
-| **Container Queries** | `@container`, `@md:`, `@lg:` | Responsive to parent container |
-| **Content Detection** | `@source "./src"` | Optional explicit paths |
-| **Vite Plugin** | `@tailwindcss/vite` | Must come before framework plugin |
+| Feature               | Syntax                         | Description                       |
+| --------------------- | ------------------------------ | --------------------------------- |
+| **v4 Import**         | `@import "tailwindcss"`        | Replaces `@tailwind` directives   |
+| **Theme**             | `@theme { --color-*: ... }`    | CSS variables for customization   |
+| **Custom Utilities**  | `@utility name { ... }`        | Define utilities in CSS           |
+| **Plugins**           | `@plugin "@tailwindcss/forms"` | Load plugins in CSS               |
+| **Container Queries** | `@container`, `@md:`, `@lg:`   | Responsive to parent container    |
+| **Content Detection** | `@source "./src"`              | Optional explicit paths           |
+| **Vite Plugin**       | `@tailwindcss/vite`            | Must come before framework plugin |
 
 ## 📑 Table of Contents
 
@@ -131,9 +137,7 @@ Use this skill when you need:
 ```jsx
 <div class="@container">
   <div class="@md:flex @lg:grid @lg:grid-cols-2 gap-4">
-    <div class="p-4 bg-white rounded shadow">
-      Adapts to container size
-    </div>
+    <div class="p-4 bg-white rounded shadow">Adapts to container size</div>
   </div>
 </div>
 ```
@@ -149,9 +153,11 @@ Use this skill when you need:
 ### 8. Interactive States
 
 ```jsx
-<button class="bg-blue-500 hover:bg-blue-700 active:bg-blue-800
+<button
+  class="bg-blue-500 hover:bg-blue-700 active:bg-blue-800
              focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
-             disabled:opacity-50 disabled:cursor-not-allowed">
+             disabled:opacity-50 disabled:cursor-not-allowed"
+>
   Button
 </button>
 ```
@@ -159,8 +165,10 @@ Use this skill when you need:
 ### 9. Arbitrary Values
 
 ```jsx
-<div class="bg-[#1da1f2] w-[137px] h-[calc(100vh-80px)]
-           grid-cols-[200px_minmax(900px,_1fr)_100px]">
+<div
+  class="bg-[#1da1f2] w-[137px] h-[calc(100vh-80px)]
+           grid-cols-[200px_minmax(900px,_1fr)_100px]"
+>
   Custom values with brackets
 </div>
 ```
@@ -209,7 +217,9 @@ Use this skill when you need:
   --animate-spin: spin 1s linear infinite;
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 }
 
@@ -351,30 +361,28 @@ v4 automatically detects content in common locations:
 ```jsx
 <div class="@container">
   <div class="@md:flex @lg:grid @lg:grid-cols-2">
-    <div class="p-4 bg-white rounded shadow">
-      Adapts to container width
-    </div>
+    <div class="p-4 bg-white rounded shadow">Adapts to container width</div>
   </div>
 </div>
 ```
 
 ### Container Query Classes
 
-| Class | Description |
-|-------|-------------|
-| `@<breakpoint>:` | Apply at breakpoint |
-| `@min-<width>` | Minimum container width |
-| `@max-<width>` | Maximum container width |
+| Class            | Description             |
+| ---------------- | ----------------------- |
+| `@<breakpoint>:` | Apply at breakpoint     |
+| `@min-<width>`   | Minimum container width |
+| `@max-<width>`   | Maximum container width |
 
 ### Breakpoint Mapping
 
 | Container | Media Query |
-|-----------|-------------|
-| `@sm` | 640px |
-| `@md` | 768px |
-| `@lg` | 1024px |
-| `@xl` | 1280px |
-| `@2xl` | 1536px |
+| --------- | ----------- |
+| `@sm`     | 640px       |
+| `@md`     | 768px       |
+| `@lg`     | 1024px      |
+| `@xl`     | 1280px      |
+| `@2xl`    | 1536px      |
 
 ### Complete Example
 
@@ -394,9 +402,7 @@ v4 automatically detects content in common locations:
 
 ```jsx
 <div class="@container/sidebar">
-  <div class="@sidebar/md:flex">
-    Responsive to sidebar width
-  </div>
+  <div class="@sidebar/md:flex">Responsive to sidebar width</div>
 </div>
 ```
 
@@ -480,18 +486,18 @@ v4 automatically detects content in common locations:
 module.exports = ({ addUtilities, addComponents, theme }) => {
   // Add utilities
   addUtilities({
-    '.custom-util': {
-      display: 'flex',
-      gap: theme('spacing.4'),
+    ".custom-util": {
+      display: "flex",
+      gap: theme("spacing.4"),
     },
   });
 
   // Add components
   addComponents({
-    '.custom-card': {
-      padding: theme('spacing.4'),
-      borderRadius: theme('borderRadius.lg'),
-      boxShadow: theme('boxShadow.md'),
+    ".custom-card": {
+      padding: theme("spacing.4"),
+      borderRadius: theme("borderRadius.lg"),
+      boxShadow: theme("boxShadow.md"),
     },
   });
 };
@@ -503,27 +509,27 @@ module.exports = ({ addUtilities, addComponents, theme }) => {
 
 ### State Variants
 
-| Variant | Description |
-|---------|-------------|
-| `hover:` | Mouse hover |
-| `focus:` | Keyboard focus |
-| `active:` | Mouse/active press |
-| `disabled:` | Disabled state |
-| `first:` | First child |
-| `last:` | Last child |
-| `odd:` | Odd children |
-| `even:` | Even children |
-| `empty:` | Empty elements |
+| Variant     | Description        |
+| ----------- | ------------------ |
+| `hover:`    | Mouse hover        |
+| `focus:`    | Keyboard focus     |
+| `active:`   | Mouse/active press |
+| `disabled:` | Disabled state     |
+| `first:`    | First child        |
+| `last:`     | Last child         |
+| `odd:`      | Odd children       |
+| `even:`     | Even children      |
+| `empty:`    | Empty elements     |
 
 ### Responsive Variants
 
 | Variant | Min Width |
-|---------|-----------|
-| `sm:` | 640px |
-| `md:` | 768px |
-| `lg:` | 1024px |
-| `xl:` | 1280px |
-| `2xl:` | 1536px |
+| ------- | --------- |
+| `sm:`   | 640px     |
+| `md:`   | 768px     |
+| `lg:`   | 1024px    |
+| `xl:`   | 1280px    |
+| `2xl:`  | 1536px    |
 
 ### Dark Mode
 
