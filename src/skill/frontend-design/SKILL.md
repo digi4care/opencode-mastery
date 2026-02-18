@@ -6,7 +6,6 @@ compatibility: opencode
 metadata:
   author: OpenCode Community
   version: "1.0.0"
-  source: ui-ux-pro-max + Anthropic + OpenCode Community
 ---
 
 # Frontend Design (UI/UX for Developers)
