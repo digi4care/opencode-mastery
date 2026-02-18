@@ -67,6 +67,7 @@ pnpm dlx shadcn-svelte@latest add select
 
 ## References
 
+- [Design Tokens](references/design-tokens.md) - **CRITICAL: Read before styling**
 - [Installation](references/installation.md)
 - [Dark Mode Setup](references/dark_mode.md)
 - [Component Categories](references/registry.json)
