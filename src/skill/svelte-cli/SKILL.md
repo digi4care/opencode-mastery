@@ -1,6 +1,12 @@
 ---
 name: svelte-cli
-description: Use when creating or managing Svelte/SvelteKit projects with the sv CLI - covers project scaffolding, add-ons (ESLint, Drizzle, MCP, mdsvex), dev/build workflows, and type checking
+description: Use when creating or managing Svelte/SvelteKit projects with the sv CLI. Covers project scaffolding, add-ons, dev/build workflows, and type checking.
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "2.0"
+  source: https://svelte.dev/docs/cli
 ---
 
 # Svelte CLI v2.0
@@ -9,14 +15,14 @@ The Svelte command line interface (`sv`) is a toolkit for creating and maintaini
 
 ## 📋 Quick Summary
 
-| Command/Feature | Description |
-|-----------------|-------------|
-| **`sv create`** | Scaffold new SvelteKit projects |
-| **`sv add`** | Install and configure add-ons (eslint, drizzle, lucia, mcp, mdsvex) |
-| **`sv check`** | Type checking from command line |
-| **Add-ons** | Pre-configured integrations with options |
-| **Package Managers** | npm, pnpm, bun, deno, yarn |
-| **MCP Setup** | `npx sv add mcp` for IDE integration |
+| Command/Feature      | Description                                                         |
+| -------------------- | ------------------------------------------------------------------- |
+| **`sv create`**      | Scaffold new SvelteKit projects                                     |
+| **`sv add`**         | Install and configure add-ons (eslint, drizzle, lucia, mcp, mdsvex) |
+| **`sv check`**       | Type checking from command line                                     |
+| **Add-ons**          | Pre-configured integrations with options                            |
+| **Package Managers** | npm, pnpm, bun, deno, yarn                                          |
+| **MCP Setup**        | `npx sv add mcp` for IDE integration                                |
 
 ## 📑 Table of Contents
 
@@ -134,7 +140,10 @@ Prevent DevTools warning in your dev server:
 import { dev } from "$app/environment";
 
 export function handle({ event, resolve }) {
-  if (dev && event.url.pathname === "/.well-known/appspecific/com.chrome.devtools.json") {
+  if (
+    dev &&
+    event.url.pathname === "/.well-known/appspecific/com.chrome.devtools.json"
+  ) {
     return new Response(undefined, { status: 404 });
   }
 
@@ -176,6 +185,7 @@ npx sv add mcp="ide:vscode,claude"
 ```
 
 **Resulting file structure:**
+
 ```
 myapp/
 ├── src/

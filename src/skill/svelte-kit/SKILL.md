@@ -1,6 +1,12 @@
 ---
 name: svelte-kit
-description: Use when building full-stack SvelteKit applications - covers file-based routing, load functions, server endpoints, form actions, hooks, adapters, SSR/SSG, and deployment patterns
+description: Use when building full-stack SvelteKit applications. Covers file-based routing, load functions, server endpoints, form actions, hooks, adapters, SSR/SSG, and deployment patterns.
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "2.0"
+  source: https://kit.svelte.dev/docs
 ---
 
 # SvelteKit Expert Skill v2.0
@@ -9,15 +15,15 @@ description: Use when building full-stack SvelteKit applications - covers file-b
 
 ## 📋 Quick Summary
 
-| Topic | Description |
-|-------|-------------|
-| **Routing** | File-based: `+page.svelte`, `+layout.svelte`, `+server.js` |
-| **Data Loading** | Load functions (`+page.js`, `+page.server.js`) |
-| **Form Actions** | Progressive enhancement with `+page.server.js` |
-| **Hooks** | `handle`, `handleError`, `handleFetch` in `hooks.server.js` |
-| **Adapters** | Cloudflare, Vercel, Netlify, Node.js, Static |
-| **SSR/SSG** | Server-side rendering, static generation, prerender |
-| **Platform Context** | Cloudflare KV/DO, Vercel, custom types |
+| Topic                | Description                                                 |
+| -------------------- | ----------------------------------------------------------- |
+| **Routing**          | File-based: `+page.svelte`, `+layout.svelte`, `+server.js`  |
+| **Data Loading**     | Load functions (`+page.js`, `+page.server.js`)              |
+| **Form Actions**     | Progressive enhancement with `+page.server.js`              |
+| **Hooks**            | `handle`, `handleError`, `handleFetch` in `hooks.server.js` |
+| **Adapters**         | Cloudflare, Vercel, Netlify, Node.js, Static                |
+| **SSR/SSG**          | Server-side rendering, static generation, prerender         |
+| **Platform Context** | Cloudflare KV/DO, Vercel, custom types                      |
 
 **536 undocumented APIs** - See `references/conflicts.md` and `references/api/merged_api.md`.
 
@@ -209,7 +215,8 @@ Set the HTML lang attribute dynamically.
 // src/hooks.server.js
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
-  const lang = event.request.headers.get("accept-language")?.split(",")[0] || "en";
+  const lang =
+    event.request.headers.get("accept-language")?.split(",")[0] || "en";
 
   return resolve(event, {
     transformPageChunk: ({ html }) => html.replace("%lang%", lang),

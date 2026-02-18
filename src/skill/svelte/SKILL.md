@@ -1,6 +1,12 @@
 ---
 name: svelte
-description: Complete Svelte and SvelteKit knowledge base combining official documentation and GitHub repositories (core + kit). Use when building Svelte/SvelteKit apps, understanding compiler/runtime internals, or debugging framework issues.
+description: Complete Svelte and SvelteKit knowledge base combining official documentation and GitHub repositories. Use when building Svelte/SvelteKit apps, understanding compiler/runtime internals, or debugging framework issues.
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "2.0"
+  source: https://svelte.dev/docs + sveltejs/kit GitHub
 ---
 
 # Svelte & SvelteKit Comprehensive Skill v2.0
@@ -9,15 +15,15 @@ description: Complete Svelte and SvelteKit knowledge base combining official doc
 
 ## 📋 Quick Summary
 
-| Topic | Description |
-|-------|-------------|
-| **Runes** | `$state()`, `$derived()`, `$effect()`, `$props()` (Svelte 5) |
-| **Components** | Props, slots, snippets, lifecycle |
-| **State** | Context API, stores, `$state` objects |
-| **Boundaries** | Error/async handling with `<svelte:boundary>` |
-| **Special Elements** | `<svelte:window>`, `<svelte:element>`, `<svelte:boundary>` |
-| **Custom Elements** | Compile to web components |
-| **SvelteKit** | File-based routing, load functions, form actions |
+| Topic                | Description                                                  |
+| -------------------- | ------------------------------------------------------------ |
+| **Runes**            | `$state()`, `$derived()`, `$effect()`, `$props()` (Svelte 5) |
+| **Components**       | Props, slots, snippets, lifecycle                            |
+| **State**            | Context API, stores, `$state` objects                        |
+| **Boundaries**       | Error/async handling with `<svelte:boundary>`                |
+| **Special Elements** | `<svelte:window>`, `<svelte:element>`, `<svelte:boundary>`   |
+| **Custom Elements**  | Compile to web components                                    |
+| **SvelteKit**        | File-based routing, load functions, form actions             |
 
 **536 undocumented APIs** - See `references/conflicts.md` for details.
 

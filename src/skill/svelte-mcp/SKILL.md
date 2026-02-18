@@ -1,6 +1,12 @@
 ---
 name: svelte-mcp
-description: Use this skill when working with the Svelte MCP (Model Context Protocol) server for AI-assisted Svelte/SvelteKit development. It provides documentation access, code analysis via svelte-autofixer, and playground link generation.
+description: Use when working with the Svelte MCP server for AI-assisted Svelte/SvelteKit development. Provides documentation access, code analysis via svelte-autofixer, and playground link generation.
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "2.0"
+  source: https://svelte.dev/docs/mcp
 ---
 
 # Svelte MCP Server v2.0
@@ -9,12 +15,12 @@ The Svelte MCP (Model Context Protocol) server helps LLMs and AI agents write be
 
 ## 📋 Quick Summary
 
-| Tool | Purpose |
-|------|---------|
-| **list-sections** | Discover available documentation sections |
-| **get-documentation** | Fetch full documentation content |
-| **svelte-autofixer** | Analyze code and return issues/suggestions |
-| **playground-link** | Generate Svelte Playground links |
+| Tool                  | Purpose                                    |
+| --------------------- | ------------------------------------------ |
+| **list-sections**     | Discover available documentation sections  |
+| **get-documentation** | Fetch full documentation content           |
+| **svelte-autofixer**  | Analyze code and return issues/suggestions |
+| **playground-link**   | Generate Svelte Playground links           |
 
 **Setup:** `claude mcp add -t stdio -s user svelte -- npx -y @sveltejs/mcp`
 
