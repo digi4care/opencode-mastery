@@ -80,6 +80,17 @@ Do not use me for:
 - I see the problem: STOP, seeing symptom != understanding root cause
 - Pattern says X but I'll adapt: STOP, read reference completely
 
+## Tools
+
+The following tools are available to assist with systematic debugging:
+
+- `wait-for` - Wait for conditions instead of using arbitrary delays
+- `find-flaky-tests` - Detect tests that pollute global state
+- `trace-root-cause` - Analyze stack traces to identify root cause
+- `debug-session` - Track debugging progress through 4 phases
+
+These tools integrate with the systematic-debugging skill to automate error analysis and root cause detection.
+
 ## Quick Tests
 
 Should trigger:

@@ -85,6 +85,16 @@ Do not use me for:
 - I'll test after: STOP, TDD requires test first - no exceptions
 - Keeping code as reference: STOP, delete means delete
 
+## Tools
+
+The following tools are available to enforce TDD:
+
+- `check-test-exists` - Verify test file exists before writing implementation
+- `validate-tdd-cycle` - Check if TDD cycle was followed via git history
+- `analyze-git-order` - Analyze commit order to verify test-first approach
+
+Use these tools to validate TDD compliance automatically.
+
 ## Quick Tests
 
 Should trigger:
