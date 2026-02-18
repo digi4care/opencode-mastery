@@ -3,7 +3,8 @@ set -e
 
 echo "🗑️  OpenCode Mastery Skills Uninstaller"
 echo ""
-echo "This will remove opencode-mastery, meta-agent, and skill-creator skill files."
+echo "This will remove opencode-mastery, meta-agent, skill-creator, opencode-memory,"
+echo "test-driven-development, and systematic-debugging skill files."
 echo "Your downloaded documentation, memory, and cache will NOT be removed."
 echo ""
 
@@ -11,6 +12,8 @@ GLOBAL_MASTERY="$HOME/.config/opencode/skill/opencode-mastery"
 GLOBAL_META="$HOME/.config/opencode/skill/meta-agent"
 GLOBAL_SKILL_CREATOR="$HOME/.config/opencode/skill/skill-creator"
 GLOBAL_MEMORY="$HOME/.config/opencode/skill/opencode-memory"
+GLOBAL_TDD="$HOME/.config/opencode/skill/test-driven-development"
+GLOBAL_DEBUG="$HOME/.config/opencode/skill/systematic-debugging"
 GLOBAL_PLUGIN="$HOME/.config/opencode/plugin"
 GLOBAL_COMMANDS="$HOME/.config/opencode/commands"
 GLOBAL_SCRIPTS="$HOME/.ai_docs/opencode/scripts"
@@ -21,7 +24,7 @@ COMMAND_FILES=("memory.md" "ace-reflect.md" "skill-creator-plan.md" "skill-creat
 
 # Check if any of our files exist
 FOUND=false
-for skill in "$GLOBAL_MASTERY" "$GLOBAL_META" "$GLOBAL_SKILL_CREATOR" "$GLOBAL_MEMORY"; do
+for skill in "$GLOBAL_MASTERY" "$GLOBAL_META" "$GLOBAL_SKILL_CREATOR" "$GLOBAL_MEMORY" "$GLOBAL_TDD" "$GLOBAL_DEBUG"; do
     [ -d "$skill" ] && FOUND=true
 done
 for plugin in "${PLUGIN_FILES[@]}"; do
@@ -35,14 +38,16 @@ done
 if [ "$FOUND" = false ]; then
     echo "❌ No OpenCode installation found."
     echo ""
-    echo "Checked:"
-    echo "  - $GLOBAL_MASTERY"
-    echo "  - $GLOBAL_META"
-    echo "  - $GLOBAL_SKILL_CREATOR"
-    echo "  - $GLOBAL_MEMORY"
-    echo "  - $GLOBAL_PLUGIN/{skill-creator.ts,notify.ts}"
-    echo "  - $GLOBAL_COMMANDS/{memory.md,ace-reflect.md,skill-creator-*.md}"
-    echo "  - $GLOBAL_SCRIPTS/*.py"
+echo "Checked:"
+echo "  - $GLOBAL_MASTERY"
+echo "  - $GLOBAL_META"
+echo "  - $GLOBAL_SKILL_CREATOR"
+echo "  - $GLOBAL_MEMORY"
+echo "  - $GLOBAL_TDD"
+echo "  - $GLOBAL_DEBUG"
+echo "  - $GLOBAL_PLUGIN/{skill-creator.ts,notify.ts}"
+echo "  - $GLOBAL_COMMANDS/{memory.md,ace-reflect.md,skill-creator-*.md}"
+echo "  - $GLOBAL_SCRIPTS/*.py"
     exit 1
 fi
 
@@ -53,6 +58,8 @@ echo "  - $GLOBAL_MASTERY/ (skill directory)"
 echo "  - $GLOBAL_META/ (skill directory)"
 echo "  - $GLOBAL_SKILL_CREATOR/ (skill directory)"
 echo "  - $GLOBAL_MEMORY/ (skill directory)"
+echo "  - $GLOBAL_TDD/ (skill directory)"
+echo "  - $GLOBAL_DEBUG/ (skill directory)"
 echo "  - $GLOBAL_PLUGIN/ (plugin directory)"
 echo "  - $GLOBAL_SCRIPTS/*.py (scripts)"
 echo ""
@@ -96,6 +103,16 @@ fi
 if [ -d "$GLOBAL_MEMORY" ]; then
     rm -rf "$GLOBAL_MEMORY"
     echo "Removed: $GLOBAL_MEMORY/"
+fi
+
+if [ -d "$GLOBAL_TDD" ]; then
+    rm -rf "$GLOBAL_TDD"
+    echo "Removed: $GLOBAL_TDD/"
+fi
+
+if [ -d "$GLOBAL_DEBUG" ]; then
+    rm -rf "$GLOBAL_DEBUG"
+    echo "Removed: $GLOBAL_DEBUG/"
 fi
 
 echo ""

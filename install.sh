@@ -17,10 +17,13 @@ REPO_URL="https://github.com/digi4care/opencode-mastery"
 echo "🚀 OpenCode Mastery Skills Installer"
 echo ""
 echo "This package includes:"
-echo "  • opencode-mastery - Complete OpenCode knowledge base"
-echo "  • meta-agent       - Generate commands, skills, and agents"
-echo "  • skill-creator    - Create, audit, and optimize skills"
-echo "  • opencode-memory  - Memory plugin with tools and hooks"
+echo "  • opencode-mastery      - Complete OpenCode knowledge base"
+echo "  • meta-agent            - Generate commands, skills, and agents"
+echo "  • skill-creator         - Create, audit, and optimize skills"
+echo "  • opencode-memory       - Memory plugin with tools and hooks"
+echo "  • test-driven-development - Enforce TDD discipline"
+echo "  • systematic-debugging  - Methodical debugging framework"
+echo "  • playwright-cli        - Browser automation and visual testing"
 echo ""
 echo "Installing globally (available in all projects)..."
 echo ""
@@ -30,6 +33,9 @@ MASTERY_SKILL_DIR="$HOME/.config/opencode/skill/opencode-mastery"
 META_AGENT_SKILL_DIR="$HOME/.config/opencode/skill/meta-agent"
 SKILL_CREATOR_SKILL_DIR="$HOME/.config/opencode/skill/skill-creator"
 MEMORY_SKILL_DIR="$HOME/.config/opencode/skill/opencode-memory"
+TDD_SKILL_DIR="$HOME/.config/opencode/skill/test-driven-development"
+DEBUG_SKILL_DIR="$HOME/.config/opencode/skill/systematic-debugging"
+PLAYWRIGHT_SKILL_DIR="$HOME/.config/opencode/skill/playwright-cli"
 COMMANDS_DIR="$HOME/.config/opencode/commands"
 PLUGIN_DIR="$HOME/.config/opencode/plugin"
 
@@ -39,13 +45,16 @@ META_AGENT_SKILL_FILE="$META_AGENT_SKILL_DIR/SKILL.md"
 
 echo ""
 echo "Installing to:"
-echo "  Docs/Scripts:    $INSTALL_DIR"
-echo "  opencode-mastery: $MASTERY_SKILL_DIR"
-echo "  meta-agent:       $META_AGENT_SKILL_DIR"
-echo "  skill-creator:   $SKILL_CREATOR_SKILL_DIR"
-echo "  opencode-memory: $MEMORY_SKILL_DIR"
-echo "  commands:        $COMMANDS_DIR"
-echo "  plugin:          $PLUGIN_DIR"
+echo "  Docs/Scripts:             $INSTALL_DIR"
+echo "  opencode-mastery:         $MASTERY_SKILL_DIR"
+echo "  meta-agent:               $META_AGENT_SKILL_DIR"
+echo "  skill-creator:            $SKILL_CREATOR_SKILL_DIR"
+echo "  opencode-memory:          $MEMORY_SKILL_DIR"
+echo "  test-driven-development:  $TDD_SKILL_DIR"
+echo "  systematic-debugging:     $DEBUG_SKILL_DIR"
+echo "  playwright-cli:           $PLAYWRIGHT_SKILL_DIR"
+echo "  commands:                 $COMMANDS_DIR"
+echo "  plugin:                   $PLUGIN_DIR"
 echo ""
 
 # Skip confirmation if -y flag provided
@@ -69,6 +78,9 @@ mkdir -p "$MASTERY_SKILL_DIR"
 mkdir -p "$META_AGENT_SKILL_DIR"
 mkdir -p "$SKILL_CREATOR_SKILL_DIR"
 mkdir -p "$MEMORY_SKILL_DIR"
+mkdir -p "$TDD_SKILL_DIR"
+mkdir -p "$DEBUG_SKILL_DIR"
+mkdir -p "$PLAYWRIGHT_SKILL_DIR"
 mkdir -p "$SCRIPTS_DIR"
 mkdir -p "$COMMANDS_DIR"
 mkdir -p "$PLUGIN_DIR"
@@ -117,11 +129,38 @@ if ! cp -r "$TEMP_DIR/src/skill/opencode-memory/"* "$MEMORY_SKILL_DIR/"; then
 fi
 
 echo ""
+echo "📋 Copying test-driven-development skill..."
+if ! cp -r "$TEMP_DIR/src/skill/test-driven-development/"* "$TDD_SKILL_DIR/"; then
+    echo "❌ Failed to copy test-driven-development skill directory"
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+
+echo ""
+echo "📋 Copying systematic-debugging skill..."
+if ! cp -r "$TEMP_DIR/src/skill/systematic-debugging/"* "$DEBUG_SKILL_DIR/"; then
+    echo "❌ Failed to copy systematic-debugging skill directory"
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+
+echo ""
+echo "📋 Copying playwright-cli skill..."
+if ! cp -r "$TEMP_DIR/src/skill/playwright-cli/"* "$PLAYWRIGHT_SKILL_DIR/"; then
+    echo "❌ Failed to copy playwright-cli skill directory"
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+
+echo ""
 echo "🗑️  Removing scripts from skill directories (kept globally)..."
 rm -rf "$MASTERY_SKILL_DIR/scripts" 2>/dev/null || true
 rm -rf "$META_AGENT_SKILL_DIR/scripts" 2>/dev/null || true
 rm -rf "$SKILL_CREATOR_SKILL_DIR/scripts" 2>/dev/null || true
 rm -rf "$MEMORY_SKILL_DIR/scripts" 2>/dev/null || true
+rm -rf "$TDD_SKILL_DIR/scripts" 2>/dev/null || true
+rm -rf "$DEBUG_SKILL_DIR/scripts" 2>/dev/null || true
+rm -rf "$PLAYWRIGHT_SKILL_DIR/scripts" 2>/dev/null || true
 
 echo ""
 echo "📋 Copying commands..."
@@ -143,11 +182,14 @@ fi
 
 rm -rf "$TEMP_DIR"
 
-echo "✓ Scripts copied to:         $SCRIPTS_DIR"
-echo "✓ opencode-mastery copied to: $MASTERY_SKILL_DIR"
-echo "✓ meta-agent copied to:       $META_AGENT_SKILL_DIR"
-echo "✓ skill-creator copied to:    $SKILL_CREATOR_SKILL_DIR"
-echo "✓ opencode-memory copied to:   $MEMORY_SKILL_DIR"
+echo "✓ Scripts copied to:              $SCRIPTS_DIR"
+echo "✓ opencode-mastery copied to:     $MASTERY_SKILL_DIR"
+echo "✓ meta-agent copied to:           $META_AGENT_SKILL_DIR"
+echo "✓ skill-creator copied to:        $SKILL_CREATOR_SKILL_DIR"
+echo "✓ opencode-memory copied to:      $MEMORY_SKILL_DIR"
+echo "✓ test-driven-development copied: $TDD_SKILL_DIR"
+echo "✓ systematic-debugging copied:    $DEBUG_SKILL_DIR"
+echo "✓ playwright-cli copied:          $PLAYWRIGHT_SKILL_DIR"
 
 echo ""
 echo "📜 Making scripts executable..."
@@ -178,13 +220,25 @@ echo ""
 echo "  5. Run: /skill opencode-memory"
 echo "     → Memory plugin with tools and hooks!"
 echo ""
+echo "  6. Run: /skill test-driven-development"
+echo "     → Enforce TDD discipline automatically!"
+echo ""
+echo "  7. Run: /skill systematic-debugging"
+echo "     → Methodical debugging framework!"
+echo ""
+echo "  8. Run: /skill playwright-cli"
+echo "     → Browser automation for web testing!"
+echo ""
 echo "📍 Files installed at:"
-echo "  - Scripts:          $SCRIPTS_DIR"
-echo "  - opencode-mastery: $MASTERY_SKILL_DIR"
-echo "  - meta-agent:       $META_AGENT_SKILL_DIR"
-echo "  - skill-creator:    $SKILL_CREATOR_SKILL_DIR"
-echo "  - opencode-memory:  $MEMORY_SKILL_DIR"
-echo "  - Plugin:           $PLUGIN_DIR"
-echo "  - Commands:         $COMMANDS_DIR"
-echo "  - Docs:             $INSTALL_DIR/docs"
-echo "  - Memory:           $INSTALL_DIR/memory"
+echo "  - Scripts:                 $SCRIPTS_DIR"
+echo "  - opencode-mastery:        $MASTERY_SKILL_DIR"
+echo "  - meta-agent:              $META_AGENT_SKILL_DIR"
+echo "  - skill-creator:           $SKILL_CREATOR_SKILL_DIR"
+echo "  - opencode-memory:         $MEMORY_SKILL_DIR"
+echo "  - test-driven-development: $TDD_SKILL_DIR"
+echo "  - systematic-debugging:    $DEBUG_SKILL_DIR"
+echo "  - playwright-cli:          $PLAYWRIGHT_SKILL_DIR"
+echo "  - Plugin:                  $PLUGIN_DIR"
+echo "  - Commands:                $COMMANDS_DIR"
+echo "  - Docs:                    $INSTALL_DIR/docs"
+echo "  - Memory:                  $INSTALL_DIR/memory"
