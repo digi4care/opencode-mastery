@@ -1,0 +1,70 @@
+{
+  "version": "1.0.0",
+  "description": "Registry for shadcn-svelte skill references",
+  "references": {
+    "installation": "references/installation.md",
+    "dark-mode": "references/dark_mode.md",
+    "components": "references/documentation/",
+    "theming": "references/theming.md",
+    "api": "references/api/merged_api.md",
+    "conflicts": "references/conflicts.md"
+  },
+  "componentCategories": {
+    "layout": [
+      "Accordion",
+      "Collapsible", 
+      "Resizable",
+      "Scroll_Area",
+      "Separator"
+    ],
+    "forms": [
+      "Button",
+      "Checkbox",
+      "Input",
+      "Radio_Group",
+      "Select",
+      "Slider",
+      "Switch",
+      "Textarea",
+      "Toggle",
+      "Toggle_Group",
+      "Combobox",
+      "Date_Picker"
+    ],
+    "overlays": [
+      "Alert_Dialog",
+      "Dialog",
+      "Dropdown_Menu",
+      "Hover_Card",
+      "Popover",
+      "Sheet"
+    ],
+    "display": [
+      "Alert",
+      "Avatar",
+      "Badge",
+      "Card",
+      "Carousel",
+      "Kbd",
+      "Progress",
+      "Skeleton",
+      "Table",
+      "Tabs",
+      "Tooltip"
+    ],
+    "navigation": [
+      "Breadcrumb",
+      "Command",
+      "Context_Menu",
+      "Menubar",
+      "Navigation_Menu",
+      "Pagination",
+      "Sidebar"
+    ],
+    "advanced": [
+      "Calendar",
+      "Chart",
+      "Data_Table"
+    ]
+  }
+}
