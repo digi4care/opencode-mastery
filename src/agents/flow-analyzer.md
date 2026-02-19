@@ -1,7 +1,13 @@
 ---
-description: Framework-agnostic flow completeness analyzer for planned and implemented user/system flows.
+# OpenCode Agent Configuration
+id: flow-analyzer
+name: Flow Analyzer
+description: "Framework-agnostic flow completeness analyzer for planned and implemented user/system flows."
+category: analysis
+type: subagent
+version: 1.0.0
+author: opencode
 mode: subagent
-model: default
 temperature: 0.2
 tools:
   read: true

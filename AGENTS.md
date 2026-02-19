@@ -23,6 +23,7 @@ Alle plugins                 # Gebruiken zelfde config
 **Lees eerst:** [docs/project/config-system.md](docs/project/config-system.md)
 
 Dit is de BELANGRIJKSTE documentatie voor deze repo. Hierin staat:
+
 - Hoe de config werkt
 - Hoe plugins de config gebruiken
 - Hoe nieuwe features toe te voegen
@@ -37,7 +38,10 @@ opencode-mastery/
 │   │   └── config/            # Shared config library (ALLE plugins gebruiken dit)
 │   │       ├── schema.ts      # Zod schemas
 │   │       ├── loader.ts      # YAML loader
-│   │       └── defaults.ts    # Default waarden
+│   │       ├── defaults.ts    # Default waarden
+│   │       ├── types.ts       # Model resolution types
+│   │       ├── frontmatter-parser.ts  # YAML frontmatter parser
+│   │       └── model-resolver.ts      # 5-level model resolution
 │   │
 │   ├── skill/                 # 16 Skills
 │   │   ├── opencode-mastery/
@@ -64,6 +68,7 @@ opencode-mastery/
 ## Nieuwe Feature Toevoegen
 
 ### Stap 1: Update Config Schema
+
 ```typescript
 // src/lib/config/schema.ts
 export const MyFeatureConfigSchema = z.object({
@@ -75,6 +80,7 @@ export const MyFeatureConfigSchema = z.object({
 ```
 
 ### Stap 2: Update Defaults
+
 ```typescript
 // src/lib/config/defaults.ts
 myFeature: {
@@ -84,6 +90,7 @@ myFeature: {
 ```
 
 ### Stap 3: Update Config File
+
 ```yaml
 # opencode.config.yaml
 features:
@@ -92,6 +99,7 @@ features:
 ```
 
 ### Stap 4: Gebruik in Plugin
+
 ```typescript
 import { isFeatureEnabled, getFeatureConfig } from "../../lib/config";
 
@@ -100,6 +108,37 @@ if (!isFeatureEnabled("myFeature")) {
 }
 
 const config = getFeatureConfig("myFeature");
+```
+
+### Stap 5: Model Resolution (optioneel)
+
+5-level pipeline voor model selectie:
+
+| #   | Prioriteit     | Bron                      |
+| --- | -------------- | ------------------------- |
+| 1️⃣  | CLI flag       | `--model` of `-m`         |
+| 2️⃣  | Frontmatter    | `model:` in .md file      |
+| 3️⃣  | User override  | JSON config `agent.model` |
+| 4️⃣  | Inherited      | Van parent agent          |
+| 5️⃣  | System default | OpenCode's actieve model  |
+
+```typescript
+import { resolveModel, resolveModelWithSource } from "../../lib/config";
+
+// Simpel - alleen model string
+const model = resolveModel({
+  userModel: agentConfig.model, // Uit JSON config (optioneel)
+  systemDefault: context.model, // OpenCode's actieve model
+});
+
+// Volledig - met source tracking
+const result = resolveModelWithSource({
+  frontmatterModel: "anthropic/claude-sonnet-4", // Uit .md file
+  userModel: agentConfig.model, // Uit JSON config
+  systemDefault: context.model, // OpenCode global
+});
+// result.model = "anthropic/claude-sonnet-4"
+// result.source = "frontmatter"
 ```
 
 **Zie:** [docs/project/config-system.md](docs/project/config-system.md) voor volledige guide.
@@ -122,32 +161,33 @@ uv sync                        # Python dependencies
 ## Package Managers
 
 | Taal                  | Tool    |
-|--------------------- | ------- |
+| --------------------- | ------- |
 | JavaScript/TypeScript | **Bun** |
 | Python                | **uv**  |
 
 ## Quick Links
 
-| Wat                    | Waar                                                        |
-| ---------------------- | ----------------------------------------------------------- |
+| Wat                    | Waar                                                           |
+| ---------------------- | -------------------------------------------------------------- |
 | **🔥 CONFIG SYSTEM**   | [docs/project/config-system.md](docs/project/config-system.md) |
-| **Project Conventies** | [docs/project/conventions.md](docs/project/conventions.md) |
-| **Plugins Guide**      | [docs/opencode/plugins.md](docs/opencode/plugins.md)       |
-| **Tools Guide**        | [docs/opencode/tools.md](docs/opencode/tools.md)           |
+| **Project Conventies** | [docs/project/conventions.md](docs/project/conventions.md)     |
+| **Plugins Guide**      | [docs/opencode/plugins.md](docs/opencode/plugins.md)           |
+| **Tools Guide**        | [docs/opencode/tools.md](docs/opencode/tools.md)               |
 
 ## Anti-Patterns (NOOIT doen)
 
-| Anti-Pattern                    | Correct Pattern                |
-| ------------------------------- | ------------------------------ |
-| Eigen config in plugin          | Gebruik `src/lib/config`       |
-| `skills/` (plural directory)    | `skill/` (singular)            |
-| Python scripts voor AI logica   | TypeScript tools               |
-| Harde defaults in code          | Lees uit config                |
-| pnpm/npm gebruiken              | Alleen Bun                     |
+| Anti-Pattern                  | Correct Pattern          |
+| ----------------------------- | ------------------------ |
+| Eigen config in plugin        | Gebruik `src/lib/config` |
+| `skills/` (plural directory)  | `skill/` (singular)      |
+| Python scripts voor AI logica | TypeScript tools         |
+| Harde defaults in code        | Lees uit config          |
+| pnpm/npm gebruiken            | Alleen Bun               |
 
 ## Installatie
 
 Na installatie bevindt zich in `~/.config/opencode/`:
+
 - `skill/` - 16 skills
 - `plugin/` - 3 TypeScript plugins
 - `lib/config/` - Shared config library
@@ -155,23 +195,23 @@ Na installatie bevindt zich in `~/.config/opencode/`:
 
 ## Skills (16)
 
-| Skill | Doel |
-|-------|------|
-| opencode-mastery | OpenCode documentatie |
-| test-driven-development | TDD enforcement |
-| systematic-debugging | Methodisch debuggen |
-| playwright-cli | Browser automatisering |
-| frontend-design | UI/UX voor developers |
-| tailwind | CSS styling |
-| shadcn-svelte | UI components |
-| svelte* | Svelte ecosysteem |
-| database-architect | Database selectie |
-| postgresql | PostgreSQL implementatie |
+| Skill                   | Doel                     |
+| ----------------------- | ------------------------ |
+| opencode-mastery        | OpenCode documentatie    |
+| test-driven-development | TDD enforcement          |
+| systematic-debugging    | Methodisch debuggen      |
+| playwright-cli          | Browser automatisering   |
+| frontend-design         | UI/UX voor developers    |
+| tailwind                | CSS styling              |
+| shadcn-svelte           | UI components            |
+| svelte\*                | Svelte ecosysteem        |
+| database-architect      | Database selectie        |
+| postgresql              | PostgreSQL implementatie |
 
 ## Plugins (3)
 
-| Plugin | Tools |
-|--------|-------|
-| opencode-mastery | search-docs, download-docs, memory-* |
-| tdd-enforcer | validate-tdd-cycle, check-test-exists |
-| debug-assistant | wait-for, find-flaky-tests, debug-session |
+| Plugin           | Tools                                     |
+| ---------------- | ----------------------------------------- |
+| opencode-mastery | search-docs, download-docs, memory-\*     |
+| tdd-enforcer     | validate-tdd-cycle, check-test-exists     |
+| debug-assistant  | wait-for, find-flaky-tests, debug-session |

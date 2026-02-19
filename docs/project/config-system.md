@@ -144,6 +144,207 @@ import type {
 } from "../../lib/config";
 ```
 
+### Model Resolution
+
+Resolve which model to use for custom agents or features.
+
+#### ⚠️ OpenCode Automatic Fallback
+
+**OpenCode handles model resolution automatically for custom agents:**
+
+> If you don't specify a model, **primary agents** use the model globally configured, while **subagents** will use the model of the primary agent that invoked them.
+
+This means:
+
+- Agent without `model` → Uses OpenCode's active model
+- Agent with `model` → Uses specified model
+
+#### Full Pipeline (5 Levels)
+
+For plugin code that needs complete model resolution control:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    MODEL RESOLUTION PIPELINE                        │
+├─────────────────────────────────────────────────────────────────────┤
+│  1️⃣ CLI Flag         --model or -m                    [HIGHEST]    │
+│  2️⃣ Frontmatter      model: in .md file                            │
+│  3️⃣ User Override    agent.model in JSON config                    │
+│  4️⃣ Inherited        Parent agent model (subagents)                │
+│  5️⃣ System Default   OpenCode's active model          [LOWEST]     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+#### When to Use `resolveModel()`
+
+The `resolveModel()` function is useful when:
+
+1. **Plugin TypeScript code** needs explicit model resolution
+2. **Complex logic** requires knowing the model source (user override vs system default)
+3. **Future-proofing** for more advanced resolution strategies
+
+#### API Reference
+
+##### Simple Resolution (2 levels)
+
+```typescript
+import { resolveModel } from "@lib/config";
+
+const model = resolveModel({
+  userModel: agentConfig.model, // Optional override
+  systemDefault: context.model, // OpenCode's active model
+});
+```
+
+##### Full Pipeline (5 levels)
+
+```typescript
+import {
+  resolveModelPipeline,
+  resolveModelWithSource,
+  buildOptions,
+  withCliModel,
+  withFrontmatterModel,
+} from "@lib/config";
+
+// Full pipeline with all levels
+const result = resolveModelPipeline({
+  cliModel: process.env.OPENCODE_MODEL, // 1️⃣ CLI flag
+  frontmatterModel: parsedFrontmatter.model, // 2️⃣ From .md file
+  userModel: agentConfig.model, // 3️⃣ JSON config
+  inheritedModel: parentAgent.model, // 4️⃣ From parent
+  systemDefault: context.model, // 5️⃣ Global default
+});
+
+console.log(`Using ${result.model} (source: ${result.source})`);
+// "Using anthropic/claude-sonnet-4 (source: frontmatter)"
+```
+
+##### Helper Functions
+
+```typescript
+// Build options with optional values (skips undefined)
+const options = buildOptions({
+  userModel: config.model,
+  systemDefault: context.model,
+});
+
+// Add CLI model to existing options
+const optionsWithCli = withCliModel(options, cliValue);
+
+// Add frontmatter model to existing options
+const optionsWithFrontmatter = withFrontmatterModel(options, fmValue);
+```
+
+##### Types
+
+```typescript
+import type {
+  ModelResolutionOptions,
+  ModelResolutionResult,
+  ModelSource,
+} from "@lib/config";
+
+type ModelSource =
+  | "cli" // --model flag
+  | "frontmatter" // model: in .md file
+  | "user-override" // agent.model in JSON
+  | "inherited" // Parent agent
+  | "system-default"; // OpenCode global
+```
+
+#### Frontmatter Parsing
+
+Extract model from markdown files:
+
+```typescript
+import { parseFrontmatter, extractModel } from "@lib/config";
+
+// Parse full frontmatter
+const frontmatter = parseFrontmatter(markdownContent);
+// { model: "anthropic/claude-sonnet-4", description: "...", ... }
+
+// Extract model only (faster)
+const model = extractModel(markdownContent);
+// "anthropic/claude-sonnet-4" or null
+```
+
+#### Use Case - Custom Agents in Plugin Code
+
+```typescript
+// In plugin index.ts
+import { resolveModel, resolveModelWithSource } from "../../lib/config";
+
+export const Plugin = async (context: PluginContext) => {
+  const agents = loadAgentConfigs();
+
+  return {
+    agent: agents.map((agent) => ({
+      name: agent.name,
+      model: resolveModel({
+        userModel: agent.model, // From opencode-mastery.json
+        systemDefault: context.model, // OpenCode's active model
+      }),
+      // ... other config
+    })),
+  };
+};
+```
+
+#### Use Case - Full Pipeline with Frontmatter
+
+```typescript
+import { resolveModelPipeline, parseFrontmatter } from "@lib/config";
+import fs from "fs";
+
+// Load agent from markdown file
+const agentMd = fs.readFileSync("agents/code-reviewer.md", "utf-8");
+const frontmatter = parseFrontmatter(agentMd);
+
+// Resolve model with full pipeline
+const result = resolveModelPipeline({
+  frontmatterModel: frontmatter.model, // From .md file
+  userModel: jsonConfig.agents["code-reviewer"]?.model,
+  systemDefault: context.model,
+});
+
+if (result) {
+  console.log(`Model: ${result.model} via ${result.source}`);
+}
+```
+
+#### Config Example
+
+```json
+{
+  "agents": {
+    "flow-analyzer": {}, // → OpenCode uses global model automatically
+    "gsd-flow-analyzer": {}, // → OpenCode uses global model automatically
+    "ace-reflect": {
+      "model": "zai-coding-plan/glm-5" // → Uses this specific model
+    }
+  }
+}
+```
+
+| Agent               | `model` in Config         | Result                      | Note                        |
+| ------------------- | ------------------------- | --------------------------- | --------------------------- |
+| `flow-analyzer`     | (not set)                 | → Global model              | OpenCode automatic fallback |
+| `gsd-flow-analyzer` | (not set)                 | → Global model              | OpenCode automatic fallback |
+| `ace-reflect`       | `"zai-coding-plan/glm-5"` | → `"zai-coding-plan/glm-5"` | Explicit override           |
+
+#### Priority Matrix
+
+| Source         | Priority | Example                             | Use Case                   |
+| -------------- | -------- | ----------------------------------- | -------------------------- |
+| CLI flag       | 1️⃣       | `--model anthropic/claude-sonnet-4` | Temporary override         |
+| Frontmatter    | 2️⃣       | `model: openai/gpt-4` in agent.md   | Per-agent default          |
+| JSON config    | 3️⃣       | `{ "agent": { "model": "..." } }`   | Config-based override      |
+| Inherited      | 4️⃣       | Subagent inherits from primary      | Subagent model consistency |
+| System default | 5️⃣       | OpenCode's active model             | Fallback                   |
+
+> **Note:** You don't need to use `resolveModel()` in your config file. OpenCode handles this automatically. The function is for plugin TypeScript code.
+
 ## Implementation in Plugins
 
 ### Step 1: Import from Shared Library

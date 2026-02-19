@@ -1,7 +1,13 @@
 ---
-description: GSD-specific flow analyzer that evaluates phase plans and implementation for flow completeness.
+# OpenCode Agent Configuration
+id: gsd-flow-analyzer
+name: GSD Flow Analyzer
+description: "GSD-specific flow analyzer that evaluates phase plans and implementation for flow completeness."
+category: analysis
+type: subagent
+version: 1.0.0
+author: opencode
 mode: subagent
-model: default
 temperature: 0.2
 tools:
   read: true

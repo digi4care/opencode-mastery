@@ -1,7 +1,13 @@
 ---
-description: Analyzes sessions using ACE framework to generate prompt improvement suggestions. Focuses on patterns, not individual mistakes.
+# OpenCode Agent Configuration
+id: ace-analyzer
+name: ACE Analyzer
+description: "Analyzes sessions using ACE framework to generate prompt improvement suggestions. Focuses on patterns, not individual mistakes."
+category: analysis
+type: subagent
+version: 1.0.0
+author: opencode
 mode: subagent
-model: default
 temperature: 0.3
 tools:
   write: false

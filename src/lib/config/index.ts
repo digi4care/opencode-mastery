@@ -25,3 +25,6 @@
 export * from "./schema";
 export * from "./loader";
 export * from "./defaults";
+export * from "./types";
+export * from "./frontmatter-parser";
+export * from "./model-resolver";
