@@ -225,6 +225,21 @@ done
 
 rm -rf "$TEMP_DIR"
 
+# Run bun install in installed directory for plugin dependencies
+echo ""
+echo "📦 Installing dependencies in ~/.config/opencode..."
+cd "$HOME/.config/opencode"
+if [ -f "package.json" ]; then
+    cp "$HOME/.config/opencode/package.json" /tmp/opencode-package.json 2>/dev/null
+    if timeout 120 bun install --ignore-scripts; then
+        echo "  ✓ Dependencies installed"
+    else
+        echo "  ⚠️  Failed to install dependencies (or timed out after 120s)"
+    fi
+else
+    echo "  ℹ️  No package.json found, skipping"
+fi
+
 echo ""
 echo "✅ Installation complete!"
 echo ""
