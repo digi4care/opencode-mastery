@@ -52,16 +52,159 @@ DOCS_PATH = Path.home() / ".ai_docs" / "opencode" / "docs"
 ### ❌ NEVER: Skip cache TTL check
 
 ```python
-# FOUT
+# WRONG
 def download_docs():
     # Always download, no cache check
     fetch_from_github()
 
-# GOED
+# CORRECT
 def download_docs():
     if cache_is_fresh(max_age_days=7):
         return load_from_cache()
     return fetch_from_github()
+```
+
+**Reason**: Unnecessary GitHub API calls, rate limiting risk.
+
+## SKILL.md Updates
+
+### ❌ NEVER: Modify SKILL.md without updating metadata
+
+```yaml
+# WRONG - version not updated
+metadata:
+  version: 1.0.0  # Old version after changes
+
+# CORRECT
+metadata:
+  version: 1.1.0  # Updated after changes
+  refresh: weekly
+```
+
+**Reason**: Version tracking is essential for debugging and updates.
+
+## Package.json Scripts
+
+### ❌ NEVER: Add scripts without updating package.json
+
+```bash
+# WRONG - script exists but not in package.json
+./scripts/new-script.py
+
+# CORRECT
+# 1. Add to package.json scripts section
+# 2. Run via npm run
+bun run new-script
+```
+
+**Reason**: Scripts must be discoverable and executable via standard interface.
+
+## Package Manager Mixing
+
+### ❌ NEVER: Use pnpm or npm
+
+```bash
+# WRONG
+pnpm install
+npm run dev
+
+# CORRECT
+bun install
+bun run dev
+```
+
+**Reason**: Project uses Bun as package manager. Mixing leads to conflicts.
+
+## Documentation Anti-Patterns
+
+### ❌ NEVER: Duplicate content across files
+
+```
+# WRONG
+examples/README.md contains same info as SKILL.md
+PLUGIN_OVERVIEW.md contains same info as PLUGIN_ARCHITECTURE.md
+
+# CORRECT
+Each file has unique, specific content
+Use references instead of duplication
+```
+
+### ❌ NEVER: Outdated examples
+
+````markdown
+# WRONG
+
+```bash
+# Example that no longer works
+python scripts/old-script.py
+```
+````
+
+# CORRECT
+
+```bash
+# Working example
+uv run src/skill/opencode-mastery/scripts/download-docs.py
+```
+
+`````
+
+## Plugin Anti-Patterns
+
+### ❌ NEVER: Assume plugin directory
+
+```python
+# WRONG - hard assumption
+PLUGIN_DIR = ".opencode/plugins/"
+
+# CORRECT - check both
+PLUGIN_DIRS = [".opencode/plugin/", ".opencode/plugins/"]
+```
+
+### ❌ NEVER: Unvalidated tool inputs
+
+```typescript
+// WRONG
+export const myTool = tool(z.object({ path: z.string() }), async (args) => {
+  // No path validation!
+  return readFile(args.path);
+});
+
+// CORRECT
+export const myTool = tool(z.object({ path: z.string() }), async (args) => {
+  // Validate path (no .. traversal)
+  const safePath = validatePath(args.path);
+  return readFile(safePath);
+});
+```
+
+## Shell Command Anti-Patterns
+
+### ❌ NEVER: Unsanitized shell commands
+
+```typescript
+// WRONG
+await $`rm -rf ${userInput}`;
+
+// CORRECT
+const safeInput = sanitizePath(userInput);
+await $`rm -rf ${safeInput}`;
+```
+
+### ❌ NEVER: Missing error handling in scripts
+
+```bash
+# WRONG
+#!/bin/bash
+rm -rf output/
+mkdir output/
+
+# CORRECT
+#!/bin/bash
+set -euo pipefail
+trap 'echo "Error on line $LINENO"' ERR
+rm -rf output/
+mkdir -p output/
 ```
 
 **Reden**: Onnodige GitHub API calls, rate limiting risk.
@@ -138,7 +281,7 @@ Gebruik verwijzingen in plaats van duplicatie
 # Voorbeeld dat niet meer werkt
 python scripts/old-script.py
 ```
-````
+`````
 
 # GOED
 

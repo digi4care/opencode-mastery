@@ -1,61 +1,64 @@
-# Vervolg Prompt: OpenCode Mastery Project
+# Continuation Prompt: OpenCode Mastery Project
 
-## 📊 Huidige Status (2026-02-19)
+## 📊 Current Status (2026-02-19)
 
-### ✅ Voltooid Vandaag
+### ✅ Completed Today
 
-1. **Skills Toegevoegd (7 nieuwe)**
+1. **Added Skills (7 new)**
    - test-driven-development (TDD discipline)
-   - systematic-debugging (4-fase debugging)
-   - playwright-cli (browser automatisering)
-   - frontend-design (UI/UX voor developers)
-   - database-architect (database selectie)
-   - postgresql (PostgreSQL implementatie)
-   - Totaal: 16 skills
+   - systematic-debugging (4-phase debugging)
+   - playwright-cli (browser automation)
+   - frontend-design (UI/UX for developers)
+   - database-architect (database selection)
+   - postgresql (PostgreSQL implementation)
+   - Total: 16 skills
 
-2. **Plugins Gemaakt (4)**
+2. **Created Plugins (4)**
    - opencode-mastery: Docs + Memory tools (TypeScript)
    - tdd-enforcer: TDD enforcement tools
    - debug-assistant: Debugging tools
    - om-session: Session management via SDK client
 
 3. **Shared Config System**
-   - `src/lib/config/` - Gedeelde config library
+   - `src/lib/config/` - Shared config library
    - `opencode.config.yaml` - Single source of truth
-   - Alle plugins gebruiken dezelfde config
+   - All plugins use the same config
 
 4. **Session Manager**
-   - Gebruikt OpenCode SDK client (geen HTTP/poort detectie)
+   - Uses OpenCode SDK client (no HTTP/port detection)
    - Tools: session-list, session-read, session-search, session-stats
-   - Werkt met elke poort, meerdere instances
+   - Works with any port, multiple instances
 
 5. **/ace-reflect Command**
-   - Geupdate naar orchestrator patroon
-   - Start subagent met schone context
+   - Updated to orchestrator pattern
+   - Starts subagent with clean context
 
 ---
 
-## 📋 Nog Te Doen
+## 📋 Still To Do
 
-### 1. ACE Analyzer Subagent (Hoogste prioriteit)
+### 1. ACE Analyzer Subagent (Highest Priority)
 
-**Doel:** De eigenlijke analyse "hersenen" voor /ace-reflect
+**Goal:** The actual analysis "brain" for /ace-reflect
 
-**Wat nodig is:**
+**What's needed:**
+
 ```
 src/agents/ace-analyzer/
-├── AGENT.md              # Agent definitie
+├── AGENT.md              # Agent definition
 └── prompts/
-    └── analyze.md        # Analyse prompt
+    └── analyze.md        # Analysis prompt
 ```
 
-**De agent moet:**
-- Sessie data ontvangen van /ace-reflect
-- ACE framework toepassen (5 dimensies scoren)
-- Patronen identificeren (niet individuele fouten)
-- Concrete suggesties genereren voor skills/commands
+**The agent must:**
 
-**Config toevoegen:**
+- Receive session data from /ace-reflect
+- Apply ACE framework (score 5 dimensions)
+- Identify patterns (not individual errors)
+- Generate concrete suggestions for skills/commands
+
+**Add config:**
+
 ```yaml
 # opencode.config.yaml
 agents:
@@ -64,13 +67,14 @@ agents:
     model: default
 ```
 
-### 2. Install.sh Updaten
+### 2. Update Install.sh
 
-**Toevoegen:**
-- om-session plugin installatie
-- Nieuwe plugin count (4 in plaats van 3)
+**Add:**
 
-### 3. Testen
+- om-session plugin installation
+- New plugin count (4 instead of 3)
+
+### 3. Test
 
 ```bash
 ./uninstall.sh --silent
@@ -79,44 +83,44 @@ agents:
 # Test /ace-reflect
 ```
 
-### 4. Documentatie
+### 4. Documentation
 
-- `AGENTS.md` updaten met om-session plugin
-- `docs/project/config-system.md` updaten met session feature
-
----
-
-## 🗂️ Belangrijke Bestanden
-
-| Bestand | Doel |
-|---------|------|
-| `opencode.config.yaml` | Centrale configuratie |
-| `src/lib/config/` | Gedeelde config library |
-| `src/plugin/om-session/` | Session manager plugin |
-| `src/commands/ace-reflect.md` | Orchestrator command |
-| `docs/project/config-system.md` | Config documentatie |
+- Update `AGENTS.md` with om-session plugin
+- Update `docs/project/config-system.md` with session feature
 
 ---
 
-## 🎯 Start Commando voor Volgende Sessie
+## 🗂️ Important Files
+
+| File                            | Purpose                |
+| ------------------------------- | ---------------------- |
+| `opencode.config.yaml`          | Central configuration  |
+| `src/lib/config/`               | Shared config library  |
+| `src/plugin/om-session/`        | Session manager plugin |
+| `src/commands/ace-reflect.md`   | Orchestrator command   |
+| `docs/project/config-system.md` | Config documentation   |
+
+---
+
+## 🎯 Start Command for Next Session
 
 ```
-Lees dit bestand: .tmp/NEXT-SESSION-PROMPT.md
+Read this file: .tmp/NEXT-SESSION-PROMPT.md
 
-Daar staat precies wat we gedaan hebben en wat er nog moet gebeuren.
+It contains exactly what we did and what still needs to be done.
 
-Kort samengevat:
-1. Maak ACE Analyzer subagent
+Short summary:
+1. Create ACE Analyzer subagent
 2. Update install.sh
-3. Test alles
-4. Update documentatie
+3. Test everything
+4. Update documentation
 
-Begin met: "Ik wil de ACE Analyzer subagent maken zoals beschreven in .tmp/NEXT-SESSION-PROMPT.md"
+Start with: "I want to create the ACE Analyzer subagent as described in .tmp/NEXT-SESSION-PROMPT.md"
 ```
 
 ---
 
-## 📝 Config Structuur
+## 📝 Config Structure
 
 ```yaml
 # opencode.config.yaml
@@ -128,7 +132,7 @@ features:
   tdd: { enabled: true, ... }
   debugging: { enabled: true, ... }
   playwright: { enabled: true, ... }
-  session:                    # NIEUW
+  session: # NEW
     enabled: true
     ace:
       max_subagent_depth: 2
@@ -137,7 +141,7 @@ features:
 
 ---
 
-## 🔌 Plugin Structuur
+## 🔌 Plugin Structure
 
 ```
 src/plugin/
@@ -151,6 +155,6 @@ src/plugin/
 
 ## Git Status
 
-Laatste commit: `2dc6eb1 - Refactor om-session to use SDK client instead of HTTP`
+Last commit: `2dc6eb1 - Refactor om-session to use SDK client instead of HTTP`
 
-Alle wijzigingen zijn gepusht naar GitHub.
+All changes pushed to GitHub.
