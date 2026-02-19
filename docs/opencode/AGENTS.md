@@ -39,7 +39,7 @@ Create a new Markdown file in `src/agents/{agent-name}.md` with frontmatter:
 ---
 # OpenCode Agent Configuration
 id: my-agent
-name: My Agent
+name: my-agent # MUST match id exactly (kebab-case, no spaces)
 description: "Brief description of what this agent does."
 category: analysis # analysis | utility | devops | testing | etc.
 type: subagent # subagent | orchestrator
@@ -69,19 +69,45 @@ permission:
 
 ### 3. Frontmatter Reference
 
-| Field         | Required | Description         | Example                             |
-| ------------- | -------- | ------------------- | ----------------------------------- |
-| `id`          | ✅       | Unique identifier   | `my-agent`                          |
-| `name`        | ✅       | Display name        | `My Agent`                          |
-| `description` | ✅       | What the agent does | `"Analyzes code quality"`           |
-| `category`    | ✅       | Functional category | `analysis`, `utility`, `testing`    |
-| `type`        | ✅       | Agent type          | `subagent`, `orchestrator`          |
-| `version`     | ✅       | Semantic version    | `1.0.0`                             |
-| `author`      | ✅       | Creator name/org    | `opencode`, `your-org`              |
-| `mode`        | ✅       | Execution mode      | `subagent`, `standalone`            |
-| `temperature` | ✅       | Response creativity | `0.2` (precise) to `1.0` (creative) |
-| `tools`       | ❌       | Tool permissions    | See below                           |
-| `permission`  | ❌       | Action restrictions | `edit: deny`, `bash: deny`          |
+| Field         | Required | Description                  | Example                             |
+| ------------- | -------- | ---------------------------- | ----------------------------------- |
+| `id`          | ✅       | Unique identifier            | `my-agent`                          |
+| `name`        | ✅       | Agent name (must match `id`) | `my-agent`                          |
+| `description` | ✅       | What the agent does          | `"Analyzes code quality"`           |
+| `category`    | ✅       | Functional category          | `analysis`, `utility`, `testing`    |
+| `type`        | ✅       | Agent type                   | `subagent`, `orchestrator`          |
+| `version`     | ✅       | Semantic version             | `1.0.0`                             |
+| `author`      | ✅       | Creator name/org             | `opencode`, `your-org`              |
+| `mode`        | ✅       | Execution mode               | `subagent`, `standalone`            |
+| `temperature` | ✅       | Response creativity          | `0.2` (precise) to `1.0` (creative) |
+| `tools`       | ❌       | Tool permissions             | See below                           |
+| `permission`  | ❌       | Action restrictions          | `edit: deny`, `bash: deny`          |
+
+#### ⚠️ Best Practice: `id` and `name` Must Match
+
+**CRITICAL:** The `name` field must be identical to the `id` field.
+
+```yaml
+# ✅ CORRECT
+id: my-agent
+name: my-agent
+
+# ❌ WRONG - will cause agent lookup failures
+id: my-agent
+name: My Agent
+```
+
+**Why?**
+
+- Commands reference agents by their identifier
+- OpenCode performs lookup using the `name` field
+- Mismatch between `id` and `name` causes "Agent not found" errors
+
+This applies to:
+
+- Custom agents defined in `src/agents/*.md`
+- Agents registered via plugin `config()` hook
+- All slash commands that invoke agents
 
 #### Temperature Guidelines
 

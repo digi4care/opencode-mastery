@@ -36,13 +36,24 @@ This architecture ensures the ACE analyzer has maximum context available for ana
 
 ### Step 1: Collect Session Data
 
-Use the om-session tools to get session data:
+**Option A: om-session plugin tools (preferred)**
 
-```
-1. Use session-list tool to get recent sessions
-2. Use session-read tool to get messages from target session(s)
+If `session-list` and `session-read` tools are available:
+
+1. Use `session-list` tool to get recent sessions
+2. Use `session-read` tool to get messages from target session(s)
 3. Prepare a summary of the session data for the subagent
+
+**Option B: CLI fallback (if plugins unavailable)**
+
+If om-session tools are not registered, use OpenCode CLI:
+
+```bash
+opencode session list --limit 10
+opencode session read <session-id>
 ```
+
+Parse the CLI output to extract session data for analysis.
 
 ### Step 2: Start ACE Analyzer Subagent
 

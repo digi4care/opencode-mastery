@@ -47,7 +47,7 @@ Doel: flow-completeness betrouwbaar analyseren voor GSD en later hergebruiken vo
 
 ```text
 User Command Layer
-  /flow-analyze (generic)
+  /flow-analyzer (generic)
   /gsd-analyze-flow (GSD adapter command)
 
 Orchestration Layer
@@ -250,7 +250,7 @@ Voor framework-onafhankelijke analyse.
 Voorbeeld:
 
 ```text
-/flow-analyze --input ./specs/auth-flow.md --code-root ./src
+/flow-analyzer --input ./specs/auth-flow.md --code-root ./src
 ```
 
 ### 7.2 GSD command: `/gsd-analyze-flow`

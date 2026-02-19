@@ -9,12 +9,12 @@ Analyze intended flow definitions against implementation evidence and report gap
 
 ## Usage
 
-`/flow-analyze <flow description or path context>`
+`/flow-analyzer <flow description or path context>`
 
 Examples:
 
-- `/flow-analyze Password reset: Request -> email link -> token validate -> reset -> login redirect`
-- `/flow-analyze Analyze checkout flow from docs/checkout.md against src/`
+- `/flow-analyzer Password reset: Request -> email link -> token validate -> reset -> login redirect`
+- `/flow-analyzer Analyze checkout flow from docs/checkout.md against src/`
 
 ## Process
 

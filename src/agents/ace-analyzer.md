@@ -1,7 +1,7 @@
 ---
 # OpenCode Agent Configuration
 id: ace-analyzer
-name: ACE Analyzer
+name: ace-analyzer
 description: "Analyzes sessions using ACE framework to generate prompt improvement suggestions. Focuses on patterns, not individual mistakes."
 category: analysis
 type: subagent

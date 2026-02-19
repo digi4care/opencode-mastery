@@ -1,7 +1,7 @@
 ---
 # OpenCode Agent Configuration
 id: flow-analyzer
-name: Flow Analyzer
+name: flow-analyzer
 description: "Framework-agnostic flow completeness analyzer for planned and implemented user/system flows."
 category: analysis
 type: subagent

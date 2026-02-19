@@ -101,6 +101,21 @@ if ! curl -fsSL "$REPO_URL/tarball/main" | tar xz --strip=1 -C "$TEMP_DIR"; then
 fi
 
 echo ""
+echo "📦 Installing dependencies for plugin build..."
+PLUGINS_CAN_BUILD=false
+if command -v bun &> /dev/null && [ -f "$TEMP_DIR/package.json" ]; then
+    cd "$TEMP_DIR"
+    if bun install --ignore-scripts 2>/dev/null; then
+        echo "  ✓ Dependencies installed"
+        PLUGINS_CAN_BUILD=true
+    else
+        echo "  ⚠️  Failed to install dependencies, plugins will use TypeScript source"
+    fi
+else
+    echo "  ⚠️  bun not found or package.json missing, plugins will use TypeScript source"
+fi
+
+echo ""
 echo "📋 Copying skills..."
 
 # All skills
@@ -150,6 +165,27 @@ for plugin in "${PLUGINS[@]}"; do
     mkdir -p "$PLUGIN_DIR/$plugin"
     cp -r "$TEMP_DIR/src/plugin/$plugin/"* "$PLUGIN_DIR/$plugin/" 2>/dev/null || true
 done
+
+echo ""
+echo "🔨 Building TypeScript plugins..."
+if [ "$PLUGINS_CAN_BUILD" = true ]; then
+    cd "$TEMP_DIR"
+    for plugin in "${PLUGINS[@]}"; do
+        if [ -f "src/plugin/$plugin/index.ts" ]; then
+            echo "  Building $plugin..."
+            bun build "src/plugin/$plugin/index.ts" \
+                --outdir="$PLUGIN_DIR/$plugin" \
+                --target=bun \
+                --sourcemap=external \
+                --external=@opencode-ai/plugin \
+                2>/dev/null || {
+                echo "  ⚠️  Failed to build $plugin, copying TypeScript source"
+                cp "src/plugin/$plugin/index.ts" "$PLUGIN_DIR/$plugin/" 2>/dev/null
+            }
+        fi
+    done
+    echo "✓ Plugin build complete"
+fi
 
 echo ""
 echo "📋 Copying agents..."

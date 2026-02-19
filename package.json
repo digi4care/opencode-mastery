@@ -4,8 +4,8 @@
   "description": "OpenCode knowledge base with lazy-loaded docs, fuzzy search and intelligent memory",
   "main": "src/index.ts",
   "scripts": {
-    "install": "./install.sh",
-    "uninstall": "./uninstall.sh",
+    "deploy": "./install.sh",
+    "undeploy": "./uninstall.sh",
     "download-docs": "uv run src/skill/opencode-mastery/scripts/download-docs.py",
     "load-docs": "uv run src/skill/opencode-mastery/scripts/load_docs.py",
     "build-index": "uv run src/skill/opencode-mastery/scripts/index_builder.py",
@@ -35,6 +35,7 @@
     "gpt-tokenizer": "^3.4.0",
     "mdast-util-from-markdown": "^2.0.2",
     "unist-util-visit": "^5.1.0",
-    "yaml": "^2.8.2"
+    "yaml": "^2.8.2",
+    "zod": "^3.25.0"
   }
 }
