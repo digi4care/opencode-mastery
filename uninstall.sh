@@ -3,15 +3,16 @@ set -e
 
 echo "🗑️  OpenCode Mastery Skills Uninstaller"
 echo ""
-echo "This will remove all skills, plugins, and shared config library."
+echo "This will remove installed skills, plugins, commands, agents, and shared config library."
 echo "Your downloaded documentation, memory, and cache will NOT be removed."
 echo ""
 
 # All directories to remove
 SKILLS_DIR="$HOME/.config/opencode/skill"
 PLUGIN_DIR="$HOME/.config/opencode/plugin"
-COMMANDS_DIR_PRIMARY="$HOME/.config/opencode/command"
-COMMANDS_DIR_COMPAT="$HOME/.config/opencode/commands"
+COMMANDS_DIR="$HOME/.config/opencode/commands"
+COMMANDS_DIR_COMPAT="$HOME/.config/opencode/command"
+AGENTS_DIR="$HOME/.config/opencode/agents"
 LIB_DIR="$HOME/.config/opencode/lib"
 SCRIPTS_DIR="$HOME/.ai_docs/opencode/scripts"
 
@@ -26,6 +27,13 @@ COMMAND_FILES=(
     "flow-analyze.md"
     "flow-analyzer.md"
     "gsd-analyze-flow.md"
+)
+
+# Agents installed by this package
+AGENT_FILES=(
+    "ace-analyzer.md"
+    "flow-analyzer.md"
+    "gsd-flow-analyzer.md"
 )
 
 # All skills to remove
@@ -72,8 +80,12 @@ done
 [ -d "$SCRIPTS_DIR" ] && FOUND=true
 
 for command in "${COMMAND_FILES[@]}"; do
-    [ -f "$COMMANDS_DIR_PRIMARY/$command" ] && FOUND=true
+    [ -f "$COMMANDS_DIR/$command" ] && FOUND=true
     [ -f "$COMMANDS_DIR_COMPAT/$command" ] && FOUND=true
+done
+
+for agent_file in "${AGENT_FILES[@]}"; do
+    [ -f "$AGENTS_DIR/$agent_file" ] && FOUND=true
 done
 
 if [ "$FOUND" = false ]; then
@@ -83,8 +95,9 @@ if [ "$FOUND" = false ]; then
     echo "  - $SKILLS_DIR/*"
     echo "  - $PLUGIN_DIR/*"
     echo "  - $LIB_DIR/config"
-    echo "  - $COMMANDS_DIR_PRIMARY/*"
+    echo "  - $COMMANDS_DIR/*"
     echo "  - $COMMANDS_DIR_COMPAT/*"
+    echo "  - $AGENTS_DIR/*"
     echo "  - $SCRIPTS_DIR"
     exit 1
 fi
@@ -95,8 +108,9 @@ echo "This will remove:"
 echo "  - $SKILLS_DIR/ (${#SKILLS[@]} skills)"
 echo "  - $PLUGIN_DIR/ (${#PLUGINS[@]} plugins)"
 echo "  - $LIB_DIR/config (shared config library)"
-echo "  - command files in $COMMANDS_DIR_PRIMARY/"
+echo "  - command files in $COMMANDS_DIR/"
 echo "  - command files in $COMMANDS_DIR_COMPAT/"
+echo "  - agent files in $AGENTS_DIR/"
 echo "  - $SCRIPTS_DIR/"
 echo ""
 echo "These will NOT be removed (your data):"
@@ -145,14 +159,23 @@ rmdir "$LIB_DIR" 2>/dev/null || true
 echo ""
 echo "Removing commands..."
 for command in "${COMMAND_FILES[@]}"; do
-    if [ -f "$COMMANDS_DIR_PRIMARY/$command" ]; then
-        rm -f "$COMMANDS_DIR_PRIMARY/$command"
-        echo "  Removed: $COMMANDS_DIR_PRIMARY/$command"
+    if [ -f "$COMMANDS_DIR/$command" ]; then
+        rm -f "$COMMANDS_DIR/$command"
+        echo "  Removed: $COMMANDS_DIR/$command"
     fi
 
     if [ -f "$COMMANDS_DIR_COMPAT/$command" ]; then
         rm -f "$COMMANDS_DIR_COMPAT/$command"
         echo "  Removed: $COMMANDS_DIR_COMPAT/$command"
+    fi
+done
+
+echo ""
+echo "Removing agents..."
+for agent_file in "${AGENT_FILES[@]}"; do
+    if [ -f "$AGENTS_DIR/$agent_file" ]; then
+        rm -f "$AGENTS_DIR/$agent_file"
+        echo "  Removed: $AGENTS_DIR/$agent_file"
     fi
 done
 

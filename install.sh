@@ -35,8 +35,8 @@ echo "  • tdd-enforcer          - TDD enforcement tools"
 echo "  • debug-assistant       - Debugging tools"
 echo "  • flow-analyzer         - Flow analysis tools"
 echo ""
-echo "  🤖 1 Agent:"
-echo "  • ace-analyzer          - Session analysis with ACE framework"
+echo "  🤖 Agents:"
+echo "  • Installed from src/agents/*.md"
 echo ""
 echo "  ⚙️  Shared Config:"
 echo "  • opencode.config.yaml  - Single source of truth"
@@ -47,8 +47,7 @@ echo ""
 
 # Directories
 INSTALL_DIR="$HOME/.ai_docs/opencode"
-COMMANDS_DIR_PRIMARY="$HOME/.config/opencode/command"
-COMMANDS_DIR_COMPAT="$HOME/.config/opencode/commands"
+COMMANDS_DIR="$HOME/.config/opencode/commands"
 PLUGIN_DIR="$HOME/.config/opencode/plugin"
 SKILLS_DIR="$HOME/.config/opencode/skill"
 LIB_DIR="$HOME/.config/opencode/lib"
@@ -59,8 +58,7 @@ echo "  Skills:   $SKILLS_DIR"
 echo "  Plugins: $PLUGIN_DIR"
 echo "  Lib:      $LIB_DIR"
 echo "  Agents:   $AGENTS_DIR"
-echo "  Commands (primary): $COMMANDS_DIR_PRIMARY"
-echo "  Commands (compat):  $COMMANDS_DIR_COMPAT"
+echo "  Commands: $COMMANDS_DIR"
 echo "  Docs:     $INSTALL_DIR/docs"
 echo ""
 
@@ -81,8 +79,7 @@ echo "📥 Creating directories..."
 mkdir -p "$INSTALL_DIR/docs"
 mkdir -p "$INSTALL_DIR/memory"
 mkdir -p "$INSTALL_DIR/cache/github"
-mkdir -p "$COMMANDS_DIR_PRIMARY"
-mkdir -p "$COMMANDS_DIR_COMPAT"
+mkdir -p "$COMMANDS_DIR"
 mkdir -p "$PLUGIN_DIR"
 mkdir -p "$LIB_DIR/config"
 mkdir -p "$AGENTS_DIR"
@@ -146,15 +143,13 @@ done
 echo ""
 echo "📋 Copying agents..."
 
-# All agents
-AGENTS=(
-    "ace-analyzer"
-)
-
-for agent in "${AGENTS[@]}"; do
-    echo "  Copying $agent..."
-    cp "$TEMP_DIR/src/agents/$agent.md" "$AGENTS_DIR/" 2>/dev/null || true
-done
+if [ -d "$TEMP_DIR/src/agents" ]; then
+    cp -r "$TEMP_DIR/src/agents/"*.md "$AGENTS_DIR/" 2>/dev/null || true
+    AGENT_COUNT=$(ls -1 "$TEMP_DIR/src/agents/"*.md 2>/dev/null | wc -l | tr -d ' ')
+    echo "✓ Agents copied to: $AGENTS_DIR ($AGENT_COUNT files)"
+else
+    echo "ℹ️  No agents to install"
+fi
 
 echo ""
 echo "📋 Copying shared config library..."
@@ -164,10 +159,9 @@ echo "✓ Config library copied to: $LIB_DIR/config"
 echo ""
 echo "📋 Copying commands..."
 if [ -d "$TEMP_DIR/src/commands" ]; then
-    cp -r "$TEMP_DIR/src/commands/"* "$COMMANDS_DIR_PRIMARY/" 2>/dev/null || true
-    cp -r "$TEMP_DIR/src/commands/"* "$COMMANDS_DIR_COMPAT/" 2>/dev/null || true
-    echo "✓ Commands copied to: $COMMANDS_DIR_PRIMARY"
-    echo "✓ Commands copied to: $COMMANDS_DIR_COMPAT"
+    cp -r "$TEMP_DIR/src/commands/"* "$COMMANDS_DIR/" 2>/dev/null || true
+    COMMAND_COUNT=$(ls -1 "$TEMP_DIR/src/commands/"*.md 2>/dev/null | wc -l | tr -d ' ')
+    echo "✓ Commands copied to: $COMMANDS_DIR ($COMMAND_COUNT files)"
 else
     echo "ℹ️  No commands to install"
 fi
@@ -192,7 +186,8 @@ echo ""
 echo "📁 Installed:"
 echo "   • 17 skills in $SKILLS_DIR"
 echo "   • 4 plugins in $PLUGIN_DIR"
-echo "   • 1 agent in $AGENTS_DIR"
+echo "   • agents in $AGENTS_DIR"
+echo "   • commands in $COMMANDS_DIR"
 echo "   • Shared config in $LIB_DIR/config"
 echo ""
 echo "🚀 Quick Start:"

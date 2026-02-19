@@ -44,13 +44,13 @@ export const Plugin = async (_context: PluginContext) => {
   const flowConfig = getFeatureConfig("flowAnalyzer");
 
   return {
-    tool: [
-      extractFlows,
-      buildFlowGraph,
-      traceImplementation,
-      detectFlowGaps,
-      scoreFlowConfidence,
-    ],
+    tool: {
+      "extract-flows": extractFlows,
+      "build-flow-graph": buildFlowGraph,
+      "trace-implementation": traceImplementation,
+      "detect-flow-gaps": detectFlowGaps,
+      "score-flow-confidence": scoreFlowConfidence,
+    },
 
     config: async (currentConfig: any) => {
       if (!flowConfig.register_agents) {
