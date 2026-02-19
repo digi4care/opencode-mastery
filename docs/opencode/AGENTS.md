@@ -1,6 +1,6 @@
 # Agents
 
-Custom agents registered via `opencode-mastery.json`.
+Custom agents from this repository, registered via `opencode-mastery.json`.
 
 ## Registered Agents
 
@@ -10,6 +10,12 @@ Custom agents registered via `opencode-mastery.json`.
 | ------------------- | --------------------------------------------- |
 | `flow-analyzer`     | Framework-agnostic flow completeness analysis |
 | `gsd-flow-analyzer` | GSD phase flow analysis                       |
+
+### Session Analysis
+
+| Agent          | Purpose               |
+| -------------- | --------------------- |
+| `ace-analyzer` | Session introspection |
 
 ## Adding New Agents
 

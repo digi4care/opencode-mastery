@@ -18,36 +18,74 @@ cd opencode-mastery
 ./install.sh
 ```
 
-## What's Included
+## Project Structure
 
-### Skills (17)
+```
+opencode-mastery/
+├── src/
+│   ├── agents/          # Custom agent definitions (markdown)
+│   ├── commands/        # Slash commands
+│   ├── features/        # Feature modules (debugging, flow, memory, repo, session, tdd)
+│   ├── lib/             # Shared config library
+│   ├── plugin/          # TypeScript plugins
+│   └── skill/           # Skills with SKILL.md, references/, AGENTS.md
+├── docs/                # Documentation
+├── install.sh           # Install script
+└── uninstall.sh         # Uninstall script
+```
+
+### Skills (18)
 
 | Category     | Skills                                                                                             |
 | ------------ | -------------------------------------------------------------------------------------------------- |
 | **OpenCode** | `opencode-mastery`, `meta-agent`, `skill-creator`, `opencode-memory`                               |
 | **Frontend** | `tailwind`, `shadcn-svelte`, `svelte`, `svelte-cli`, `svelte-kit`, `svelte-mcp`, `frontend-design` |
 | **Backend**  | `postgresql`, `database-architect`                                                                 |
-| **Analysis** | `flow-analysis`, `systematic-debugging`, `test-driven-development`                                 |
-| **Tools**    | `playwright-cli`, `repo-analysis`                                                                  |
+| **Testing**  | `test-driven-development`, `playwright-cli`                                                        |
+| **Analysis** | `flow-analysis`, `systematic-debugging`, `repo-analysis`                                           |
 
-### Plugins (4)
+### Plugins (9)
 
-| Plugin             | Purpose                    |
-| ------------------ | -------------------------- |
-| `opencode-mastery` | Docs & memory tools        |
-| `tdd-enforcer`     | TDD cycle validation       |
-| `debug-assistant`  | Debug session tools        |
-| `flow-analyzer`    | Flow completeness analysis |
+| Plugin                    | Purpose                    |
+| ------------------------- | -------------------------- |
+| `opencode-mastery`        | Core docs & memory tools   |
+| `opencode-mastery-plugin` | Custom agent registration  |
+| `opencode-memory`         | Persistent memory system   |
+| `tdd-enforcer`            | TDD cycle validation       |
+| `debug-assistant`         | Debug session tools        |
+| `flow-analyzer`           | Flow completeness analysis |
+| `om-session`              | Session management         |
+| `repo-analyzer`           | Repository analysis        |
+| `skill-creator`           | Skill generation           |
 
-### Commands
+### Commands (8)
 
-| Command             | Agent             | Purpose                 |
-| ------------------- | ----------------- | ----------------------- |
-| `/flow-analyzer`    | flow-analyzer     | Generic flow analysis   |
-| `/gsd-analyze-flow` | gsd-flow-analyzer | GSD phase flow analysis |
-| `/skill-creator-*`  | skill-creator     | Skill management        |
-| `/ace-reflect`      | ace-analyzer      | Session analysis        |
-| `/memory`           | -                 | Memory commands         |
+| Command             | Agent             | Purpose                   |
+| ------------------- | ----------------- | ------------------------- |
+| `/flow-analyzer`    | flow-analyzer     | Generic flow analysis     |
+| `/gsd-analyze-flow` | gsd-flow-analyzer | GSD phase flow analysis   |
+| `/skill-creator-*`  | skill-creator     | Skill management (4 cmds) |
+| `/ace-reflect`      | general           | Session analysis          |
+| `/memory`           | -                 | Memory commands           |
+
+### Agents (3)
+
+| Agent               | Purpose                          |
+| ------------------- | -------------------------------- |
+| `flow-analyzer`     | Framework-agnostic flow analysis |
+| `gsd-flow-analyzer` | GSD phase flow analysis          |
+| `ace-analyzer`      | Session analysis                 |
+
+### Features (6)
+
+| Feature     | Purpose                  |
+| ----------- | ------------------------ |
+| `debugging` | Debug session tools      |
+| `flow`      | Flow analyzer tools      |
+| `memory`    | Persistent memory system |
+| `repo`      | Repository analysis      |
+| `session`   | Session management       |
+| `tdd`       | TDD cycle validation     |
 
 ## Features
 
