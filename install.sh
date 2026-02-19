@@ -105,11 +105,12 @@ echo "📦 Installing dependencies for plugin build..."
 PLUGINS_CAN_BUILD=false
 if command -v bun &> /dev/null && [ -f "$TEMP_DIR/package.json" ]; then
     cd "$TEMP_DIR"
-    if bun install --ignore-scripts 2>/dev/null; then
+    echo "  Running: bun install --ignore-scripts"
+    if timeout 60 bun install --ignore-scripts; then
         echo "  ✓ Dependencies installed"
         PLUGINS_CAN_BUILD=true
     else
-        echo "  ⚠️  Failed to install dependencies, plugins will use TypeScript source"
+        echo "  ⚠️  Failed to install dependencies (or timed out), plugins will use TypeScript source"
     fi
 else
     echo "  ⚠️  bun not found or package.json missing, plugins will use TypeScript source"
