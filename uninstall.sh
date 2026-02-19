@@ -25,6 +25,7 @@ COMMAND_FILES=(
     "skill-creator-optimize.md"
     "skill-creator-plan.md"
     "flow-analyze.md"
+    "flow-analyzer.md"
     "gsd-analyze-flow.md"
 )
 
@@ -65,6 +66,7 @@ PLUGINS=(
     "flow-analyzer"
     "om-session"
     "repo-analyzer"
+    "skill-creator"
 )
 
 # Check if any files exist

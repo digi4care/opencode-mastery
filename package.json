@@ -32,7 +32,6 @@
   },
   "homepage": "https://github.com/digi4care/opencode-mastery#readme",
   "dependencies": {
-    "gpt-tokenizer": "^3.4.0",
     "mdast-util-from-markdown": "^2.0.2",
     "unist-util-visit": "^5.1.0",
     "yaml": "^2.8.2",
