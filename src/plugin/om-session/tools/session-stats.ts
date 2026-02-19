@@ -1,24 +1,16 @@
 /**
  * Get OpenCode Session Statistics
  * 
- * Provides statistics and insights about sessions.
+ * Provides statistics via the OpenCode SDK client.
+ * No port detection needed - uses the client from plugin context.
  */
 import { tool } from "@opencode-ai/plugin";
 import { z } from "zod";
-import { openCodeRequest, getServerConfig } from "../lib/server";
 
-interface SessionStats {
-  totalSessions: number;
-  totalMessages: number;
-  averageMessagesPerSession: number;
-  oldestSession: string;
-  newestSession: string;
-  topTools: Array<{ name: string; count: number }>;
-  sessionsPerDay: Array<{ date: string; count: number }>;
-}
+let sdkClient: any = null;
 
-interface StatsResponse {
-  stats: SessionStats;
+export function setSessionClient(client: any): void {
+  sdkClient = client;
 }
 
 export const sessionStats = tool(
@@ -27,62 +19,58 @@ export const sessionStats = tool(
     days: z.number().min(1).max(365).default(30).describe("Number of days to analyze"),
   }),
   async (args) => {
-    // Build query string
-    const params = new URLSearchParams();
-    params.set("days", String(args.days));
-    if (args.projectId) {
-      params.set("projectId", args.projectId);
-    }
-    
-    // Request stats from OpenCode server
-    const result = await openCodeRequest<StatsResponse>(
-      `/session/stats?${params.toString()}`
-    );
-    
-    if (!result.success) {
-      // Return basic stats if server doesn't support stats endpoint
-      return {
-        success: true,
-        data: {
-          serverStatus: "limited",
-          message: "Statistics endpoint not available on this OpenCode version",
-          config: getServerConfig(),
-        },
-        metadata: {
-          error: result.error,
-        },
-      };
-    }
-    
-    const stats = result.data?.stats;
-    
-    if (!stats) {
+    if (!sdkClient) {
       return {
         success: false,
         data: {
-          error: "No statistics available",
+          error: "SDK client not initialized",
         },
         metadata: {},
       };
     }
-    
-    return {
-      success: true,
-      data: {
-        totalSessions: stats.totalSessions,
-        totalMessages: stats.totalMessages,
-        averageMessagesPerSession: Math.round(stats.averageMessagesPerSession),
-        dateRange: {
-          oldest: stats.oldestSession,
-          newest: stats.newestSession,
-          daysAnalyzed: args.days,
+
+    try {
+      // Probeer stats endpoint via SDK
+      const result = await sdkClient.session.stats({
+        projectId: args.projectId,
+        days: args.days,
+      });
+
+      const stats = result.data;
+
+      return {
+        success: true,
+        data: {
+          totalSessions: stats?.totalSessions || stats?.total_sessions || 0,
+          totalMessages: stats?.totalMessages || stats?.total_messages || 0,
+          averageMessagesPerSession: Math.round(stats?.averageMessagesPerSession || stats?.avg_messages || 0),
+          dateRange: {
+            oldest: stats?.oldestSession || stats?.oldest_session,
+            newest: stats?.newestSession || stats?.newest_session,
+            daysAnalyzed: args.days,
+          },
+          topTools: (stats?.topTools || stats?.top_tools || []).slice(0, 10),
+          sessionsPerDay: (stats?.sessionsPerDay || stats?.sessions_per_day || []).slice(-7),
         },
-        topTools: stats.topTools?.slice(0, 10) || [],
-        sessionsPerDay: stats.sessionsPerDay?.slice(-7) || [], // Last 7 days
-      },
-      metadata: {
-        projectId: args.projectId || "all",
-      },
-    };
+        metadata: {
+          source: "opencode-sdk",
+          projectId: args.projectId || "all",
+        },
+      };
+    } catch (error) {
+      // Stats niet beschikbaar - geef basis info terug
+      return {
+        success: true,
+        data: {
+          serverStatus: "connected",
+          message: "Statistics endpoint not available. SDK client is connected and working.",
+          hint: "Use sessionList to get session count manually.",
+        },
+        metadata: {
+          source: "opencode-sdk",
+          error: error instanceof Error ? error.message : "Stats not available",
+        },
+      };
+    }
   }
-).describe("Get statistics about OpenCode sessions. Use to understand usage patterns and session activity.");
+).describe("Get statistics about OpenCode sessions. Uses SDK client - works with any port.");

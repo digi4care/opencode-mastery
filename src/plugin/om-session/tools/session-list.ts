@@ -1,24 +1,17 @@
 /**
  * List OpenCode Sessions
  * 
- * Retrieves a list of available sessions from the OpenCode server.
+ * Retrieves a list of available sessions via the OpenCode SDK client.
+ * No port detection needed - uses the client from plugin context.
  */
 import { tool } from "@opencode-ai/plugin";
 import { z } from "zod";
-import { openCodeRequest, getServerConfig } from "../lib/server";
 
-interface SessionInfo {
-  id: string;
-  projectId?: string;
-  title?: string;
-  createdAt: string;
-  updatedAt: string;
-  messageCount?: number;
-}
+// Client wordt via context doorgegeven
+let sdkClient: any = null;
 
-interface SessionListResponse {
-  sessions: SessionInfo[];
-  total: number;
+export function setSessionClient(client: any): void {
+  sdkClient = client;
 }
 
 export const sessionList = tool(
@@ -28,51 +21,55 @@ export const sessionList = tool(
     projectId: z.string().optional().describe("Filter by project ID"),
   }),
   async (args) => {
-    // Build query string
-    const params = new URLSearchParams();
-    params.set("limit", String(args.limit));
-    params.set("offset", String(args.offset));
-    if (args.projectId) {
-      params.set("projectId", args.projectId);
-    }
-    
-    // Request sessions from OpenCode server
-    const result = await openCodeRequest<SessionListResponse>(
-      `/session?${params.toString()}`
-    );
-    
-    if (!result.success) {
+    if (!sdkClient) {
       return {
         success: false,
         data: {
           sessions: [],
-          error: result.error || "Failed to connect to OpenCode server",
-          serverHint: `Make sure OpenCode is running on port ${getServerConfig().port}`,
+          error: "SDK client not initialized",
         },
         metadata: {},
       };
     }
-    
-    const sessions = result.data?.sessions || [];
-    
-    return {
-      success: true,
-      data: {
-        sessions: sessions.map(s => ({
-          id: s.id,
-          title: s.title || "Untitled",
-          projectId: s.projectId,
-          createdAt: s.createdAt,
-          updatedAt: s.updatedAt,
-          messageCount: s.messageCount,
-        })),
-        total: result.data?.total || sessions.length,
+
+    try {
+      // Gebruik SDK client - deze weet al de juiste server/poort
+      const result = await sdkClient.session.list({
         limit: args.limit,
         offset: args.offset,
-      },
-      metadata: {
-        serverUrl: await import("../lib/server").then(m => m.getOpenCodeServerUrl()),
-      },
-    };
+        projectId: args.projectId,
+      });
+
+      const sessions = result.data?.sessions || [];
+
+      return {
+        success: true,
+        data: {
+          sessions: sessions.map((s: any) => ({
+            id: s.id,
+            title: s.title || "Untitled",
+            projectId: s.projectId,
+            createdAt: s.createdAt || s.created_at,
+            updatedAt: s.updatedAt || s.updated_at,
+            messageCount: s.messageCount || s.message_count,
+          })),
+          total: result.data?.total || sessions.length,
+          limit: args.limit,
+          offset: args.offset,
+        },
+        metadata: {
+          source: "opencode-sdk",
+        },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        data: {
+          sessions: [],
+          error: error instanceof Error ? error.message : "Failed to list sessions",
+        },
+        metadata: {},
+      };
+    }
   }
-).describe("List available OpenCode sessions. Use to see session history and find specific sessions to analyze.");
+).describe("List available OpenCode sessions. Uses SDK client - works with any port.");

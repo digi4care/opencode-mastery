@@ -7,23 +7,35 @@
  * - Search session content
  * - Get session statistics
  * 
- * Uses OpenCode HTTP API for session data.
- * Auto-detects OpenCode server port.
+ * Uses OpenCode SDK client from plugin context.
+ * Works with ANY port - no detection needed!
  * 
  * Configuration: opencode.config.yaml → features.session
  */
 import type { PluginContext } from "@opencode-ai/plugin";
 import { isFeatureEnabled } from "../../lib/config";
-import { sessionList } from "./tools/session-list";
-import { sessionRead } from "./tools/session-read";
-import { sessionSearch } from "./tools/session-search";
-import { sessionStats } from "./tools/session-stats";
+import { sessionList, setSessionClient as setListClient } from "./tools/session-list";
+import { sessionRead, setSessionClient as setReadClient } from "./tools/session-read";
+import { sessionSearch, setSessionClient as setSearchClient } from "./tools/session-search";
+import { sessionStats, setSessionClient as setStatsClient } from "./tools/session-stats";
 
 export const Plugin = async (context: PluginContext) => {
   // Check if session feature is enabled
   if (!isFeatureEnabled("session")) {
     console.log("Session management is disabled in config");
     return { tool: [] };
+  }
+
+  // De client uit de context is AL verbonden met de juiste server
+  // Het maakt niet uit op welke poort OpenCode draait!
+  const { client } = context;
+  
+  // Geef client door aan alle tools
+  if (client) {
+    setListClient(client);
+    setReadClient(client);
+    setSearchClient(client);
+    setStatsClient(client);
   }
 
   return {
@@ -37,7 +49,7 @@ export const Plugin = async (context: PluginContext) => {
     
     // Lifecycle hooks
     "session.start": async () => {
-      console.log("OM Session plugin loaded");
+      console.log("OM Session plugin loaded - using SDK client");
     },
   };
 };

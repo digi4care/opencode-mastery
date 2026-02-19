@@ -1,28 +1,16 @@
 /**
  * Read OpenCode Session Messages
  * 
- * Retrieves messages and content from a specific session.
+ * Retrieves messages via the OpenCode SDK client.
+ * No port detection needed - uses the client from plugin context.
  */
 import { tool } from "@opencode-ai/plugin";
 import { z } from "zod";
-import { openCodeRequest } from "../lib/server";
 
-interface Message {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  timestamp: string;
-  toolCalls?: Array<{
-    name: string;
-    input: Record<string, unknown>;
-    output?: unknown;
-  }>;
-}
+let sdkClient: any = null;
 
-interface SessionReadResponse {
-  sessionId: string;
-  messages: Message[];
-  hasMore: boolean;
+export function setSessionClient(client: any): void {
+  sdkClient = client;
 }
 
 export const sessionRead = tool(
@@ -33,60 +21,69 @@ export const sessionRead = tool(
     offset: z.number().min(0).default(0).describe("Message offset for pagination"),
   }),
   async (args) => {
-    // Build query string
-    const params = new URLSearchParams();
-    params.set("limit", String(args.limit));
-    params.set("offset", String(args.offset));
-    params.set("includeToolCalls", String(args.includeToolCalls));
-    
-    // Request session messages from OpenCode server
-    const result = await openCodeRequest<SessionReadResponse>(
-      `/session/${args.sessionId}/message?${params.toString()}`
-    );
-    
-    if (!result.success) {
+    if (!sdkClient) {
       return {
         success: false,
         data: {
           messages: [],
-          error: result.error || "Failed to read session",
+          error: "SDK client not initialized",
           sessionId: args.sessionId,
         },
         metadata: {},
       };
     }
-    
-    const messages = result.data?.messages || [];
-    
-    // Summarize for context efficiency
-    const summary = {
-      totalMessages: messages.length,
-      userMessages: messages.filter(m => m.role === "user").length,
-      assistantMessages: messages.filter(m => m.role === "assistant").length,
-      toolCallsCount: messages.reduce(
-        (sum, m) => sum + (m.toolCalls?.length || 0),
-        0
-      ),
-    };
-    
-    return {
-      success: true,
-      data: {
-        sessionId: args.sessionId,
-        messages: messages.map(m => ({
-          id: m.id,
-          role: m.role,
-          content: m.content.slice(0, 1000) + (m.content.length > 1000 ? "..." : ""),
-          timestamp: m.timestamp,
-          toolCalls: args.includeToolCalls ? m.toolCalls : undefined,
-        })),
-        summary,
-        hasMore: result.data?.hasMore || false,
-      },
-      metadata: {
+
+    try {
+      // Gebruik SDK client
+      const result = await sdkClient.session.messages(args.sessionId, {
         limit: args.limit,
         offset: args.offset,
-      },
-    };
+        includeToolCalls: args.includeToolCalls,
+      });
+
+      const messages = result.data?.messages || [];
+
+      // Summarize for context efficiency
+      const summary = {
+        totalMessages: messages.length,
+        userMessages: messages.filter((m: any) => m.role === "user").length,
+        assistantMessages: messages.filter((m: any) => m.role === "assistant").length,
+        toolCallsCount: messages.reduce(
+          (sum: number, m: any) => sum + (m.toolCalls?.length || m.tool_calls?.length || 0),
+          0
+        ),
+      };
+
+      return {
+        success: true,
+        data: {
+          sessionId: args.sessionId,
+          messages: messages.map((m: any) => ({
+            id: m.id,
+            role: m.role,
+            content: (m.content || "").slice(0, 1000) + ((m.content || "").length > 1000 ? "..." : ""),
+            timestamp: m.timestamp || m.created_at,
+            toolCalls: args.includeToolCalls ? (m.toolCalls || m.tool_calls) : undefined,
+          })),
+          summary,
+          hasMore: result.data?.hasMore || result.data?.has_more || false,
+        },
+        metadata: {
+          source: "opencode-sdk",
+          limit: args.limit,
+          offset: args.offset,
+        },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        data: {
+          messages: [],
+          error: error instanceof Error ? error.message : "Failed to read session",
+          sessionId: args.sessionId,
+        },
+        metadata: {},
+      };
+    }
   }
-).describe("Read messages from an OpenCode session. Use to analyze conversation history and understand what happened during a session.");
+).describe("Read messages from an OpenCode session. Uses SDK client - works with any port.");

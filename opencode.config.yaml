@@ -107,13 +107,9 @@ features:
     default_timeout: 30000   # Default timeout in ms
 
   # Session - OpenCode session management and ACE analysis
+  # Uses SDK client - works with ANY port, no server config needed!
   session:
     enabled: true
-    server:
-      hostname: "127.0.0.1"
-      port: 4096             # OpenCode server port (auto-detected if auto_detect: true)
-      auto_detect: true      # Auto-detect running OpenCode server
-      timeout_ms: 5000       # Connection timeout
     track:
       tool_calls: true       # Track tool invocations
       ai_responses: false    # Track AI responses (can be large)

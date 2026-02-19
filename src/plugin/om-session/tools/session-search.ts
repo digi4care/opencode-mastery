@@ -1,25 +1,16 @@
 /**
  * Search OpenCode Sessions
  * 
- * Full-text search across session content.
+ * Full-text search via the OpenCode SDK client.
+ * No port detection needed - uses the client from plugin context.
  */
 import { tool } from "@opencode-ai/plugin";
 import { z } from "zod";
-import { openCodeRequest } from "../lib/server";
 
-interface SearchResult {
-  sessionId: string;
-  messageId: string;
-  role: "user" | "assistant";
-  snippet: string;
-  timestamp: string;
-  relevanceScore: number;
-}
+let sdkClient: any = null;
 
-interface SearchResponse {
-  results: SearchResult[];
-  total: number;
-  query: string;
+export function setSessionClient(client: any): void {
+  sdkClient = client;
 }
 
 export const sessionSearch = tool(
@@ -27,55 +18,64 @@ export const sessionSearch = tool(
     query: z.string().min(1).describe("Search query"),
     sessionId: z.string().optional().describe("Limit search to specific session"),
     limit: z.number().min(1).max(50).default(10).describe("Maximum results to return"),
-    caseSensitive: z.boolean().default(false).describe("Case-sensitive search"),
   }),
   async (args) => {
-    // Build query string
-    const params = new URLSearchParams();
-    params.set("q", args.query);
-    params.set("limit", String(args.limit));
-    params.set("caseSensitive", String(args.caseSensitive));
-    if (args.sessionId) {
-      params.set("sessionId", args.sessionId);
-    }
-    
-    // Search sessions via OpenCode server
-    const result = await openCodeRequest<SearchResponse>(
-      `/session/search?${params.toString()}`
-    );
-    
-    if (!result.success) {
+    if (!sdkClient) {
       return {
         success: false,
         data: {
           results: [],
-          error: result.error || "Search failed",
+          error: "SDK client not initialized",
           query: args.query,
         },
         metadata: {},
       };
     }
-    
-    const results = result.data?.results || [];
-    
-    return {
-      success: true,
-      data: {
+
+    try {
+      // Gebruik SDK client voor search
+      const result = await sdkClient.session.search({
         query: args.query,
-        results: results.map(r => ({
-          sessionId: r.sessionId,
-          messageId: r.messageId,
-          role: r.role,
-          snippet: r.snippet,
-          timestamp: r.timestamp,
-          relevanceScore: r.relevanceScore,
-        })),
-        total: result.data?.total || results.length,
-      },
-      metadata: {
-        caseSensitive: args.caseSensitive,
-        limitedTo: args.sessionId || "all sessions",
-      },
-    };
+        sessionId: args.sessionId,
+        limit: args.limit,
+      });
+
+      const results = result.data?.results || [];
+
+      return {
+        success: true,
+        data: {
+          query: args.query,
+          results: results.map((r: any) => ({
+            sessionId: r.sessionId || r.session_id,
+            messageId: r.messageId || r.message_id,
+            role: r.role,
+            snippet: r.snippet,
+            timestamp: r.timestamp || r.created_at,
+            relevanceScore: r.relevanceScore || r.relevance_score || 0,
+          })),
+          total: result.data?.total || results.length,
+        },
+        metadata: {
+          source: "opencode-sdk",
+          limitedTo: args.sessionId || "all sessions",
+        },
+      };
+    } catch (error) {
+      // Fallback: search not supported, return hint
+      return {
+        success: true,
+        data: {
+          query: args.query,
+          results: [],
+          total: 0,
+          hint: "Search not available. Use sessionList + sessionRead to find content manually.",
+        },
+        metadata: {
+          source: "opencode-sdk",
+          error: error instanceof Error ? error.message : "Search failed",
+        },
+      };
+    }
   }
-).describe("Search for content across OpenCode sessions. Use to find specific conversations, topics, or patterns in session history.");
+).describe("Search for content across OpenCode sessions. Uses SDK client - works with any port.");

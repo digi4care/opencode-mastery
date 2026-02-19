@@ -104,12 +104,7 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
     },
     session: {
       enabled: true,
-      server: {
-        hostname: "127.0.0.1",
-        port: 4096,
-        auto_detect: true,
-        timeout_ms: 5000,
-      },
+      // No server config - SDK client is already connected to the right server
       track: {
         tool_calls: true,
         ai_responses: false,
