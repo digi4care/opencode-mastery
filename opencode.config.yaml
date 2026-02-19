@@ -1,0 +1,154 @@
+# OpenCode Mastery Configuration
+# Single source of truth for all features and settings
+# 
+# Edit this file to enable/disable features for your project
+# Changes are respected by skills and plugins
+
+# =============================================================================
+# CORE FEATURES
+# =============================================================================
+
+# Memory System
+memory:
+  enabled: true
+  lazyLoading: true
+  compaction:
+    enabled: true
+    countBased: 80           # Compact after N entries
+    timeBased: 15            # Compact after N minutes
+    eventBased: true         # Compact on session.compacting event
+  types:
+    episodic:
+      enabled: false
+      retention: 30d
+    semantic:
+      enabled: false
+      scope: project
+
+# Documentation System
+docs:
+  enabled: true
+  autoUpdate: true           # Auto-download docs if outdated
+  cacheTTL: 7d              # How long to cache docs
+  sources:
+    local: true              # Use local cached docs
+    context7: true           # Use Context7 API for live docs
+
+# =============================================================================
+# DEVELOPMENT SKILLS
+# =============================================================================
+
+skills:
+  # Quality Assurance
+  test-driven-development:
+    enabled: true
+    enforce: false           # Block code without tests (strict mode)
+    
+  systematic-debugging:
+    enabled: true
+    autoStart: false         # Auto-start debug session on errors
+    
+  # Frontend
+  frontend-design:
+    enabled: true
+    
+  tailwind:
+    enabled: true
+    
+  shadcn-svelte:
+    enabled: true
+    
+  # Svelte Ecosystem
+  svelte:
+    enabled: true
+  svelte-kit:
+    enabled: true
+  svelte-cli:
+    enabled: true
+  svelte-mcp:
+    enabled: true
+    
+  # Database
+  database-architect:
+    enabled: true
+  postgresql:
+    enabled: true
+    
+  # Browser Automation
+  playwright-cli:
+    enabled: true
+
+# =============================================================================
+# PLUGINS
+# =============================================================================
+
+plugins:
+  opencode-mastery:
+    enabled: true
+    tools:
+      searchDocs: true
+      downloadDocs: true
+      memoryStatus: true
+      memoryRemember: true
+      memoryCompact: true
+      
+  tdd-enforcer:
+    enabled: false           # Experimental - blocks writes without tests
+    tools:
+      validateTDDCycle: true
+      checkTestExists: true
+      analyzeGitOrder: true
+    hooks:
+      preWrite: false        # Block writes without tests (strict!)
+      
+  debug-assistant:
+    enabled: true
+    tools:
+      waitFor: true
+      findFlakyTests: true
+      traceRootCause: true
+      debugSession: true
+    hooks:
+      onError: false         # Auto-start debug on errors
+
+# =============================================================================
+# PROJECT SETTINGS
+# =============================================================================
+
+project:
+  name: opencode-mastery
+  version: "1.0.0"
+  
+  # Preferred languages (in order)
+  languages:
+    - typescript
+    - python
+    
+  # Package managers
+  packageManagers:
+    javascript: bun          # bun, npm, pnpm, yarn
+    python: uv               # uv, pip, poetry
+    
+  # Testing frameworks
+  testing:
+    javascript: vitest
+    python: pytest
+
+# =============================================================================
+# AI BEHAVIOR
+# =============================================================================
+
+ai:
+  # How strict should the AI be about rules?
+  strictness: normal         # relaxed, normal, strict
+  
+  # Should AI auto-load skills based on context?
+  autoLoadSkills: true
+  
+  # Should AI suggest related skills?
+  suggestSkills: true
+  
+  # Memory retention
+  rememberContext: true
+  rememberPreferences: true
+  rememberCorrections: true

@@ -1,147 +1,113 @@
 ---
 name: opencode-mastery
-description: Answer OpenCode questions about skills, agents, commands, plugins, tools, config, MCP/LSP, and troubleshooting. Use when users ask for OpenCode docs, setup, examples, or best practices. Do not trigger for general programming questions.
+description: Complete OpenCode knowledge base with live documentation access. Use for questions about OpenCode CLI, skills, plugins, tools, agents, SDK, or configuration. Automatically searches official docs via Context7 API with local fallback.
 license: MIT
 compatibility: opencode
 metadata:
-  author: user
-  version: 1.4.1
-  refresh: weekly
-  paths:
-    docs: ~/.ai_docs/opencode/docs
-    memory: ~/.ai_docs/opencode/memory
-    scripts: ~/.ai_docs/opencode/scripts
-    references: src/skill/opencode-mastery/references
-    skill_references: src/skill/opencode-memory
+  author: OpenCode Community
+  version: "2.0.0"
+  source: https://github.com/anomalyco/opencode
 ---
 
-# OpenCode Mastery Skill
+# OpenCode Mastery
 
-I answer OpenCode questions with verified sources from official docs, custom references, and GitHub research when needed.
+I have direct access to OpenCode documentation via tools.
 
 ## When to Use Me
 
-Use me when:
+Use me for:
 
-- users ask OpenCode documentation or setup questions
-- users ask for OpenCode concepts, examples, or best practices
-- users need reference-backed answers about skills, plugins, tools, config, MCP, or LSP
+- Questions about OpenCode CLI commands and options
+- How to create/use skills, plugins, tools, agents
+- SDK documentation and API reference
+- Configuration and setup questions
+- Best practices and patterns
 
 Do not use me for:
 
-- general programming questions unrelated to OpenCode
-- framework-agnostic code help
-- requests to create/optimize SKILL.md files (route to `skill-creator`)
+- General programming questions
+- Framework-specific questions (Svelte, React, etc.)
+- Debugging your application code
 
-## How I Work
+## Available Tools
 
-- Extract keywords from your question.
-- Search official docs and custom references.
-- Lazy-load only the relevant sections.
-- Use session memory for follow-ups.
-- If not found, search GitHub and cite sources.
-- If the user asks for skill lifecycle changes, route to `skill-creator`.
-
-## Actions
-
-Refresh docs (project):
-
-```
-uv sync
-bun run download-docs
-```
-
-Refresh docs (global):
-
-```
-~/.ai_docs/opencode/scripts/download-docs.py --verbose
-```
-
-Rebuild index (project):
-
-```
-bun run build-index -- --rebuild
-```
-
-Rebuild index (global):
-
-```
-~/.ai_docs/opencode/scripts/index-builder.py --rebuild
-```
-
-Load custom docs:
-
-```
-bun run load-docs -- --query "keyword"
-```
-
-Session history:
-
-```
-.ai_docs/opencode/scripts/memory-manager.py --history
-```
-
-Search topic memory:
-
-```
-.ai_docs/opencode/scripts/memory-manager.py --topic <topic>
-```
-
-Search memory keywords:
-
-```
-.ai_docs/opencode/scripts/memory-manager.py --search <keyword1> <keyword2>
-```
-
-List custom references:
-
-```
-bun run load-docs -- --list
-```
-
-## Error Handling
-
-- If docs are missing, say so and offer a refresh or GitHub search.
-- If confidence is low, ask for confirmation before proceeding.
-- If request is not docs/Q&A lane, reroute to the correct skill.
-
-## Quick Tests
-
-Should trigger:
-
-- How do I create a skill in OpenCode?
-- Show me the difference between skills and plugins.
-- How do I configure MCP in OpenCode?
-
-Should not trigger:
-
-- How do I fix a Python import error?
-- Explain React hooks.
-
-Functional:
-
-- Find the config option for custom LSP servers.
-- "Create and optimize a new SKILL.md" -> route to `skill-creator`.
-
-## References
-
-- `src/skill/opencode-mastery/references/architecture-two-source.mdx`
-- `src/skill/opencode-mastery/references/directory-structure.mdx`
-- `src/skill/opencode-mastery/references/workflow-examples.mdx`
-- `src/skill/opencode-mastery/references/memory-policy.mdx`
-- `src/skill/opencode-mastery/references/plugins-deep-dive.mdx`
-- `src/skill/opencode-mastery/references/tools-deep-dive.mdx`
-- `src/skill/opencode-mastery/references/local-plugins.mdx`
-- `src/skill/opencode-mastery/references/opencode-design-patterns.mdx`
-- `src/skill/opencode-mastery/references/ace-framework.mdx`
-- `src/skill/opencode-mastery/references/ace-rubric.mdx`
-- `src/skill/opencode-mastery/references/ace-patterns.mdx`
-- `src/skill/skill-creator/SKILL.md`
+| Tool             | Purpose                             |
+| ---------------- | ----------------------------------- |
+| `searchDocs`     | Search OpenCode documentation       |
+| `downloadDocs`   | Download/update local documentation |
+| `memoryStatus`   | Check project memory status         |
+| `memoryRemember` | Store info for future sessions      |
+| `memoryCompact`  | Compact large memory files          |
 
 ## Workflow
 
-1. Identify question scope
-2. If request is skill create/audit/optimize, hand off to `skill-creator`
-3. Load relevant docs
-4. Answer with sources
-5. Offer next steps
+When asked about OpenCode:
+
+1. **Search documentation automatically**
+
+   ```
+   searchDocs({ query: "skills", source: "both", maxResults: 5 })
+   ```
+
+2. **Return accurate information**
+   - Cite sources (Context7 or local)
+   - Provide code examples from docs
+   - Link to relevant documentation
+
+3. **Remember important context**
+   ```
+   memoryRemember({ content: "User prefers TypeScript", category: "preference" })
+   ```
+
+## Documentation Sources
+
+1. **Context7 (Primary)** - Live docs from `/anomalyco/opencode`
+   - Always up-to-date
+   - Semantic search
+   - API-based access
+
+2. **Local (Fallback)** - Cached docs in `~/.ai_docs/opencode/`
+   - Updated via `downloadDocs` tool
+   - 7-day cache TTL
+   - Fuzzy search
+
+## Memory Management
+
+Project memory is stored in `.memory.md`:
+
+- **Check status**: `memoryStatus()`
+- **Store info**: `memoryRemember({ content: "...", category: "preference" })`
+- **Compact**: `memoryCompact()` when over 50KB
+
+Categories: `preference`, `pattern`, `correction`, `context`, `decision`
+
+## Examples
+
+### Search for Skills Documentation
+
+```
+searchDocs({ query: "skills SKILL.md frontmatter", maxResults: 3 })
+```
+
+### Search for Plugin Tools
+
+```
+searchDocs({ query: "plugin tool zod schema", maxResults: 5 })
+```
+
+### Remember a Preference
+
+```
+memoryRemember({
+  content: "User prefers Bun over npm for JavaScript",
+  category: "preference",
+  priority: "high"
+})
+```
+
+## References
+
+- `references/registry.json` - Reference index
+- `examples/plugins/` - Plugin templates (minimal, intermediate, advanced)
+- `examples/tools/` - Tool templates (minimal, intermediate, advanced)
+- `examples/skills/` - Skill templates (minimal, intermediate, advanced)
