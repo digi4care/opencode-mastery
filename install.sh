@@ -94,6 +94,7 @@ SKILLS=(
     "opencode-mastery"
     "meta-agent"
     "skill-creator"
+    "flow-analysis"
     "opencode-memory"
     "test-driven-development"
     "systematic-debugging"
@@ -123,6 +124,7 @@ PLUGINS=(
     "opencode-mastery"
     "tdd-enforcer"
     "debug-assistant"
+    "flow-analyzer"
 )
 
 for plugin in "${PLUGINS[@]}"; do

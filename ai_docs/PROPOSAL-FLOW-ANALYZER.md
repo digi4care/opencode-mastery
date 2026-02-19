@@ -1,559 +1,267 @@
-# GSD Flow Analyzer - Implementation Proposal
+# Flow Analyzer v2 - Proposal (Quality First)
 
-## Overview
+## Status
 
-**Doel:** Een nieuwe GSD component die plans en implementaties analyseert op **flow completeness** - niet alleen of componenten bestaan, maar of ze samen een werkende flow vormen.
-
-**Type:** Nieuwe Agent + Nieuw Command + Reference Document
-
----
-
-## Het Probleem
-
-### Wat ging er mis
-
-GSD verification controleert **structurele compleetheid**:
-
-- ✅ Bestaat het bestand?
-- ✅ Heeft het de juiste exports?
-- ✅ Zijn de imports correct?
-- ✅ Zijn key_links gedefinieerd?
-
-Maar verification controleert **NIET**:
-
-- ❌ Werken de componenten samen als flow?
-- ❌ Zijn alle conditional branches geïmplementeerd?
-- ❌ Zijn preconditions correct?
-- ❌ Is data correct doorgegeven tussen stappen?
-
-### Een concreet voorbeeld (Password Reset Flow)
-
-Stel je hebt een Password Reset feature gepland:
-
-```
-Gebruiker klikt "Wachtwoord vergeten"
-        ↓
-POST /api/auth/forgot-password → Email met reset link
-        ↓
-Gebruiker klikt link → /reset-password?token=xxx
-        ↓
-POST /api/auth/reset-password → Password gewijzigd
-        ↓
-Redirect naar /login
-```
-
-Je bouwt:
-
-- ✅ `/api/auth/forgot-password` endpoint (bestaat)
-- ✅ `/api/auth/reset-password` endpoint (bestaat)
-- ✅ `/reset-password` frontend pagina (bestaat)
-- ✅ Email template (bestaat)
-
-**MAAR** je vergeet:
-
-- ❌ Login pagina checkt NIET of token valid is voor redirect
-- ❌ `/reset-password` pagina vereist dat user AL INGELOGD is (fout precondition!)
-- ❌ Email bevat token, maar token wordt niet gevalideerd
-- ❌ Na password reset wordt user NIET automatisch uitgelogd
-
-**Resultaat:** Alle componenten bestaan, maar de flow werkt niet.
-
-### De fundamentele gap
-
-| Structural Verification | Flow Verification |
-|------------------------|-------------------|
-| "Bestaat `/api/auth/reset-password`?" | "Checkt het token voor password te resetten?" |
-| "Bestaat `/reset-password` pagina?" | "Werkt de pagina voor niet-ingelogde users?" |
-| "Zijn key_links gedefinieerd?" | "Is de conditional logic correct?" |
+- **Owner:** OpenCode team
+- **Scope:** Architecture proposal
+- **Primary target:** GSD
+- **Secondary target:** Reuse for other frameworks
+- **Decision:** Quality over speed and feature count
 
 ---
 
-## De Oplossing
+## 1) Waarom deze update
 
-### Nieuwe componenten
+De vorige proposal loste het juiste probleem op, maar had een te smalle vorm:
 
-| Component | Type | Locatie |
-|-----------|------|---------|
-| `gsd-flow-analyzer` | Agent | `~/.config/opencode/agents/gsd-flow-analyzer.md` |
-| `/gsd-analyze-flow` | Command | `~/.config/opencode/commands/gsd-analyze-flow.md` |
-| `flow-patterns.md` | Reference | `~/.config/opencode/get-shit-done/references/flow-patterns.md` |
+- Te veel logica in 1 GSD-specifieke agent
+- Te weinig scheiding tussen capability en orchestratie
+- Beperkte herbruikbaarheid buiten GSD
 
-### Wat Flow Analyzer doet
+Deze v2 proposal maakt de Flow Analyzer:
 
-1. **Leest alle PLAN.md files** van een phase
-2. **Extraheert intended flows** uit de plan descriptions
-3. **Traceert de implementatie** door de codebase
-4. **Detecteert gaps:**
-   - Missing conditional branches
-   - Wrong preconditions
-   - Dead ends in flows
-   - Missing data flow between steps
-   - Unreachable code paths
-
-### Flow Gap Types
-
-| Gap Type | Beschrijving | Voorbeeld |
-|----------|-------------|-----------|
-| **MISSING_BRANCH** | Een conditional branch ontbreekt | Login checkt niet of user email verified is |
-| **WRONG_PRECONDITION** | Precondition is fout | `/reset-password` vereist ingelogde user |
-| **DEAD_END** | Flow eindigt zonder afsluiting | Na password reset geen redirect/logout |
-| **MISSING_DATA_FLOW** | Data wordt niet doorgegeven | `requires_x` flag niet in response |
-| **UNREACHABLE_CODE** | Code kan nooit bereikt worden | 2FA verify zonder login path |
+- **Agnostisch in de core**
+- **Framework-specifiek aan de rand**
+- **Volledig volgens OpenCode design patterns**
 
 ---
 
-## Implementatie Details
+## 2) Probleemdefinitie
 
-### 1. Agent: `gsd-flow-analyzer.md`
+Huidige verificatie focust vooral op structurele aanwezigheid:
 
-**Locatie:** `~/.config/opencode/agents/gsd-flow-analyzer.md`
+- Bestaat bestand/route/endpoint?
+- Zijn exports/imports correct?
+- Zijn links tussen artefacts aanwezig?
 
-```markdown
-# gsd-flow-analyzer
+Maar flow-correctheid blijft onderbelicht:
 
-## Role
-Analyseert GSD phase plannen en implementaties op flow completeness.
+- Ontbrekende conditionele branch
+- Foute precondition
+- Data niet doorgegeven naar volgende stap
+- Flows die eindigen zonder afronding
 
-## Context Loading
-1. Load PLANNING.md for project context
-2. Load all PLAN.md files from target phase
-3. Load SUMMARY.md files from completed plans
-4. Load relevant source files mentioned in plans
-
-## Flow Extraction Process
-
-### Step 1: Identify Flow Endpoints
-For each plan, extract:
-- User-facing entry points (routes, buttons, forms)
-- API endpoints
-- State transitions
-- Conditional branches mentioned in descriptions
-
-### Step 2: Map Flow Steps
-Create a flow graph:
-- Nodes = Steps in flow (route, API call, state change)
-- Edges = Transitions between steps
-- Labels = Conditions for transitions
-
-### Step 3: Trace Implementation
-For each flow step:
-1. Find the actual code file
-2. Extract preconditions (what must be true before)
-3. Extract postconditions (what becomes true after)
-4. Extract conditional branches (if X then Y else Z)
-5. Identify data passed to next step
-
-### Step 4: Detect Gaps
-
-**MISSING_BRANCH Detection:**
-```
-
-For each conditional mentioned in plan:
-  IF code has no implementation of that branch:
-    REPORT gap with location and expected behavior
-
-```
-
-**WRONG_PRECONDITION Detection:**
-```
-
-For each flow step:
-  Extract precondition from code (e.g., "if (!locals.user) redirect")
-  Compare with intended flow (e.g., "anonymous user should access")
-  IF mismatch:
-    REPORT gap with expected vs actual precondition
-
-```
-
-**DEAD_END Detection:**
-```
-
-For each flow that starts:
-  Trace all paths
-  IF any path ends without:
-    - User feedback (message, redirect, UI update)
-    - State finalization (save, complete)
-  THEN REPORT dead end
-
-```
-
-**MISSING_DATA_FLOW Detection:**
-```
-
-For each step transition:
-  Identify what data step A produces
-  Identify what data step B expects
-  IF mismatch:
-    REPORT missing data flow
-
-```
-
-## Output Format
-
-```markdown
-## Flow Analysis Report
-
-### Flows Analyzed
-- [Flow name] - [Entry point] → [End point]
-
-### Gaps Found
-
-#### GAP-1: [GAP_TYPE] - [Short description]
-- **Location:** [file:line]
-- **Expected:** [What should happen]
-- **Actual:** [What actually happens]
-- **Impact:** [User-visible impact]
-- **Fix Hint:** [How to fix]
-
-### Flow Graph
-[ASCII or Mermaid diagram of intended flow with gaps marked]
-```
-
-## Verification Commands
-
-After analysis, report:
-
-- Total flows analyzed
-- Total gaps by type
-- Critical gaps (dead ends, wrong preconditions)
-- Warnings (missing branches, data flow issues)
-
-```
+Resultaat: features kunnen als "compleet" lijken, terwijl de user flow in praktijk breekt.
 
 ---
 
-### 2. Command: `/gsd-analyze-flow`
+## 3) Doel
 
-**Locatie:** `~/.config/opencode/commands/gsd-analyze-flow.md`
+Introduceer een analyzer die intended flow versus implementatie vergelijkt en duidelijke gaps rapporteert.
 
-```markdown
-# /gsd-analyze-flow [phase-name]
+Kernuitkomst:
 
-Analyseert een phase op flow completeness.
-
-## Usage
-```
-
-/gsd-analyze-flow 03-authentication
-/gsd-analyze-flow 04-2fa-session-management
-
-```
-
-## Process
-1. Spawn `gsd-flow-analyzer` agent
-2. Load all plans from target phase
-3. Analyze each plan's intended flows
-4. Trace implementation in codebase
-5. Generate gap report
-
-## Output
-- Flow Analysis Report (printed to console)
-- Optional: Save to `.planning/phases/{phase}/FLOW-ANALYSIS.md`
-
-## When to Use
-- After phase planning (before execution)
-- After phase execution (before verification)
-- When debugging why a flow doesn't work
-```
+- Minder false completion
+- Snellere root-cause bij flow bugs
+- Herbruikbare analysecapability voor meerdere frameworks
 
 ---
 
-### 3. Reference: `flow-patterns.md`
+## 4) Scope en non-goals
 
-**Locatie:** `~/.config/opencode/get-shit-done/references/flow-patterns.md`
+## In scope
 
-```markdown
-# Common Flow Patterns
+- Framework-agnostische flow analysis core
+- GSD adapter als eerste concrete implementatie
+- Heldere gap-taxonomie
+- Markdown + JSON rapportage
+- Integratiepad naar GSD verifier/planner workflow
 
-## Pattern 1: Conditional Login Redirect
+## Out of scope (fase 1)
 
-**Description:** Login may need to redirect to different pages based on user state.
-
-**Flow:**
-```
-
-Login → Check user state
-         ↓
-    Has condition X? → YES → Redirect to /handle-x
-         ↓ NO
-    Normal redirect to dashboard
-
-```
-
-**Implementation Checklist:**
-- [ ] Backend returns flag for condition X
-- [ ] Frontend checks flag
-- [ ] Frontend redirects to correct page
-- [ ] /handle-x page works for just-logged-in user
-
-**Common Gaps:**
-- Backend never returns the flag
-- Frontend ignores the flag
-- /handle-x page requires fully authenticated session
+- Auto-remediation/autofix
+- Volledige CI policy enforcement
+- Framework-specifieke adapters anders dan GSD
 
 ---
 
-## Pattern 2: Token-Based Flow
+## 5) Architectuurbesluit
 
-**Description:** Flow uses temporary tokens (password reset, email verification, magic link).
+## Besluit
 
-**Flow:**
-```
+Gebruik een gelaagde architectuur:
 
-Request → Generate token → Send to user
-                              ↓
-User clicks link → Validate token → Perform action → Invalidate token
+1. **Plugin tools (core capability)**
+2. **Agents (orchestratie)**
+3. **Commands (entrypoints)**
+4. **Skill + references (kennislaag)**
 
-```
+## Waarom dit beter is
 
-**Implementation Checklist:**
-- [ ] Token is cryptographically secure
-- [ ] Token has expiration
-- [ ] Token is single-use (invalidated after use)
-- [ ] Token validation handles expired/invalid gracefully
-- [ ] Action page works for anonymous users with valid token
-
-**Common Gaps:**
-- Token not validated before action
-- Token not invalidated after use
-- Action page requires login (wrong precondition)
+- Tooling wordt testbaar en type-safe
+- Agent blijft dun en stuurt alleen workflow
+- Commands blijven framework-vriendelijk voor gebruikers
+- Kennis en heuristieken blijven los van runtime code
 
 ---
 
-## Pattern 3: Multi-Step Form
+## 6) Componentmodel
 
-**Description:** User completes action across multiple steps.
+### 6.1 Plugin (agnostische core)
 
-**Flow:**
-```
+**Doel:** deterministische en herbruikbare analyse-tools.
 
-Step 1 → Validate → Save draft → Step 2 → Validate → Save draft → Step N → Submit
+Voorgestelde tools:
 
-```
+- `extract_flows`
+- `build_flow_graph`
+- `trace_implementation`
+- `detect_flow_gaps`
+- `score_flow_confidence`
 
-**Implementation Checklist:**
-- [ ] Each step validates independently
-- [ ] Draft state is preserved between steps
-- [ ] User can go back without losing data
-- [ ] Final submit validates all steps
-- [ ] Error handling returns to correct step
+### 6.2 Base agent
 
-**Common Gaps:**
-- Draft not saved between steps
-- Back button loses data
-- Final validation doesn't re-check earlier steps
+**Naam:** `flow-analyzer`
 
----
+Verantwoordelijk voor:
 
-## Pattern 4: OAuth/External Integration
+- Tool-chain orchestration
+- Normalisatie van input/output
+- Rapportgeneratie in standaard formaat
 
-**Description:** Flow involves external service.
+### 6.3 GSD adapter agent
 
-**Flow:**
-```
+**Naam:** `gsd-flow-analyzer`
 
-Click "Connect X" → Redirect to X → Authorize → Callback → Exchange code → Create session
+Verantwoordelijk voor:
 
-```
+- Laden van GSD phase-context
+- Mapping van GSD artefacts naar core input
+- Schrijven van GSD-conventie outputs
 
-**Implementation Checklist:**
-- [ ] State parameter for CSRF protection
-- [ ] Callback handles success and error
-- [ ] Code exchange happens server-side
-- [ ] Session created only after successful exchange
-- [ ] Error states handled gracefully
+### 6.4 Commands
 
-**Common Gaps:**
-- State parameter not validated
-- Session created before code exchange
-- Error callback not handled
+- **Generic:** `/flow-analyze`
+- **GSD:** `/gsd-analyze-flow`
 
----
+### 6.5 Skill
 
-## Pattern 5: CRUD with Conditional Actions
+**Naam:** `flow-analysis`
 
-**Description:** Create/Read/Update/Delete with conditions.
+Bevat:
 
-**Flow:**
-```
-
-Create → Check conditions → Is user allowed? → YES → Save → Notify
-                                    ↓ NO
-                              Return error
-
-```
-
-**Implementation Checklist:**
-- [ ] Conditions checked before action
-- [ ] Appropriate error message for each condition
-- [ ] Side effects (notifications) only after success
-- [ ] Audit logging for sensitive actions
-
-**Common Gaps:**
-- Conditions checked after action
-- Generic error message doesn't explain why
-- Notifications sent even if action fails
-```
+- Pattern library
+- Gap taxonomy
+- Preconditions checklist
+- Richtlijnen tegen false positives
 
 ---
 
-### 4. Updates to Existing Agents
+## 7) Gap-taxonomie (v2)
 
-#### Update: `gsd-plan-checker.md`
+Minimale set:
 
-Add to checklist:
+- `MISSING_BRANCH`
+- `WRONG_PRECONDITION`
 
-```markdown
-## Flow Completeness Check
+Uitbreidingsset:
 
-After structural checks, verify:
+- `DEAD_END`
+- `MISSING_DATA_FLOW`
+- `UNREACHABLE_CODE`
 
-### Conditional Branches
-For each conditional mentioned in plan:
-- [ ] Is the condition implemented in code?
-- [ ] Is the true branch handled?
-- [ ] Is the false branch handled?
+Elk gap-resultaat bevat minimaal:
 
-### Preconditions
-For each route/endpoint:
-- [ ] Are preconditions explicitly stated?
-- [ ] Do preconditions match the intended flow?
-- [ ] Are anonymous users handled correctly?
-
-### Data Flow
-For each step transition:
-- [ ] Is required data available at each step?
-- [ ] Is data correctly passed between steps?
-```
-
-#### Update: `gsd-verifier.md`
-
-Add to verification process:
-
-```markdown
-## Flow Verification (Optional - Run with --flow flag)
-
-In addition to structural verification, verify flows work:
-
-### Manual Flow Testing
-1. Identify critical user flows from plans
-2. Test each flow manually in browser
-3. Document any gaps between expected and actual behavior
-
-### Automated Flow Detection
-1. Parse plan descriptions for flow keywords:
-   - "redirect to", "then", "if X then", "after"
-2. Extract expected flow steps
-3. Verify each step has implementation
-4. Flag missing connections
-```
+- Locatie (path + line indien beschikbaar)
+- Expected
+- Actual
+- Impact
+- Fix hint
+- Severity
 
 ---
 
-## Acceptatie Criteria
+## 8) Kwaliteitsstrategie (kwaliteit boven kwantiteit)
 
-### Must Have
+## Kwaliteitsregels
 
-- [ ] `gsd-flow-analyzer.md` agent exists and is functional
-- [ ] `/gsd-analyze-flow` command spawns the agent correctly
-- [ ] Agent detects MISSING_BRANCH gaps
-- [ ] Agent detects WRONG_PRECONDITION gaps
-- [ ] Agent produces readable gap report
+1. Eerst kleine verticale slice, daarna uitbreiden
+2. Eerst betrouwbaarheid op 2 gap-types, daarna breadth
+3. Elke fase heeft expliciete done-criteria
+4. Geen feature-uitbreiding zolang false positives te hoog zijn
 
-### Should Have
+## Vertical slice definitie
 
-- [ ] `flow-patterns.md` reference document
-- [ ] Agent detects DEAD_END gaps
-- [ ] Agent detects MISSING_DATA_FLOW gaps
-- [ ] Integration with `gsd-plan-checker`
+"Done" betekent:
 
-### Nice to Have
-
-- [ ] Visual flow graph output (Mermaid)
-- [ ] Automatic gap closure plan generation
-- [ ] CI integration for flow analysis
+- GSD command werkt end-to-end
+- Minimaal 2 gap types met aantoonbare detectie
+- Rapport output is consistent (md + json)
+- Testfixtures dekken broken en gezonde flow
 
 ---
 
-## Testing
+## 9) Integratie met GSD workflow
 
-### Test Case 1: Password Reset Flow
+## `gsd-plan-checker`
 
-Create a broken password reset implementation:
+- Optional pre-check op flow-risico in planningsfase
 
-- Token generated but not validated
-- Reset page requires login (wrong precondition)
-- No redirect after password changed
+## `gsd-verifier`
 
-**Expected:** Agent should detect all three gaps.
-
-### Test Case 2: OAuth Flow
-
-Create a broken OAuth implementation:
-
-- No state parameter
-- Session created before code exchange
-- Error callback not handled
-
-**Expected:** Agent should detect all three gaps.
-
-### Test Case 3: Complete Flow
-
-Create a correct implementation.
-
-**Expected:** Agent should report no gaps.
+- `--flow` mode consumeert analyzer output
+- Verifier blijft owner van "goal achieved" verdict
+- Flow Analyzer levert gespecialiseerd bewijs, geen verdict-overname
 
 ---
 
-## Implementation Order
+## 10) Files (conceptueel)
 
-### Phase 1: Core Agent (1-2 hours)
+Core in repo:
 
-1. Create `gsd-flow-analyzer.md`
-2. Implement basic gap detection (MISSING_BRANCH, WRONG_PRECONDITION)
-3. Test with simple flows
+- `src/plugin/flow-analyzer/src/index.ts`
+- `src/plugin/flow-analyzer/src/types.ts`
+- `src/plugin/flow-analyzer/src/tools/*.ts`
+- `src/skill/flow-analysis/SKILL.md`
+- `src/skill/flow-analysis/references/*.md`
 
-### Phase 2: Command Integration (30 min)
+Agent/command definitions:
 
-1. Create `/gsd-analyze-flow` command
-2. Wire up agent spawning
-3. Test command execution
-
-### Phase 3: Reference Documentation (1 hour)
-
-1. Create `flow-patterns.md`
-2. Document common patterns
-3. Add pattern detection to agent
-
-### Phase 4: Integration (30 min)
-
-1. Update `gsd-plan-checker.md`
-2. Update `gsd-verifier.md`
-3. Add --flow flag to verification
+- `src/agent/flow-analyzer.md`
+- `src/agent/gsd-flow-analyzer.md`
+- `src/command/flow-analyze.md`
+- `src/command/gsd-analyze-flow.md`
 
 ---
 
-## Files to Create/Modify
+## 11) Acceptance criteria
 
-| File | Action | Description |
-|------|--------|-------------|
-| `~/.config/opencode/agents/gsd-flow-analyzer.md` | CREATE | New agent |
-| `~/.config/opencode/commands/gsd-analyze-flow.md` | CREATE | New command |
-| `~/.config/opencode/get-shit-done/references/flow-patterns.md` | CREATE | Reference doc |
-| `~/.config/opencode/agents/gsd-plan-checker.md` | MODIFY | Add flow checks |
-| `~/.config/opencode/agents/gsd-verifier.md` | MODIFY | Add flow verification |
+## Must
+
+- Agnostische plugin-core operationeel
+- GSD adapter operationeel op dezelfde core
+- Detectie van `MISSING_BRANCH` en `WRONG_PRECONDITION`
+- Output in markdown en json
+
+## Should
+
+- Detectie van `DEAD_END` en `MISSING_DATA_FLOW`
+- Integratiepad naar `gsd-verifier --flow`
+- Pattern references beschikbaar en bruikbaar
+
+## Nice
+
+- Mermaid flow graph output
+- CI gate voor kritieke flow gaps
+- Suggestie-output voor gap closure planning
 
 ---
 
-## Summary
+## 12) Risico's en mitigatie
 
-**Probleem:** GSD verification checkt of componenten bestaan, maar niet of ze samen een werkende flow vormen.
+- **False positives:** confidence score + evidence-first output
+- **Scope creep:** fase-gates en non-goals expliciet bewaken
+- **Framework drift:** adapterlaag isoleren, core agnostisch houden
+- **Performance:** adapter hints voor target file selectie
 
-**Oplossing:** Een nieuwe `gsd-flow-analyzer` agent die:
+---
 
-1. Intended flows uit plannen haalt
-2. Implementatie traceert door codebase
-3. Gaps detecteert (missing branches, wrong preconditions, dead ends)
-4. Duidelijk rapport genereert met fix hints
+## 13) Besluit
 
-**Resultaat:** Fouten zoals "login redirect niet naar 2FA" worden gedetecteerd VOORDAT ze als "complete" worden gemarkeerd.
+Deze v2 proposal kiest bewust voor kwaliteit:
+
+- Eerst een kleine, betrouwbare kern
+- Dan gecontroleerde uitbreiding
+- Met een structuur die GSD direct helpt en tegelijk framework-agnostisch opschaalt
+
+De gedetailleerde architectuur staat in `ai_docs/IMPLEMENTATION-FLOW-ANALYZER.md`.

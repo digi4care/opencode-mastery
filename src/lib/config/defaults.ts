@@ -126,5 +126,16 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
         auto_analyze_on_end: false,
       },
     },
+    flowAnalyzer: {
+      enabled: true,
+      register_agents: true,
+      strict_default: false,
+      max_gaps_reported: 50,
+      agent_tool_mode: "scoped",
+      framework_defaults: {
+        gsd: true,
+        generic: true,
+      },
+    },
   },
 };

@@ -126,3 +126,14 @@ features:
       max_subagent_depth: 2  # Max nesting for analysis subagents
       auto_apply_suggestions: false  # Auto-apply ACE suggestions
       auto_analyze_on_end: false     # Auto-analyze when session ends
+
+  # Flow Analyzer - Framework-agnostic flow analysis
+  flowAnalyzer:
+    enabled: true
+    register_agents: true       # Register flow-analyzer and gsd-flow-analyzer agents
+    strict_default: false       # Default strictness for analysis runs
+    max_gaps_reported: 50       # Prevent overly large reports
+    agent_tool_mode: scoped     # scoped | all
+    framework_defaults:
+      gsd: true                 # Enable GSD-specific adapter defaults
+      generic: true             # Enable generic adapter defaults

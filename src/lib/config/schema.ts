@@ -102,15 +102,10 @@ export const PlaywrightConfigSchema = z.object({
   default_timeout: z.number().default(30000),
 });
 
-// Feature: Session Manager
+// Feature: Session Manager (uses SDK client - no port config needed!)
 export const SessionConfigSchema = z.object({
   enabled: z.boolean().default(true),
-  server: z.object({
-    hostname: z.string().default("127.0.0.1"),
-    port: z.number().default(4096),
-    auto_detect: z.boolean().default(true),
-    timeout_ms: z.number().default(5000),
-  }).default({}),
+  // No server config needed - SDK client is already connected
   track: z.object({
     tool_calls: z.boolean().default(true),
     ai_responses: z.boolean().default(false),
@@ -131,6 +126,19 @@ export const SessionConfigSchema = z.object({
   }).default({}),
 });
 
+// Feature: Flow Analyzer
+export const FlowAnalyzerConfigSchema = z.object({
+  enabled: z.boolean().default(true),
+  register_agents: z.boolean().default(true),
+  strict_default: z.boolean().default(false),
+  max_gaps_reported: z.number().int().min(1).default(50),
+  agent_tool_mode: z.enum(["scoped", "all"]).default("scoped"),
+  framework_defaults: z.object({
+    gsd: z.boolean().default(true),
+    generic: z.boolean().default(true),
+  }).default({}),
+});
+
 // All features
 export const FeaturesConfigSchema = z.object({
   memory: MemoryConfigSchema.default({}),
@@ -139,6 +147,7 @@ export const FeaturesConfigSchema = z.object({
   debugging: DebugConfigSchema.default({}),
   playwright: PlaywrightConfigSchema.default({}),
   session: SessionConfigSchema.default({}),
+  flowAnalyzer: FlowAnalyzerConfigSchema.default({}),
 });
 
 // Project metadata
@@ -162,6 +171,7 @@ export type TDDConfig = z.infer<typeof TDDConfigSchema>;
 export type DebugConfig = z.infer<typeof DebugConfigSchema>;
 export type PlaywrightConfig = z.infer<typeof PlaywrightConfigSchema>;
 export type SessionConfig = z.infer<typeof SessionConfigSchema>;
+export type FlowAnalyzerConfig = z.infer<typeof FlowAnalyzerConfigSchema>;
 export type FeaturesConfig = z.infer<typeof FeaturesConfigSchema>;
 export type ProjectConfig = z.infer<typeof ProjectConfigSchema>;
 export type OpenCodeConfig = z.infer<typeof OpenCodeConfigSchema>;
