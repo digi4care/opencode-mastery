@@ -39,34 +39,22 @@ This architecture ensures the ACE analyzer has maximum context available for ana
 Use the om-session tools to get session data:
 
 ```
-1. Use sessionList tool to get recent sessions
-2. Use sessionRead tool to get messages from target session(s)
+1. Use session-list tool to get recent sessions
+2. Use session-read tool to get messages from target session(s)
 3. Prepare a summary of the session data for the subagent
 ```
 
 ### Step 2: Start ACE Analyzer Subagent
 
-Use the Task tool to start the ACE Analyzer subagent with clean context:
+Use the task tool to start the ACE Analyzer subagent with clean context:
 
-```javascript
+```
 task(
-  subagent_type: "ace-analyzer",
+  subagent_type: "general",
   description: "ACE Session Analysis",
-  prompt: `
-## Session Data
-[Paste session summary from Step 1 - the messages, tool calls, and outcomes]
-
-## Context
-- Session ID: [if available]
-- Duration: [if available]
-- Tools used: [list from session data]
-
-Analyze this session and return the ACE Reflection Report.
-`
+  prompt: "You are an ACE (Agentic Context Engineering) analyzer..."
 )
 ```
-
-**Note**: The `ace-analyzer` agent is defined in `~/.config/opencode/agents/ace-analyzer.md` and contains the full ACE framework instructions.
 
 ### Step 3: Present Results
 
