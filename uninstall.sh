@@ -63,6 +63,7 @@ PLUGINS=(
     "tdd-enforcer"
     "debug-assistant"
     "flow-analyzer"
+    "opencode-mastery-plugin"
 )
 
 # Check if any files exist

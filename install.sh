@@ -132,6 +132,7 @@ PLUGINS=(
     "tdd-enforcer"
     "debug-assistant"
     "flow-analyzer"
+    "opencode-mastery-plugin"
 )
 
 for plugin in "${PLUGINS[@]}"; do
