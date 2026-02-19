@@ -25,7 +25,6 @@ COMMAND_FILES=(
     "skill-creator-optimize.md"
     "skill-creator-plan.md"
     "flow-analyze.md"
-    "flow-analyzer.md"
     "gsd-analyze-flow.md"
 )
 
