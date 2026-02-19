@@ -1,13 +1,13 @@
 # Project Conventions
 
-Dit document bevat alle project-specifieke conventies voor opencode-mastery.
+This document contains all project-specific conventions for opencode-mastery.
 
 ## Package Managers
 
-| Taal                  | Tool                    | Reden                      |
-| --------------------- | ----------------------- | -------------------------- |
-| JavaScript/TypeScript | **Bun** (niet pnpm/npm) | Sneller, native TypeScript |
-| Python                | **uv**                  | Moderne package manager    |
+| Language              | Tool                   | Reason                    |
+| --------------------- | ---------------------- | ------------------------- |
+| JavaScript/TypeScript | **Bun** (not pnpm/npm) | Faster, native TypeScript |
+| Python                | **uv**                 | Modern package manager    |
 
 ```bash
 # JavaScript/TypeScript
@@ -23,8 +23,8 @@ uv run <script.py>
 
 ```
 opencode-mastery/
-├── docs/                    # Gestructureerde documentatie
-│   ├── project/             # Project-specifiek
+├── docs/                    # Structured documentation
+│   ├── project/             # Project-specific
 │   ├── opencode/            # OpenCode guides
 │   └── ace/                 # ACE framework
 ├── src/
@@ -33,7 +33,7 @@ opencode-mastery/
 │       │   ├── SKILL.md
 │       │   ├── references/  # Custom .mdx docs
 │       │   ├── scripts/     # Python utilities
-│       │   └── examples/    # Voorbeelden
+│       │   └── examples/    # Examples
 │       └── meta-agent/
 │           └── SKILL.md
 ├── .opencode/
@@ -44,7 +44,7 @@ opencode-mastery/
 └── package.json             # npm scripts
 ```
 
-## Python Scripts Conventies
+## Python Scripts Conventions
 
 ```python
 # Type hints required (| syntax for unions)
@@ -62,9 +62,9 @@ CACHE_TTL_DAYS = 7
 
 ## GitHub CLI
 
-- **Required** voor het downloaden van OpenCode documentatie
-- **Authenticatie vereist**: `gh auth login`
-- Gebruikt via subprocess calls in `download-docs.py`
+- **Required** for downloading OpenCode documentation
+- **Authentication required**: `gh auth login`
+- Used via subprocess calls in `download-docs.py`
 
 ## SKILL.md Format
 
@@ -87,12 +87,12 @@ metadata:
 
 ## Install Flow
 
-| Stap | Command                 | Resultaat                                 |
-| ---- | ----------------------- | ----------------------------------------- |
-| 1    | `./install.sh`          | Kopieert naar `~/.config/opencode/skill/` |
-| 2    | `uv sync`               | Installeert Python dependencies           |
-| 3    | `bun run download-docs` | Haalt docs van GitHub                     |
-| 4    | `bun run build-index`   | Bouwt fuzzy search index                  |
+| Step | Command                 | Result                                |
+| ---- | ----------------------- | ------------------------------------- |
+| 1    | `./install.sh`          | Copies to `~/.config/opencode/skill/` |
+| 2    | `uv sync`               | Installs Python dependencies          |
+| 3    | `bun run download-docs` | Fetches docs from GitHub              |
+| 4    | `bun run build-index`   | Builds fuzzy search index             |
 
 ## npm Scripts
 
@@ -105,7 +105,7 @@ bun run build-index      # Build fuzzy search index
 bun run test             # Run tests
 ```
 
-## Documentatie Locaties
+## Documentation Locations
 
 | Type          | Global                                                  | Project                                  |
 | ------------- | ------------------------------------------------------- | ---------------------------------------- |

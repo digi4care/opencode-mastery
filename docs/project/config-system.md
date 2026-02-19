@@ -1,45 +1,46 @@
 # OpenCode Config System
 
-> **Single Source of Truth** voor alle features, plugins, en tools configuratie.
+> **Single Source of Truth** for all features, plugins, and tools configuration.
 
-## Overzicht
+## Overview
 
-Het config systeem gebruikt `opencode.config.yaml` in de project root als centrale configuratie. **ALLE** plugins en tools lezen hun instellingen uit dit bestand via de gedeelde library `src/lib/config`.
+The config system uses `opencode.config.yaml` in the project root as the central configuration. **ALL** plugins and tools read their settings from this file via the shared library `src/lib/config`.
 
-## ⚠️ KRITIEK: Gedeelde Standaard
+## ⚠️ CRITICAL: Shared Standard
 
-**ALLE plugins MOETEN de gedeelde config library gebruiken:**
+**ALL plugins MUST use the shared config library:**
 
 ```typescript
-// ✅ CORRECT - Gebruik gedeelde library
+// ✅ CORRECT - Use shared library
 import { isFeatureEnabled, getFeatureConfig } from "../../lib/config";
 
-// ❌ FOUT - Eigen config implementatie
+// ❌ WRONG - Own config implementation
 import { loadMyOwnConfig } from "./my-config";
 ```
 
-Dit zorgt voor:
-- Consistentie tussen alle plugins
-- Geen verschillen of bugs door configuratie
-- Eén plek om alles aan/uit te zetten
+This ensures:
 
-## Structuur
+- Consistency across all plugins
+- No differences or bugs from configuration
+- One place to turn everything on/off
+
+## Structure
 
 ```
 project-root/
-├── opencode.config.yaml       # CENTRALE configuratie
+├── opencode.config.yaml       # CENTRAL configuration
 ├── src/
 │   ├── lib/
-│   │   └── config/            # GEDEELDE config library
+│   │   └── config/            # SHARED config library
 │   │       ├── index.ts       # Exports
 │   │       ├── loader.ts      # YAML loader
-│   │       ├── schema.ts      # Zod schema's
-│   │       └── defaults.ts    # Default waarden
+│   │       ├── schema.ts      # Zod schemas
+│   │       └── defaults.ts    # Default values
 │   │
 │   └── plugin/
-│       ├── opencode-mastery/  # Gebruikt src/lib/config
-│       ├── tdd-enforcer/      # Gebruikt src/lib/config
-│       └── debug-assistant/   # Gebruikt src/lib/config
+│       ├── opencode-mastery/  # Uses src/lib/config
+│       ├── tdd-enforcer/      # Uses src/lib/config
+│       └── debug-assistant/   # Uses src/lib/config
 ```
 
 ## Config Schema
@@ -66,8 +67,8 @@ features:
   # Docs - OpenCode documentation access
   docs:
     enabled: true
-    context7: true           # Live docs via Context7
-    local_fallback: true     # Fallback to local cache
+    context7: true # Live docs via Context7
+    local_fallback: true # Fallback to local cache
     cache_ttl_days: 7
     auto_download: false
 
@@ -99,7 +100,7 @@ features:
 
 ## API Reference
 
-### Basis Functies
+### Basic Functions
 
 ```typescript
 import {
@@ -111,18 +112,18 @@ import {
   reloadConfig,
 } from "../../lib/config";
 
-// Laad volledige config
+// Load full config
 const config = loadConfig();
 
-// Haal alle features
+// Get all features
 const features = getFeatures();
 
-// Check of feature enabled is
+// Check if feature is enabled
 if (isFeatureEnabled("tdd")) {
   // TDD is enabled
 }
 
-// Haal specifieke feature config
+// Get specific feature config
 const tddConfig = getFeatureConfig("tdd");
 if (tddConfig.block_without_test) {
   // Block writes without tests
@@ -143,16 +144,16 @@ import type {
 } from "../../lib/config";
 ```
 
-## Implementatie in Plugins
+## Implementation in Plugins
 
-### Stap 1: Importeer van Gedeelde Library
+### Step 1: Import from Shared Library
 
 ```typescript
 // src/plugin/my-plugin/index.ts
 import { isFeatureEnabled, getFeatureConfig } from "../../lib/config";
 ```
 
-### Stap 2: Check Config bij Plugin Load
+### Step 2: Check Config on Plugin Load
 
 ```typescript
 export const Plugin = async (context: PluginContext) => {
@@ -163,7 +164,7 @@ export const Plugin = async (context: PluginContext) => {
   }
 
   const config = getFeatureConfig("myFeature");
-  
+
   return {
     tool: [myTool],
     // Use config values...
@@ -171,29 +172,26 @@ export const Plugin = async (context: PluginContext) => {
 };
 ```
 
-### Stap 3: Check Config in Tools
+### Step 3: Check Config in Tools
 
 ```typescript
-export const myTool = tool(
-  z.object({ input: z.string() }),
-  async (args) => {
-    // Check config first
-    if (!isFeatureEnabled("myFeature")) {
-      return {
-        success: false,
-        data: { error: "Feature disabled in opencode.config.yaml" },
-      };
-    }
-
-    const config = getFeatureConfig("myFeature");
-    // Use config values...
+export const myTool = tool(z.object({ input: z.string() }), async (args) => {
+  // Check config first
+  if (!isFeatureEnabled("myFeature")) {
+    return {
+      success: false,
+      data: { error: "Feature disabled in opencode.config.yaml" },
+    };
   }
-);
+
+  const config = getFeatureConfig("myFeature");
+  // Use config values...
+});
 ```
 
-## Nieuwe Feature Toevoegen
+## Adding a New Feature
 
-### Stap 1: Update Schema
+### Step 1: Update Schema
 
 ```typescript
 // src/lib/config/schema.ts
@@ -203,20 +201,20 @@ export const MyNewFeatureConfigSchema = z.object({
   option2: z.number().default(42),
 });
 
-// Voeg toe aan FeaturesConfigSchema
+// Add to FeaturesConfigSchema
 export const FeaturesConfigSchema = z.object({
-  // ... bestaande features
+  // ... existing features
   myNewFeature: MyNewFeatureConfigSchema.default({}),
 });
 ```
 
-### Stap 2: Update Defaults
+### Step 2: Update Defaults
 
 ```typescript
 // src/lib/config/defaults.ts
 export const DEFAULT_CONFIG: OpenCodeConfig = {
   features: {
-    // ... bestaande features
+    // ... existing features
     myNewFeature: {
       enabled: true,
       option1: "value",
@@ -226,7 +224,7 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
 };
 ```
 
-### Stap 3: Update Config File
+### Step 3: Update Config File
 
 ```yaml
 # opencode.config.yaml
@@ -237,7 +235,7 @@ features:
     option2: 42
 ```
 
-### Stap 4: Gebruik in Plugin
+### Step 4: Use in Plugin
 
 ```typescript
 import { isFeatureEnabled, getFeatureConfig } from "../../lib/config";
@@ -246,25 +244,25 @@ import { isFeatureEnabled, getFeatureConfig } from "../../lib/config";
 const config = getFeatureConfig("myNewFeature");
 ```
 
-## Config Wijzigen
+## Modifying Config
 
-De AI kan de config wijzigen wanneer:
+The AI can modify the config when:
 
-1. **Gebruiker vraagt om feature aan/uit te zetten**
-   - "Zet memory uit" → AI edit `opencode.config.yaml`
-   - AI herlaadt config via `reloadConfig()`
+1. **User asks to enable/disable a feature**
+   - "Turn off memory" → AI edits `opencode.config.yaml`
+   - AI reloads config via `reloadConfig()`
 
-2. **Nieuwe feature toegevoegd wordt**
-   - AI voegt feature toe aan config
-   - AI update schema en defaults
+2. **New feature is added**
+   - AI adds feature to config
+   - AI updates schema and defaults
 
-3. **Plugin instelling aangepast wordt**
-   - Gebruiker: "Maak TDD minder strikt"
+3. **Plugin settings are adjusted**
+   - User: "Make TDD less strict"
    - AI: `tdd.block_without_test: false`
 
-## Voorbeelden
+## Examples
 
-### Voorbeeld 1: Feature Uitschakelen
+### Example 1: Disable Feature
 
 ```yaml
 features:
@@ -272,9 +270,9 @@ features:
     enabled: false
 ```
 
-AI: _"TDD enforcement is disabled. I won't block writes without tests."_
+AI: \_"TDD enforcement is disabled. I won't block writes without tests."
 
-### Voorbeeld 2: Strikte TDD
+### Example 2: Strict TDD
 
 ```yaml
 features:
@@ -285,35 +283,35 @@ features:
     check_git_order: true
 ```
 
-AI blokkeert ALLE code zonder test en verifieert git geschiedenis.
+AI blocks ALL code without tests and verifies git history.
 
-### Voorbeeld 3: Offline Mode
+### Example 3: Offline Mode
 
 ```yaml
 features:
   docs:
-    context7: false        # Geen live docs
-    local_fallback: true   # Alleen lokale cache
+    context7: false # No live docs
+    local_fallback: true # Only local cache
 ```
 
-AI gebruikt alleen lokale documentatie.
+AI uses only local documentation.
 
-## Checklist Nieuwe Plugin
+## New Plugin Checklist
 
-- [ ] Schema toegevoegd aan `src/lib/config/schema.ts`
-- [ ] Defaults toegevoegd aan `src/lib/config/defaults.ts`
-- [ ] Type geëxporteerd in `src/lib/config/index.ts`
-- [ ] Plugin importeert van `../../lib/config`
-- [ ] Plugin checkt `isFeatureEnabled()` bij load
-- [ ] Tools checken config voor uitvoering
-- [ ] Config file geüpdatet met nieuwe feature
-- [ ] Deze documentatie geüpdatet
+- [ ] Schema added to `src/lib/config/schema.ts`
+- [ ] Defaults added to `src/lib/config/defaults.ts`
+- [ ] Type exported in `src/lib/config/index.ts`
+- [ ] Plugin imports from `../../lib/config`
+- [ ] Plugin checks `isFeatureEnabled()` on load
+- [ ] Tools check config before execution
+- [ ] Config file updated with new feature
+- [ ] This documentation updated
 
-## Fouten Voorkomen
+## Preventing Errors
 
-| Fout | Gevolg | Oplossing |
-|------|--------|-----------|
-| Eigen config implementatie | Inconsistenties | Gebruik altijd `src/lib/config` |
-| Harde defaults in code | Config wordt genegeerd | Lees altijd uit config |
-| Geen type safety | Runtime errors | Gebruik Zod schema's |
-| Cache niet cleared | Oude waarden | Gebruik `reloadConfig()` na wijziging |
+| Error                      | Consequence       | Solution                           |
+| -------------------------- | ----------------- | ---------------------------------- |
+| Own config implementation  | Inconsistencies   | Always use `src/lib/config`        |
+| Hardcoded defaults in code | Config is ignored | Always read from config            |
+| No type safety             | Runtime errors    | Use Zod schemas                    |
+| Cache not cleared          | Old values        | Use `reloadConfig()` after changes |

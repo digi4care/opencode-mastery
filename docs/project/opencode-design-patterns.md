@@ -1,7 +1,6 @@
 # OpenCode Design Patterns
 
 Dit document beschrijft de Design Patterns voor het bouwen van OpenCode plugins en tools.
-Gebaseerd op het oh-my-opencode project - de manier waarop zij plugins bouwen, niet hun specifieke implementatie.
 
 ---
 
@@ -280,10 +279,10 @@ export const mijnPlugin = {
 
 ### Voor Diepgaande Research
 
-| Onderwerp           | Referentie                                                                    |
-| ------------------- | ----------------------------------------------------------------------------- |
+| Onderwerp           | Referentie                                                                     |
+| ------------------- | ------------------------------------------------------------------------------ |
 | **Plugin Patterns** | `github.com/code-yeongyu/oh-my-opencode` - hoe plugins en tools worden gebouwd |
-| **OpenCode Core**   | `github.com/opencode-ai/opencode` - officiële OpenCode repository             |
+| **OpenCode Core**   | `github.com/opencode-ai/opencode` - officiële OpenCode repository              |
 
 ### Documentatie
 

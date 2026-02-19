@@ -1,26 +1,26 @@
 # Anti-Patterns
 
-Dit document bevat alle anti-patterns die je MOET vermijden in dit project.
+This document contains all anti-patterns you MUST avoid in this project.
 
 ## Directory Naming
 
 ### ❌ NEVER: `skills/` (plural)
 
 ```
-# FOUT
+# WRONG
 ~/.config/opencode/skills/
 .opencode/skills/
 
-# GOED
+# CORRECT
 ~/.config/opencode/skill/
 .opencode/skill/
 ```
 
-**Reden**: Op dit systeem werkt alleen `skill/` (singular). Dit is een systeem-specifieke configuratie.
+**Reason**: On this system only `skill/` (singular) works. This is system-specific configuration.
 
 ### Debug Tips
 
-Als `skills/` vs `skill/` problemen geeft:
+If `skills/` vs `skill/` causes problems:
 
 ```bash
 # Check OpenCode version
@@ -37,15 +37,15 @@ cat ~/.config/opencode/opencode.json
 ### ❌ NEVER: Hardcode paths
 
 ```python
-# FOUT
+# WRONG
 DOCS_PATH = "/home/user/.ai_docs/opencode/docs"
 
-# GOED
+# CORRECT
 from pathlib import Path
 DOCS_PATH = Path.home() / ".ai_docs" / "opencode" / "docs"
 ```
 
-**Reden**: Werkt niet op andere systemen of met verschillende gebruikers.
+**Reason**: Does not work on other systems or with different users.
 
 ## Cache Validation
 
