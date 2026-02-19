@@ -147,6 +147,11 @@ export const RepoAnalyzerConfigSchema = z.object({
   tmp_dir: z.string().default(""),
 });
 
+// Feature: Skill Creator
+export const SkillCreatorConfigSchema = z.object({
+  enabled: z.boolean().default(true),
+});
+
 // All features
 export const FeaturesConfigSchema = z.object({
   memory: MemoryConfigSchema.default({}),
@@ -157,6 +162,7 @@ export const FeaturesConfigSchema = z.object({
   session: SessionConfigSchema.default({}),
   flowAnalyzer: FlowAnalyzerConfigSchema.default({}),
   repoAnalyzer: RepoAnalyzerConfigSchema.default({}),
+  skillCreator: SkillCreatorConfigSchema.default({}),
 });
 
 // Project metadata
@@ -182,6 +188,7 @@ export type PlaywrightConfig = z.infer<typeof PlaywrightConfigSchema>;
 export type SessionConfig = z.infer<typeof SessionConfigSchema>;
 export type FlowAnalyzerConfig = z.infer<typeof FlowAnalyzerConfigSchema>;
 export type RepoAnalyzerConfig = z.infer<typeof RepoAnalyzerConfigSchema>;
+export type SkillCreatorConfig = z.infer<typeof SkillCreatorConfigSchema>;
 export type FeaturesConfig = z.infer<typeof FeaturesConfigSchema>;
 export type ProjectConfig = z.infer<typeof ProjectConfigSchema>;
 export type OpenCodeConfig = z.infer<typeof OpenCodeConfigSchema>;

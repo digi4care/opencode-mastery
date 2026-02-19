@@ -140,3 +140,9 @@ features:
     default_depth: 1            # Git clone depth (1 = shallow)
     auto_cleanup: true          # Remove cloned repo after analysis
     tmp_dir: ""                 # Override temp directory (empty = use system default)
+
+  # Skill Creator - Create and improve OpenCode skills
+  skillCreator:
+    enabled: true
+    strict_validation: true     # Enforce quality gates
+    allow_dry_run: true        # Allow dry-run without changes

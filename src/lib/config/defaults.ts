@@ -138,5 +138,8 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
       auto_cleanup: true,
       tmp_dir: "",
     },
+    skillCreator: {
+      enabled: true,
+    },
   },
 };

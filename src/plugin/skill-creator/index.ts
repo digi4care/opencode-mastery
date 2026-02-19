@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { z } from 'zod';
 import { tool } from '@opencode-ai/plugin';
+import { isFeatureEnabled } from '../../../lib/config';
 
 const DEFAULT_NEGATIVE_TRIGGERS = [
   'general programming questions',
@@ -1091,6 +1092,10 @@ const optimizeTool = tool({
 });
 
 export const SkillCreatorPlugin = async () => {
+  if (!isFeatureEnabled('skillCreator')) {
+    return { tool: [] };
+  }
+
   return {
     tool: {
       'skill-creator-plan': planTool,

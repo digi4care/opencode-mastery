@@ -142,6 +142,7 @@ PLUGINS=(
     "flow-analyzer"
     "om-session"
     "repo-analyzer"
+    "skill-creator"
 )
 
 for plugin in "${PLUGINS[@]}"; do
