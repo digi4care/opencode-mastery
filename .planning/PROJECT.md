@@ -128,6 +128,12 @@ Elke nieuwe sessie kan de LLM terugvinden wat eerder besproken is, beslissingen 
 - **Backward Compatible:** .memory.md blijft werken
 - **Bron:** Port exact van /tmp/openclaw/src/memory/
 - **OpenCode Native:** Plugin tools/hooks, commands, skills
+- **⚠️ KRITIEK: Shared Config System** - Alle config MOET via `src/lib/config/` gaan:
+  - Geen eigen config in plugin
+  - Schema in `src/lib/config/schema.ts`
+  - Defaults in `src/lib/config/defaults.ts`
+  - Plugin importeert van `../../lib/config`
+  - Config file: `opencode.config.yaml`
 
 ## Key Decisions
 

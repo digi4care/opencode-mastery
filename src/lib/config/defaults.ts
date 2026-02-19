@@ -34,6 +34,44 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
           scope: "project",
         },
       },
+      embeddings: {
+        provider: "auto",
+        model: null,
+        batchSize: 100,
+      },
+      search: {
+        hybrid: {
+          enabled: true,
+          vectorWeight: 0.7,
+          textWeight: 0.3,
+          candidateMultiplier: 4,
+        },
+        minScore: 0.35,
+        maxResults: 10,
+      },
+      chunking: {
+        tokens: 400,
+        overlap: 80,
+      },
+      storage: {
+        vector: {
+          enabled: true,
+        },
+        cache: {
+          enabled: true,
+          maxEntries: 10000,
+        },
+      },
+      intent: {
+        enabled: true,
+        languages: ["en", "nl", "de", "fr", "es"],
+        confidenceThreshold: 0.7,
+      },
+      snapshots: {
+        enabled: true,
+        maxMessages: 15,
+        maxContentLength: 500,
+      },
     },
     docs: {
       enabled: true,
@@ -63,6 +101,30 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
       video: false,
       trace: false,
       default_timeout: 30000,
+    },
+    session: {
+      enabled: true,
+      server: {
+        hostname: "127.0.0.1",
+        port: 4096,
+        auto_detect: true,
+        timeout_ms: 5000,
+      },
+      track: {
+        tool_calls: true,
+        ai_responses: false,
+        subagent_calls: true,
+        file_changes: true,
+      },
+      storage: {
+        max_sessions: 100,
+        retention_days: 30,
+      },
+      ace: {
+        max_subagent_depth: 2,
+        auto_apply_suggestions: false,
+        auto_analyze_on_end: false,
+      },
     },
   },
 };

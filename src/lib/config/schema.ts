@@ -25,6 +25,44 @@ export const MemoryConfigSchema = z.object({
       scope: z.enum(["project", "global"]).default("project"),
     }).default({}),
   }).default({}),
+  embeddings: z.object({
+    provider: z.enum(["auto", "local", "openai", "gemini", "voyage"]).default("auto"),
+    model: z.string().nullable().default(null),
+    batchSize: z.number().int().min(1).max(1000).default(100),
+  }).default({}),
+  search: z.object({
+    hybrid: z.object({
+      enabled: z.boolean().default(true),
+      vectorWeight: z.number().min(0).max(1).default(0.7),
+      textWeight: z.number().min(0).max(1).default(0.3),
+      candidateMultiplier: z.number().int().min(1).default(4),
+    }).default({}),
+    minScore: z.number().min(0).max(1).default(0.35),
+    maxResults: z.number().int().min(1).max(100).default(10),
+  }).default({}),
+  chunking: z.object({
+    tokens: z.number().int().min(50).max(2000).default(400),
+    overlap: z.number().int().min(0).max(500).default(80),
+  }).default({}),
+  storage: z.object({
+    vector: z.object({
+      enabled: z.boolean().default(true),
+    }).default({}),
+    cache: z.object({
+      enabled: z.boolean().default(true),
+      maxEntries: z.number().int().min(100).max(100000).default(10000),
+    }).default({}),
+  }).default({}),
+  intent: z.object({
+    enabled: z.boolean().default(true),
+    languages: z.array(z.enum(["en", "nl", "de", "fr", "es"])).default(["en", "nl", "de", "fr", "es"]),
+    confidenceThreshold: z.number().min(0).max(1).default(0.7),
+  }).default({}),
+  snapshots: z.object({
+    enabled: z.boolean().default(true),
+    maxMessages: z.number().int().min(1).max(100).default(15),
+    maxContentLength: z.number().int().min(100).max(10000).default(500),
+  }).default({}),
 });
 
 // Feature: Documentation
@@ -64,6 +102,35 @@ export const PlaywrightConfigSchema = z.object({
   default_timeout: z.number().default(30000),
 });
 
+// Feature: Session Manager
+export const SessionConfigSchema = z.object({
+  enabled: z.boolean().default(true),
+  server: z.object({
+    hostname: z.string().default("127.0.0.1"),
+    port: z.number().default(4096),
+    auto_detect: z.boolean().default(true),
+    timeout_ms: z.number().default(5000),
+  }).default({}),
+  track: z.object({
+    tool_calls: z.boolean().default(true),
+    ai_responses: z.boolean().default(false),
+    subagent_calls: z.boolean().default(true),
+    file_changes: z.boolean().default(true),
+  }).default({}),
+  storage: z.object({
+    max_sessions: z.number().default(100),
+    retention_days: z.number().default(30),
+  }).default({}),
+  auto_analyze: z.object({
+    on_session_end: z.boolean().default(false),
+    interval_minutes: z.number().default(0),
+  }).default({}),
+  ace: z.object({
+    max_subagent_depth: z.number().default(2),
+    auto_apply_suggestions: z.boolean().default(false),
+  }).default({}),
+});
+
 // All features
 export const FeaturesConfigSchema = z.object({
   memory: MemoryConfigSchema.default({}),
@@ -71,6 +138,7 @@ export const FeaturesConfigSchema = z.object({
   tdd: TDDConfigSchema.default({}),
   debugging: DebugConfigSchema.default({}),
   playwright: PlaywrightConfigSchema.default({}),
+  session: SessionConfigSchema.default({}),
 });
 
 // Project metadata
@@ -93,6 +161,7 @@ export type DocsConfig = z.infer<typeof DocsConfigSchema>;
 export type TDDConfig = z.infer<typeof TDDConfigSchema>;
 export type DebugConfig = z.infer<typeof DebugConfigSchema>;
 export type PlaywrightConfig = z.infer<typeof PlaywrightConfigSchema>;
+export type SessionConfig = z.infer<typeof SessionConfigSchema>;
 export type FeaturesConfig = z.infer<typeof FeaturesConfigSchema>;
 export type ProjectConfig = z.infer<typeof ProjectConfigSchema>;
 export type OpenCodeConfig = z.infer<typeof OpenCodeConfigSchema>;

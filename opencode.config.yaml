@@ -32,6 +32,47 @@ features:
         enabled: false
         scope: project
 
+    # Embeddings - Vector embedding configuration
+    embeddings:
+      provider: auto        # auto | local | openai | gemini | voyage
+      model: null           # Specific model override (null = use default for provider)
+      batchSize: 100        # Embeddings per batch
+
+    # Search - Memory retrieval configuration
+    search:
+      hybrid:
+        enabled: true       # Combine vector + text search
+        vectorWeight: 0.7   # Weight for vector similarity (0-1)
+        textWeight: 0.3     # Weight for text matching (0-1)
+        candidateMultiplier: 4  # Candidates before reranking
+      minScore: 0.35        # Minimum relevance score (0-1)
+      maxResults: 10        # Maximum results returned
+
+    # Chunking - Content splitting configuration
+    chunking:
+      tokens: 400           # Target tokens per chunk
+      overlap: 80           # Token overlap between chunks
+
+    # Storage - Persistence configuration
+    storage:
+      vector:
+        enabled: true       # Enable vector storage
+      cache:
+        enabled: true       # Enable result caching
+        maxEntries: 10000   # Maximum cache entries
+
+    # Intent - Intent detection configuration
+    intent:
+      enabled: true         # Enable intent classification
+      languages: [en, nl, de, fr, es]  # Supported languages
+      confidenceThreshold: 0.7  # Minimum confidence to accept
+
+    # Snapshots - Conversation context configuration
+    snapshots:
+      enabled: true         # Enable context snapshots
+      maxMessages: 15       # Messages per snapshot
+      maxContentLength: 500 # Characters per message
+
   # Docs - OpenCode documentation access
   docs:
     enabled: true
@@ -64,3 +105,24 @@ features:
     video: false             # Record video
     trace: false             # Record trace
     default_timeout: 30000   # Default timeout in ms
+
+  # Session - OpenCode session management and ACE analysis
+  session:
+    enabled: true
+    server:
+      hostname: "127.0.0.1"
+      port: 4096             # OpenCode server port (auto-detected if auto_detect: true)
+      auto_detect: true      # Auto-detect running OpenCode server
+      timeout_ms: 5000       # Connection timeout
+    track:
+      tool_calls: true       # Track tool invocations
+      ai_responses: false    # Track AI responses (can be large)
+      subagent_calls: true   # Track subagent invocations
+      file_changes: true     # Track file modifications
+    storage:
+      max_sessions: 100      # Maximum sessions to keep
+      retention_days: 30     # Days before cleanup
+    ace:
+      max_subagent_depth: 2  # Max nesting for analysis subagents
+      auto_apply_suggestions: false  # Auto-apply ACE suggestions
+      auto_analyze_on_end: false     # Auto-analyze when session ends

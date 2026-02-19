@@ -1,68 +1,100 @@
 ---
-description: Analyze sessions and generate prompt improvement suggestions
+description: Analyze sessions and generate prompt improvement suggestions using ACE framework with clean subagent context
 agent: general
 ---
 
-# ACE Reflect - Session Analysis
+# ACE Reflect - Session Analysis Orchestrator
 
-Analyze sessions and generate prompt improvement suggestions using the ACE (Agentic Context Engineering) framework.
+Analyzes sessions and generates prompt improvement suggestions using the ACE (Agentic Context Engineering) framework.
+
+**IMPORTANT**: This command acts as an ORCHESTRATOR. It starts a subagent with clean context to do the actual analysis. This ensures the analysis is not affected by current context window usage.
 
 ## Usage
 
 ```
 /ace-reflect              Analyze current session
 /ace-reflect --help       Show this help
-/ace-reflect skill:naam   Focus on specific skill
-/ace-reflect agent:naam   Focus on specific agent
-/ace-reflect command:naam Focus on specific command
-/ace-reflect all          Full analysis of all sessions
+/ace-reflect session:id   Analyze specific session by ID
+/ace-reflect last:N       Analyze last N sessions
+/ace-reflect all          Full analysis of all sessions (limited to last 10)
 ```
 
-## What it does
+## How It Works
 
-1. Loads ACE framework context (rubric, patterns)
-2. Analyzes session(s) for friction points and successes
-3. Scores on 5 dimensions (1-5 each)
-4. Generates concrete prompt improvement suggestions
+1. **Orchestrator** (this command) - Collects session data via om-session tools
+2. **ACE Analyzer Subagent** - Gets clean context, performs analysis
+3. **Results** - Returned to orchestrator, presented to user
+
+This architecture ensures the ACE analyzer has maximum context available for analysis.
 
 ## Instructions
 
 **FIRST**: Check if `$ARGUMENTS` contains `--help` or `-h`.
 
-- If YES: Show ONLY the Usage section above and STOP. Do not run analysis.
+- If YES: Show ONLY the Usage section above and STOP.
 - If NO: Continue with analysis below.
 
-1. Load ACE context:
-   - Read references/ace-framework.mdx from opencode-mastery skill
-   - Read references/ace-rubric.mdx for evaluation criteria
-   - Read references/ace-patterns.mdx for patterns
+### Step 1: Collect Session Data
 
-2. Analyze the current or recent session(s):
-   - What went well?
-   - What friction points occurred?
-   - Were there corrections, retries, or misunderstandings?
+Use the om-session tools to get session data:
 
-3. Apply the rubric:
-   - Completeness (1-5)
-   - Accuracy (1-5)
-   - Efficiency (1-5)
-   - Clarity (1-5)
-   - Relevance (1-5)
+```
+1. Use sessionList tool to get recent sessions
+2. Use sessionRead tool to get messages from target session(s)
+3. Prepare a summary of the session data for the subagent
+```
 
-4. Generate suggestions:
-   - For each identified issue, propose a concrete prompt improvement
-   - Format as: "In [target file], change/add: [specific suggestion]"
-   - Include the reasoning: "Because: [why this helps]"
+### Step 2: Start ACE Analyzer Subagent
+
+Use the Task tool to start an ACE Analyzer subagent with clean context:
+
+```javascript
+task(
+  subagent_type: "general",
+  description: "ACE Session Analysis",
+  prompt: `
+You are an ACE (Agentic Context Engineering) analyzer with fresh context.
+
+## Your Task
+Analyze the following session data and generate improvement suggestions.
+
+## Session Data
+[Paste session summary from Step 1]
+
+## ACE Framework
+Apply the ACE framework:
+1. Completeness (1-5) - Was the task fully completed?
+2. Accuracy (1-5) - Were responses correct?
+3. Efficiency (1-5) - Was it done efficiently?
+4. Clarity (1-5) - Was communication clear?
+5. Relevance (1-5) - Was it focused on the goal?
+
+## Output Format
+Return a structured analysis with:
+- Session Summary
+- Scores (table)
+- Findings (list)
+- Suggestions (specific, actionable)
+- Decision (action recommended)
+
+Focus on PATTERNS not individual mistakes.
+Suggest SKILL/COMMAND improvements, not code fixes.
+`
+)
+```
+
+### Step 3: Present Results
+
+After the subagent returns, present the results to the user in a clear format.
 
 ## Scope Options
 
 Use `$ARGUMENTS` to specify scope:
 
-- No args: Analyze current session
-- `skill:naam`: Focus on specific skill
-- `agent:naam`: Focus on specific agent
-- `command:naam`: Focus on specific command
-- `all`: Full analysis
+- No args: Analyze current/most recent session
+- `session:id`: Analyze specific session
+- `last:N`: Analyze last N sessions
+- `all`: Full analysis (limited to 10 most recent)
 
 ## Output Format
 
@@ -70,7 +102,6 @@ Use `$ARGUMENTS` to specify scope:
 ## ACE Reflection Report
 
 ### Session Summary
-
 [Brief summary of what was attempted]
 
 ### Scores
@@ -85,23 +116,31 @@ Use `$ARGUMENTS` to specify scope:
 | **Total**    | **XX/25** |       |
 
 ### Findings
-
-1. [Finding 1]
+1. [Finding 1 - Pattern, not individual mistake]
 2. [Finding 2]
 
 ### Suggestions
-
-1. **Target**: [file location]
+1. **Target**: [skill/command file]
    **Change**: [specific suggestion]
    **Reason**: [why this helps]
 
-2. ...
-
 ### Decision
-
 - [ ] No changes needed (score ≥ 20)
 - [ ] Suggestions for review (score 15-19)
 - [ ] Changes recommended (score < 15)
+```
+
+## Configuration
+
+Session analysis behavior can be configured in `opencode.config.yaml`:
+
+```yaml
+features:
+  session:
+    enabled: true
+    ace:
+      max_subagent_depth: 2
+      auto_apply_suggestions: false
 ```
 
 ---
