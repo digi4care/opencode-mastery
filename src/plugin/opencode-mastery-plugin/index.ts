@@ -31,7 +31,14 @@ export const Plugin = async (_context: PluginContext) => {
   // Register agents from config
   if (masteryConfig.agents) {
     for (const [agentName, agentConfig] of Object.entries(masteryConfig.agents)) {
-      (configUpdates.agents as any)[agentName] = agentConfig;
+      // If no model specified, let OpenCode use its default
+      const config = agentConfig as any;
+      if (config.model) {
+        (configUpdates.agents as any)[agentName] = config;
+      } else {
+        // No model defined - leave empty so OpenCode uses default
+        (configUpdates.agents as any)[agentName] = {};
+      }
     }
   }
 
