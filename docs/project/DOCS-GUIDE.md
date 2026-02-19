@@ -121,7 +121,6 @@ Ask AI to use the documented feature. If it doesn't work, check:
 | ----------------------- | ------------- | -------------- | ---------- |
 | `opencode.config.yaml`  | Created       | Protected      | ✅ Kept    |
 | `opencode-mastery.json` | Never created | Protected      | ✅ Kept    |
-| `oh-my-opencode.json`   | Never created | Protected      | ✅ Kept    |
 
 ### How to Update Config
 
