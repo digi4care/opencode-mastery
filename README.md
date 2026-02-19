@@ -20,11 +20,34 @@ cd opencode-mastery
 
 ## What's Included
 
-| Skill                | Description                                            |
-| -------------------- | ------------------------------------------------------ |
-| **opencode-mastery** | Complete OpenCode knowledge with fuzzy search & memory |
-| **meta-agent**       | Generate commands, skills, and agents                  |
-| **skill-creator**    | Create, audit, and optimize OpenCode skills            |
+### Skills (17)
+
+| Category     | Skills                                                                                             |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| **OpenCode** | `opencode-mastery`, `meta-agent`, `skill-creator`, `opencode-memory`                               |
+| **Frontend** | `tailwind`, `shadcn-svelte`, `svelte`, `svelte-cli`, `svelte-kit`, `svelte-mcp`, `frontend-design` |
+| **Backend**  | `postgresql`, `database-architect`                                                                 |
+| **Analysis** | `flow-analysis`, `systematic-debugging`, `test-driven-development`                                 |
+| **Tools**    | `playwright-cli`, `repo-analysis`                                                                  |
+
+### Plugins (4)
+
+| Plugin             | Purpose                    |
+| ------------------ | -------------------------- |
+| `opencode-mastery` | Docs & memory tools        |
+| `tdd-enforcer`     | TDD cycle validation       |
+| `debug-assistant`  | Debug session tools        |
+| `flow-analyzer`    | Flow completeness analysis |
+
+### Commands
+
+| Command             | Agent             | Purpose                 |
+| ------------------- | ----------------- | ----------------------- |
+| `/flow-analyzer`    | flow-analyzer     | Generic flow analysis   |
+| `/gsd-analyze-flow` | gsd-flow-analyzer | GSD phase flow analysis |
+| `/skill-creator-*`  | skill-creator     | Skill management        |
+| `/ace-reflect`      | ace-analyzer      | Session analysis        |
+| `/memory`           | -                 | Memory commands         |
 
 ## Features
 
@@ -33,6 +56,8 @@ cd opencode-mastery
 - **Session memory** - Remembers conversation context
 - **GitHub fallback** - Searches when docs insufficient
 - **Source citations** - Always references sources
+- **Custom agents** - Flow analyzer, GSD agents via opencode-mastery.json
+- **Plugin system** - Extensible with TypeScript tools
 
 ## Commands
 
@@ -67,10 +92,13 @@ Or manually:
 | ------------- | ---------------------------------------------------------------- |
 | Conventions   | [docs/project/conventions.md](docs/project/conventions.md)       |
 | Anti-patterns | [docs/project/anti-patterns.md](docs/project/anti-patterns.md)   |
+| Docs Guide    | [docs/project/DOCS-GUIDE.md](docs/project/DOCS-GUIDE.md)         |
 | Plugins       | [docs/opencode/plugins.md](docs/opencode/plugins.md)             |
-| Skill Creator | [docs/opencode/skill-creator.md](docs/opencode/skill-creator.md) |
+| Agents        | [docs/opencode/AGENTS.md](docs/opencode/AGENTS.md)               |
 | Tools         | [docs/opencode/tools.md](docs/opencode/tools.md)                 |
+| Skill Creator | [docs/opencode/skill-creator.md](docs/opencode/skill-creator.md) |
 | ACE Framework | [docs/ace/framework.md](docs/ace/framework.md)                   |
+| Config System | [docs/project/config-system.md](docs/project/config-system.md)   |
 
 ## Links
 

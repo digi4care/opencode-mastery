@@ -139,6 +139,14 @@ export const FlowAnalyzerConfigSchema = z.object({
   }).default({}),
 });
 
+// Feature: Repo Analyzer
+export const RepoAnalyzerConfigSchema = z.object({
+  enabled: z.boolean().default(true),
+  default_depth: z.number().int().min(1).max(100).default(1),
+  auto_cleanup: z.boolean().default(true),
+  tmp_dir: z.string().default(""),
+});
+
 // All features
 export const FeaturesConfigSchema = z.object({
   memory: MemoryConfigSchema.default({}),
@@ -148,6 +156,7 @@ export const FeaturesConfigSchema = z.object({
   playwright: PlaywrightConfigSchema.default({}),
   session: SessionConfigSchema.default({}),
   flowAnalyzer: FlowAnalyzerConfigSchema.default({}),
+  repoAnalyzer: RepoAnalyzerConfigSchema.default({}),
 });
 
 // Project metadata
@@ -172,6 +181,7 @@ export type DebugConfig = z.infer<typeof DebugConfigSchema>;
 export type PlaywrightConfig = z.infer<typeof PlaywrightConfigSchema>;
 export type SessionConfig = z.infer<typeof SessionConfigSchema>;
 export type FlowAnalyzerConfig = z.infer<typeof FlowAnalyzerConfigSchema>;
+export type RepoAnalyzerConfig = z.infer<typeof RepoAnalyzerConfigSchema>;
 export type FeaturesConfig = z.infer<typeof FeaturesConfigSchema>;
 export type ProjectConfig = z.infer<typeof ProjectConfigSchema>;
 export type OpenCodeConfig = z.infer<typeof OpenCodeConfigSchema>;

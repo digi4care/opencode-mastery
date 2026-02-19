@@ -132,5 +132,11 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
         generic: true,
       },
     },
+    repoAnalyzer: {
+      enabled: true,
+      default_depth: 1,
+      auto_cleanup: true,
+      tmp_dir: "",
+    },
   },
 };
