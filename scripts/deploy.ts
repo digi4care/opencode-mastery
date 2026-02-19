@@ -13,15 +13,16 @@ import { existsSync, readdirSync } from "fs";
 import { join } from "path";
 
 const PLUGIN_DIR = join(process.env.HOME || "", ".config/opencode/plugin");
+const SRC_DIR = join(import.meta.dir, "..", "src/plugin");
 
 const PLUGINS = [
-  "opencode-mastery",
   "tdd-enforcer",
-  "debug-assistant",
+  "debug-assistant", 
   "flow-analyzer",
   "om-session",
   "repo-analyzer",
   "skill-creator",
+  // "opencode-mastery", // TODO: fix getMemoryConfig import
 ];
 
 interface Args {
@@ -57,7 +58,8 @@ Description:
 }
 
 async function buildPlugin(pluginName: string, verbose: boolean): Promise<boolean> {
-  const srcPath = join(PLUGIN_DIR, pluginName, "index.ts");
+  const srcPath = join(SRC_DIR, pluginName, "index.ts");
+  const outDir = join(PLUGIN_DIR, pluginName);
   
   if (!existsSync(srcPath)) {
     if (verbose) console.log(`  ⚠️  No index.ts found for ${pluginName}`);
@@ -65,18 +67,7 @@ async function buildPlugin(pluginName: string, verbose: boolean): Promise<boolea
   }
 
   try {
-    const result = await $`bun build ${srcPath}`
-      .quiet()
-      .env({ ...process.env, NODE_ENV: "production" });
-
-    if (result.exitCode !== 0) {
-      console.log(`  ❌ Failed to build ${pluginName}`);
-      return false;
-    }
-
-    // Run build with proper options
-    await $`bun build ${srcPath} --outdir=${join(PLUGIN_DIR, pluginName)} --target=bun --sourcemap=external --external=@opencode-ai/plugin`.quiet();
-    
+    await $`bun build ${srcPath} --outdir=${outDir} --target=bun --sourcemap=external --external=@opencode-ai/plugin`.quiet();
     console.log(`  ✓ ${pluginName}`);
     return true;
   } catch (error) {
@@ -145,9 +136,9 @@ async function main(): Promise<void> {
     process.exit(0);
   }
 
-  if (!existsSync(PLUGIN_DIR)) {
-    console.error(`❌ Plugin directory not found: ${PLUGIN_DIR}`);
-    console.error("   Run install.sh first to install plugins.");
+  if (!existsSync(SRC_DIR)) {
+    console.error(`❌ Source directory not found: ${SRC_DIR}`);
+    console.error("   Run this script from the opencode-mastery project root.");
     process.exit(1);
   }
 

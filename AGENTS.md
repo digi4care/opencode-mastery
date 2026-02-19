@@ -148,26 +148,27 @@ const result = resolveModelWithSource({
 ## Installatie & Build Commands
 
 ```bash
-# Installatie (download + copy + compile)
+# Stap 1: Installatie (download + copy)
 ./install.sh                 # Van GitHub
 ./install.sh -y              # Zonder bevestiging
 
-# Handmatig compilen (na lokale wijzigingen)
+# Stap 2: Plugins compilen (in project root)
+bun install                  # Dependencies installeren
 bun run deploy               # TypeScript plugins compilen
 
 # Verwijderen
 ./uninstall.sh               # Alles verwijderen
 ./uninstall.sh --silent      # Zonder output
-
-# TypeScript dependencies
-bun install                  # Dependencies installeren
 ```
 
 **Workflow:**
 
-1. `./install.sh` downloadt van GitHub → kopieert files → draait automatisch `bun run deploy`
-2. `bun run deploy` compileert alleen TypeScript plugins (cross-platform)
-3. `./uninstall.sh` verwijdert alles uit `~/.config/opencode/`
+1. `./install.sh` downloadt van GitHub → kopieert files naar `~/.config/opencode/`
+2. `bun install` installeert dependencies (nodig voor build)
+3. `bun run deploy` compileert TypeScript plugins (cross-platform, werkt op Windows/Mac/Linux)
+4. `./uninstall.sh` verwijdert alles uit `~/.config/opencode/`
+
+**Let op:** `bun run deploy` moet in de **project root** gedraaid worden (waar `src/` en `node_modules/` bestaan).
 
 ## Package Managers
 
