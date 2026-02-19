@@ -18,7 +18,7 @@ echo "🚀 OpenCode Mastery Skills Installer"
 echo ""
 echo "This package includes:"
 echo ""
-echo "  📚 16 Skills:"
+echo "  📚 17 Skills:"
 echo "  • opencode-mastery      - Complete OpenCode knowledge base"
 echo "  • meta-agent            - Generate commands, skills, and agents"
 echo "  • skill-creator         - Create, audit, and optimize skills"
@@ -29,10 +29,14 @@ echo "  • frontend-design       - UI/UX for developers"
 echo "  • tailwind, shadcn-svelte, svelte, svelte-cli, svelte-kit, svelte-mcp"
 echo "  • database-architect, postgresql"
 echo ""
-echo "  🔌 3 Plugins (TypeScript tools):"
+echo "  🔌 4 Plugins (TypeScript tools):"
 echo "  • opencode-mastery      - Docs + Memory tools"
 echo "  • tdd-enforcer          - TDD enforcement tools"
 echo "  • debug-assistant       - Debugging tools"
+echo "  • flow-analyzer         - Flow analysis tools"
+echo ""
+echo "  🤖 1 Agent:"
+echo "  • ace-analyzer          - Session analysis with ACE framework"
 echo ""
 echo "  ⚙️  Shared Config:"
 echo "  • opencode.config.yaml  - Single source of truth"
@@ -43,16 +47,20 @@ echo ""
 
 # Directories
 INSTALL_DIR="$HOME/.ai_docs/opencode"
-COMMANDS_DIR="$HOME/.config/opencode/commands"
+COMMANDS_DIR_PRIMARY="$HOME/.config/opencode/command"
+COMMANDS_DIR_COMPAT="$HOME/.config/opencode/commands"
 PLUGIN_DIR="$HOME/.config/opencode/plugin"
 SKILLS_DIR="$HOME/.config/opencode/skill"
 LIB_DIR="$HOME/.config/opencode/lib"
+AGENTS_DIR="$HOME/.config/opencode/agents"
 
 echo "Installing to:"
 echo "  Skills:   $SKILLS_DIR"
 echo "  Plugins: $PLUGIN_DIR"
 echo "  Lib:      $LIB_DIR"
-echo "  Commands: $COMMANDS_DIR"
+echo "  Agents:   $AGENTS_DIR"
+echo "  Commands (primary): $COMMANDS_DIR_PRIMARY"
+echo "  Commands (compat):  $COMMANDS_DIR_COMPAT"
 echo "  Docs:     $INSTALL_DIR/docs"
 echo ""
 
@@ -73,9 +81,11 @@ echo "📥 Creating directories..."
 mkdir -p "$INSTALL_DIR/docs"
 mkdir -p "$INSTALL_DIR/memory"
 mkdir -p "$INSTALL_DIR/cache/github"
-mkdir -p "$COMMANDS_DIR"
+mkdir -p "$COMMANDS_DIR_PRIMARY"
+mkdir -p "$COMMANDS_DIR_COMPAT"
 mkdir -p "$PLUGIN_DIR"
 mkdir -p "$LIB_DIR/config"
+mkdir -p "$AGENTS_DIR"
 
 echo "📥 Downloading latest version from GitHub..."
 TEMP_DIR=$(mktemp -d)
@@ -134,6 +144,19 @@ for plugin in "${PLUGINS[@]}"; do
 done
 
 echo ""
+echo "📋 Copying agents..."
+
+# All agents
+AGENTS=(
+    "ace-analyzer"
+)
+
+for agent in "${AGENTS[@]}"; do
+    echo "  Copying $agent..."
+    cp "$TEMP_DIR/src/agents/$agent.md" "$AGENTS_DIR/" 2>/dev/null || true
+done
+
+echo ""
 echo "📋 Copying shared config library..."
 cp -r "$TEMP_DIR/src/lib/config/"* "$LIB_DIR/config/" 2>/dev/null || true
 echo "✓ Config library copied to: $LIB_DIR/config"
@@ -141,8 +164,10 @@ echo "✓ Config library copied to: $LIB_DIR/config"
 echo ""
 echo "📋 Copying commands..."
 if [ -d "$TEMP_DIR/src/commands" ]; then
-    cp -r "$TEMP_DIR/src/commands/"* "$COMMANDS_DIR/" 2>/dev/null || true
-    echo "✓ Commands copied to: $COMMANDS_DIR"
+    cp -r "$TEMP_DIR/src/commands/"* "$COMMANDS_DIR_PRIMARY/" 2>/dev/null || true
+    cp -r "$TEMP_DIR/src/commands/"* "$COMMANDS_DIR_COMPAT/" 2>/dev/null || true
+    echo "✓ Commands copied to: $COMMANDS_DIR_PRIMARY"
+    echo "✓ Commands copied to: $COMMANDS_DIR_COMPAT"
 else
     echo "ℹ️  No commands to install"
 fi
@@ -165,8 +190,9 @@ echo ""
 echo "✅ Installation complete!"
 echo ""
 echo "📁 Installed:"
-echo "   • 16 skills in $SKILLS_DIR"
-echo "   • 3 plugins in $PLUGIN_DIR"
+echo "   • 17 skills in $SKILLS_DIR"
+echo "   • 4 plugins in $PLUGIN_DIR"
+echo "   • 1 agent in $AGENTS_DIR"
 echo "   • Shared config in $LIB_DIR/config"
 echo ""
 echo "🚀 Quick Start:"

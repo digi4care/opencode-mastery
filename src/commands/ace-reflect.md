@@ -46,42 +46,27 @@ Use the om-session tools to get session data:
 
 ### Step 2: Start ACE Analyzer Subagent
 
-Use the Task tool to start an ACE Analyzer subagent with clean context:
+Use the Task tool to start the ACE Analyzer subagent with clean context:
 
 ```javascript
 task(
-  subagent_type: "general",
+  subagent_type: "ace-analyzer",
   description: "ACE Session Analysis",
   prompt: `
-You are an ACE (Agentic Context Engineering) analyzer with fresh context.
-
-## Your Task
-Analyze the following session data and generate improvement suggestions.
-
 ## Session Data
-[Paste session summary from Step 1]
+[Paste session summary from Step 1 - the messages, tool calls, and outcomes]
 
-## ACE Framework
-Apply the ACE framework:
-1. Completeness (1-5) - Was the task fully completed?
-2. Accuracy (1-5) - Were responses correct?
-3. Efficiency (1-5) - Was it done efficiently?
-4. Clarity (1-5) - Was communication clear?
-5. Relevance (1-5) - Was it focused on the goal?
+## Context
+- Session ID: [if available]
+- Duration: [if available]
+- Tools used: [list from session data]
 
-## Output Format
-Return a structured analysis with:
-- Session Summary
-- Scores (table)
-- Findings (list)
-- Suggestions (specific, actionable)
-- Decision (action recommended)
-
-Focus on PATTERNS not individual mistakes.
-Suggest SKILL/COMMAND improvements, not code fixes.
+Analyze this session and return the ACE Reflection Report.
 `
 )
 ```
+
+**Note**: The `ace-analyzer` agent is defined in `~/.config/opencode/agents/ace-analyzer.md` and contains the full ACE framework instructions.
 
 ### Step 3: Present Results
 
@@ -102,6 +87,7 @@ Use `$ARGUMENTS` to specify scope:
 ## ACE Reflection Report
 
 ### Session Summary
+
 [Brief summary of what was attempted]
 
 ### Scores
@@ -116,15 +102,18 @@ Use `$ARGUMENTS` to specify scope:
 | **Total**    | **XX/25** |       |
 
 ### Findings
+
 1. [Finding 1 - Pattern, not individual mistake]
 2. [Finding 2]
 
 ### Suggestions
+
 1. **Target**: [skill/command file]
    **Change**: [specific suggestion]
    **Reason**: [why this helps]
 
 ### Decision
+
 - [ ] No changes needed (score ≥ 20)
 - [ ] Suggestions for review (score 15-19)
 - [ ] Changes recommended (score < 15)

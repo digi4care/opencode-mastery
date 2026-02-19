@@ -10,9 +10,23 @@ echo ""
 # All directories to remove
 SKILLS_DIR="$HOME/.config/opencode/skill"
 PLUGIN_DIR="$HOME/.config/opencode/plugin"
-COMMANDS_DIR="$HOME/.config/opencode/commands"
+COMMANDS_DIR_PRIMARY="$HOME/.config/opencode/command"
+COMMANDS_DIR_COMPAT="$HOME/.config/opencode/commands"
 LIB_DIR="$HOME/.config/opencode/lib"
 SCRIPTS_DIR="$HOME/.ai_docs/opencode/scripts"
+
+# Commands installed by this package
+COMMAND_FILES=(
+    "ace-reflect.md"
+    "memory.md"
+    "skill-creator-audit.md"
+    "skill-creator-create.md"
+    "skill-creator-optimize.md"
+    "skill-creator-plan.md"
+    "flow-analyze.md"
+    "flow-analyzer.md"
+    "gsd-analyze-flow.md"
+)
 
 # All skills to remove
 SKILLS=(
@@ -55,8 +69,12 @@ for plugin in "${PLUGINS[@]}"; do
 done
 
 [ -d "$LIB_DIR/config" ] && FOUND=true
-[ -d "$COMMANDS_DIR" ] && FOUND=true
 [ -d "$SCRIPTS_DIR" ] && FOUND=true
+
+for command in "${COMMAND_FILES[@]}"; do
+    [ -f "$COMMANDS_DIR_PRIMARY/$command" ] && FOUND=true
+    [ -f "$COMMANDS_DIR_COMPAT/$command" ] && FOUND=true
+done
 
 if [ "$FOUND" = false ]; then
     echo "❌ No OpenCode installation found."
@@ -65,7 +83,8 @@ if [ "$FOUND" = false ]; then
     echo "  - $SKILLS_DIR/*"
     echo "  - $PLUGIN_DIR/*"
     echo "  - $LIB_DIR/config"
-    echo "  - $COMMANDS_DIR"
+    echo "  - $COMMANDS_DIR_PRIMARY/*"
+    echo "  - $COMMANDS_DIR_COMPAT/*"
     echo "  - $SCRIPTS_DIR"
     exit 1
 fi
@@ -76,7 +95,8 @@ echo "This will remove:"
 echo "  - $SKILLS_DIR/ (${#SKILLS[@]} skills)"
 echo "  - $PLUGIN_DIR/ (${#PLUGINS[@]} plugins)"
 echo "  - $LIB_DIR/config (shared config library)"
-echo "  - $COMMANDS_DIR/"
+echo "  - command files in $COMMANDS_DIR_PRIMARY/"
+echo "  - command files in $COMMANDS_DIR_COMPAT/"
 echo "  - $SCRIPTS_DIR/"
 echo ""
 echo "These will NOT be removed (your data):"
@@ -124,10 +144,17 @@ rmdir "$LIB_DIR" 2>/dev/null || true
 
 echo ""
 echo "Removing commands..."
-if [ -d "$COMMANDS_DIR" ]; then
-    rm -rf "$COMMANDS_DIR"
-    echo "  Removed: $COMMANDS_DIR"
-fi
+for command in "${COMMAND_FILES[@]}"; do
+    if [ -f "$COMMANDS_DIR_PRIMARY/$command" ]; then
+        rm -f "$COMMANDS_DIR_PRIMARY/$command"
+        echo "  Removed: $COMMANDS_DIR_PRIMARY/$command"
+    fi
+
+    if [ -f "$COMMANDS_DIR_COMPAT/$command" ]; then
+        rm -f "$COMMANDS_DIR_COMPAT/$command"
+        echo "  Removed: $COMMANDS_DIR_COMPAT/$command"
+    fi
+done
 
 echo ""
 echo "Removing scripts..."
