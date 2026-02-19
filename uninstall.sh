@@ -55,6 +55,7 @@ SKILLS=(
     "svelte-mcp"
     "database-architect"
     "postgresql"
+    "repo-analysis"
 )
 
 # All plugins to remove
@@ -63,7 +64,8 @@ PLUGINS=(
     "tdd-enforcer"
     "debug-assistant"
     "flow-analyzer"
-    "opencode-mastery-plugin"
+    "om-session"
+    "repo-analyzer"
 )
 
 # Check if any files exist
