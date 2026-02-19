@@ -45,3 +45,7 @@ Thumbs.db
 # Temporary files
 .tmp/
 .planning/
+
+# Node/TypeScript
+node_modules/
+bun.lock
