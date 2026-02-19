@@ -49,23 +49,37 @@ If `session-list` and `session-read` tools are available:
 If om-session tools are not registered, use OpenCode CLI:
 
 ```bash
-opencode session list --limit 10
-opencode session read <session-id>
+# List recent sessions (use -n, not --limit)
+opencode session list -n 10 --format json
+
+# NOTE: opencode session read does NOT exist
+# Session data is stored in SQLite database at:
+# ~/.local/share/opencode/opencode.db
 ```
 
-Parse the CLI output to extract session data for analysis.
+If you cannot read session data, analyze the current conversation context directly instead of spawning a subagent.
 
-### Step 2: Start ACE Analyzer Subagent
+### Step 2: Analyze Session Data
 
-Use the task tool to start the ACE Analyzer subagent with clean context:
+**Option A: Subagent (if task tool available)**
+
+Use the task tool to start an ACE Analyzer subagent with clean context:
 
 ```
 task(
   subagent_type: "general",
   description: "ACE Session Analysis",
-  prompt: "You are an ACE (Agentic Context Engineering) analyzer..."
+  prompt: "You are an ACE analyzer. Analyze this session data: [summary]"
 )
 ```
+
+**Option B: Direct analysis (no subagent available)**
+
+If the task tool is not available, analyze the current conversation context directly:
+
+1. Review the messages in this session
+2. Identify patterns, not individual mistakes
+3. Generate suggestions following the Output Format below
 
 ### Step 3: Present Results
 
