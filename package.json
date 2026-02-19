@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/digi4care/opencode-mastery/issues"
   },
-  "homepage": "https://github.com/digi4care/opencode-mastery#readme"
+  "homepage": "https://github.com/digi4care/opencode-mastery#readme",
+  "dependencies": {
+    "gpt-tokenizer": "^3.4.0"
+  }
 }
