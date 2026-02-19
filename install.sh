@@ -179,9 +179,18 @@ if [ -f "$TEMP_DIR/opencode.config.yaml" ]; then
         cp "$TEMP_DIR/opencode.config.yaml" "$HOME/.config/opencode/"
         echo "✓ Default config copied to: $HOME/.config/opencode/opencode.config.yaml"
     else
-        echo "ℹ️  Config already exists, skipping (preserving user settings)"
+        echo "ℹ️  opencode.config.yaml already exists, skipping (preserving user settings)"
     fi
 fi
+
+# Protect user JSON config files - never overwrite
+echo "📋 Protecting user config files..."
+USER_JSON_CONFIGS=("opencode.json" "opencode-mastery.json" "oh-my-opencode.json")
+for config in "${USER_JSON_CONFIGS[@]}"; do
+    if [ -f "$HOME/.config/opencode/$config" ]; then
+        echo "   ✓ $config preserved (user config)"
+    fi
+done
 
 rm -rf "$TEMP_DIR"
 
