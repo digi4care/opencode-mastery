@@ -4,7 +4,7 @@
  */
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { visit } from "unist-util-visit";
-import type { Nodes, Position } from "mdast-util-from-markdown/lib";
+import type { Nodes } from "mdast";
 
 /**
  * Semantic boundary in markdown content.

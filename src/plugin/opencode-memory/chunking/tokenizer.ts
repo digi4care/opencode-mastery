@@ -2,7 +2,7 @@
  * Token counting utilities using gpt-tokenizer with cl100k_base encoding.
  * This encoding matches GPT-4/GPT-4o tokenization for accurate chunk sizing.
  */
-import { encode, decode, isWithinTokenLimit } from "gpt-tokenizer/cl100k_base";
+import { encode, decode, isWithinTokenLimit } from "gpt-tokenizer/encoding/cl100k_base";
 
 /**
  * Count the number of tokens in a text string.

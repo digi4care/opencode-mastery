@@ -110,3 +110,30 @@ Ask AI to use the documented feature. If it doesn't work, check:
 | Command  | `.md`           | Usage, Process                    |
 | Agent    | `.md` (or JSON) | Instructions, Tools               |
 | Config   | `schema.ts`     | Zod schema                        |
+
+---
+
+## Install & Config Guide
+
+### Config Files Behavior
+
+| File                    | First Install | Update Install | User Edits |
+| ----------------------- | ------------- | -------------- | ---------- |
+| `opencode.config.yaml`  | Created       | Protected      | ✅ Kept    |
+| `opencode-mastery.json` | Never created | Protected      | ✅ Kept    |
+| `oh-my-opencode.json`   | Never created | Protected      | ✅ Kept    |
+
+### How to Update Config
+
+**Option 1: Manual**
+Edit directly in `~/.config/opencode/`
+
+**Option 2: Via Repo**
+Add defaults to `src/lib/config/defaults.ts` and `src/lib/config/schema.ts`
+
+### Adding New Features
+
+1. Add schema to `src/lib/config/schema.ts`
+2. Add defaults to `src/lib/config/defaults.ts`
+3. Add to `opencode.config.yaml` (optional user overrides)
+4. Document in relevant skill/command
