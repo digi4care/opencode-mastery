@@ -4,8 +4,7 @@
   "description": "OpenCode knowledge base with lazy-loaded docs, fuzzy search and intelligent memory",
   "main": "src/index.ts",
   "scripts": {
-    "deploy": "./install.sh",
-    "undeploy": "./uninstall.sh",
+    "deploy": "bun run scripts/deploy.ts",
     "download-docs": "uv run src/skill/opencode-mastery/scripts/download-docs.py",
     "load-docs": "uv run src/skill/opencode-mastery/scripts/load_docs.py",
     "build-index": "uv run src/skill/opencode-mastery/scripts/index_builder.py",
@@ -35,6 +34,12 @@
     "mdast-util-from-markdown": "^2.0.2",
     "unist-util-visit": "^5.1.0",
     "yaml": "^2.8.2",
-    "zod": "^3.25.0"
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "npm:@anthropic-ai/claude-code@^0.0.11"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=0.0.1"
   }
 }

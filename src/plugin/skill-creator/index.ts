@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { z } from 'zod';
 import { tool } from '@opencode-ai/plugin';
-import { isFeatureEnabled } from '../../../lib/config';
+import { isFeatureEnabled } from '../../lib/config';
 
 const DEFAULT_NEGATIVE_TRIGGERS = [
   'general programming questions',

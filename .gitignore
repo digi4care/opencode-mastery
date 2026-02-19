@@ -13,6 +13,7 @@ eggs/
 lib/
 lib64/
 !src/lib/
+!src/plugin/*/lib/
 parts/
 sdist/
 var/

@@ -169,22 +169,10 @@ done
 echo ""
 echo "🔨 Building TypeScript plugins..."
 if [ "$PLUGINS_CAN_BUILD" = true ]; then
+    # Copy deploy script and run it
+    cp "$TEMP_DIR/scripts/deploy.ts" "$TEMP_DIR/deploy.ts" 2>/dev/null || true
     cd "$TEMP_DIR"
-    for plugin in "${PLUGINS[@]}"; do
-        if [ -f "src/plugin/$plugin/index.ts" ]; then
-            echo "  Building $plugin..."
-            bun build "src/plugin/$plugin/index.ts" \
-                --outdir="$PLUGIN_DIR/$plugin" \
-                --target=bun \
-                --sourcemap=external \
-                --external=@opencode-ai/plugin \
-                2>/dev/null || {
-                echo "  ⚠️  Failed to build $plugin, copying TypeScript source"
-                cp "src/plugin/$plugin/index.ts" "$PLUGIN_DIR/$plugin/" 2>/dev/null
-            }
-        fi
-    done
-    echo "✓ Plugin build complete"
+    bun run deploy.ts 2>/dev/null || echo "  ⚠️  Build failed, plugins will use TypeScript source"
 fi
 
 echo ""

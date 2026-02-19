@@ -27,6 +27,9 @@ opencode-mastery/
 │   ├── project/             # Project-specific
 │   ├── opencode/            # OpenCode guides
 │   └── ace/                 # ACE framework
+├── scripts/                 # Cross-platform scripts
+│   ├── deploy.ts            # Installatie (Windows/Mac/Linux)
+│   └── undeploy.ts          # Verwijderen
 ├── src/
 │   └── skill/               # OpenCode skills
 │       ├── opencode-mastery/
@@ -40,7 +43,6 @@ opencode-mastery/
 │   ├── commands/            # Custom commands
 │   └── skill/               # Project skills (symlink)
 ├── ai_docs/                 # AI documentation cache
-├── install.sh               # Global install script
 └── package.json             # npm scripts
 ```
 
@@ -87,18 +89,20 @@ metadata:
 
 ## Install Flow
 
-| Step | Command                 | Result                                |
-| ---- | ----------------------- | ------------------------------------- |
-| 1    | `./install.sh`          | Copies to `~/.config/opencode/skill/` |
-| 2    | `uv sync`               | Installs Python dependencies          |
-| 3    | `bun run download-docs` | Fetches docs from GitHub              |
-| 4    | `bun run build-index`   | Builds fuzzy search index             |
+| Step | Command                 | Result                                                         |
+| ---- | ----------------------- | -------------------------------------------------------------- |
+| 1    | `bun run deploy`        | Installs deps, copies to `~/.config/opencode/`, builds plugins |
+| 2    | `uv sync`               | Installs Python dependencies                                   |
+| 3    | `bun run download-docs` | Fetches docs from GitHub                                       |
+| 4    | `bun run build-index`   | Builds fuzzy search index                                      |
+
+**Cross-platform:** Works on Windows, macOS, and Linux (TypeScript scripts via Bun).
 
 ## npm Scripts
 
 ```bash
-bun run install          # Run install.sh
-bun run uninstall        # Run uninstall.sh
+bun run deploy           # Install skills + plugins (cross-platform)
+bun run undeploy         # Remove installed files
 bun run download-docs    # Download docs from GitHub
 bun run load-docs        # Lazy doc loader
 bun run build-index      # Build fuzzy search index

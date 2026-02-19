@@ -1,0 +1,161 @@
+#!/usr/bin/env bun
+/**
+ * Deploy script - Compile TypeScript plugins
+ * 
+ * Usage:
+ *   bun run deploy           # Build all plugins
+ *   bun run deploy --watch   # Watch mode
+ *   bun run deploy --help    # Show help
+ */
+
+import { $ } from "bun";
+import { existsSync, readdirSync } from "fs";
+import { join } from "path";
+
+const PLUGIN_DIR = join(process.env.HOME || "", ".config/opencode/plugin");
+
+const PLUGINS = [
+  "opencode-mastery",
+  "tdd-enforcer",
+  "debug-assistant",
+  "flow-analyzer",
+  "om-session",
+  "repo-analyzer",
+  "skill-creator",
+];
+
+interface Args {
+  help: boolean;
+  watch: boolean;
+  verbose: boolean;
+}
+
+function parseArgs(): Args {
+  return {
+    help: process.argv.includes("--help") || process.argv.includes("-h"),
+    watch: process.argv.includes("--watch") || process.argv.includes("-w"),
+    verbose: process.argv.includes("--verbose") || process.argv.includes("-v"),
+  };
+}
+
+function showHelp(): void {
+  console.log(`
+🔨 OpenCode Mastery - Deploy Script
+
+Usage:
+  bun run deploy [options]
+
+Options:
+  -h, --help     Show this help
+  -w, --watch    Watch for changes and rebuild
+  -v, --verbose  Show detailed output
+
+Description:
+  Compiles TypeScript plugins to JavaScript.
+  Plugins are built to: ~/.config/opencode/plugin/<name>/
+`);
+}
+
+async function buildPlugin(pluginName: string, verbose: boolean): Promise<boolean> {
+  const srcPath = join(PLUGIN_DIR, pluginName, "index.ts");
+  
+  if (!existsSync(srcPath)) {
+    if (verbose) console.log(`  ⚠️  No index.ts found for ${pluginName}`);
+    return false;
+  }
+
+  try {
+    const result = await $`bun build ${srcPath}`
+      .quiet()
+      .env({ ...process.env, NODE_ENV: "production" });
+
+    if (result.exitCode !== 0) {
+      console.log(`  ❌ Failed to build ${pluginName}`);
+      return false;
+    }
+
+    // Run build with proper options
+    await $`bun build ${srcPath} --outdir=${join(PLUGIN_DIR, pluginName)} --target=bun --sourcemap=external --external=@opencode-ai/plugin`.quiet();
+    
+    console.log(`  ✓ ${pluginName}`);
+    return true;
+  } catch (error) {
+    console.log(`  ❌ Failed to build ${pluginName}: ${error}`);
+    return false;
+  }
+}
+
+async function buildAll(verbose: boolean): Promise<void> {
+  console.log("🔨 Building TypeScript plugins...\n");
+
+  let success = 0;
+  let failed = 0;
+
+  for (const plugin of PLUGINS) {
+    const result = await buildPlugin(plugin, verbose);
+    if (result) {
+      success++;
+    } else {
+      failed++;
+    }
+  }
+
+  console.log(`\n✓ Build complete: ${success} succeeded, ${failed} failed`);
+}
+
+async function watchMode(verbose: boolean): Promise<void> {
+  console.log("👁️  Watching for changes...\n");
+  console.log("Press Ctrl+C to stop\n");
+
+  // Initial build
+  await buildAll(verbose);
+
+  // Watch for changes
+  for (const plugin of PLUGINS) {
+    const srcPath = join(PLUGIN_DIR, plugin, "index.ts");
+    if (existsSync(srcPath)) {
+      console.log(`  Watching: ${plugin}`);
+    }
+  }
+
+  // Simple watch using fs.watch
+  const { watch } = await import("fs");
+  
+  for (const plugin of PLUGINS) {
+    const pluginDir = join(PLUGIN_DIR, plugin);
+    if (existsSync(pluginDir)) {
+      watch(pluginDir, { recursive: true }, async (event, filename) => {
+        if (filename?.endsWith(".ts")) {
+          console.log(`\n📝 ${plugin}/${filename} changed, rebuilding...`);
+          await buildPlugin(plugin, verbose);
+        }
+      });
+    }
+  }
+
+  // Keep process alive
+  await new Promise(() => {});
+}
+
+async function main(): Promise<void> {
+  const args = parseArgs();
+
+  if (args.help) {
+    showHelp();
+    process.exit(0);
+  }
+
+  if (!existsSync(PLUGIN_DIR)) {
+    console.error(`❌ Plugin directory not found: ${PLUGIN_DIR}`);
+    console.error("   Run install.sh first to install plugins.");
+    process.exit(1);
+  }
+
+  if (args.watch) {
+    await watchMode(args.verbose);
+  } else {
+    await buildAll(args.verbose);
+  }
+}
+
+main().catch(console.error);

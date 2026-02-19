@@ -33,6 +33,8 @@ Dit is de BELANGRIJKSTE documentatie voor deze repo. Hierin staat:
 ```
 opencode-mastery/
 ├── opencode.config.yaml       # ⚙️ CENTRALE CONFIG
+├── scripts/                   # Cross-platform scripts
+│   └── deploy.ts              # TypeScript plugins compilen
 ├── src/
 │   ├── lib/
 │   │   └── config/            # Shared config library (ALLE plugins gebruiken dit)
@@ -143,20 +145,29 @@ const result = resolveModelWithSource({
 
 **Zie:** [docs/project/config-system.md](docs/project/config-system.md) voor volledige guide.
 
-## Build/Test Commands
+## Installatie & Build Commands
 
 ```bash
-# Installatie
-./install.sh -y                # Alles installeren
-./uninstall.sh --silent        # Alles verwijderen
+# Installatie (download + copy + compile)
+./install.sh                 # Van GitHub
+./install.sh -y              # Zonder bevestiging
 
-# TypeScript
-bun install                    # Dependencies
-bun run build                  # Build
+# Handmatig compilen (na lokale wijzigingen)
+bun run deploy               # TypeScript plugins compilen
 
-# Python (indien nodig)
-uv sync                        # Python dependencies
+# Verwijderen
+./uninstall.sh               # Alles verwijderen
+./uninstall.sh --silent      # Zonder output
+
+# TypeScript dependencies
+bun install                  # Dependencies installeren
 ```
+
+**Workflow:**
+
+1. `./install.sh` downloadt van GitHub → kopieert files → draait automatisch `bun run deploy`
+2. `bun run deploy` compileert alleen TypeScript plugins (cross-platform)
+3. `./uninstall.sh` verwijdert alles uit `~/.config/opencode/`
 
 ## Package Managers
 
