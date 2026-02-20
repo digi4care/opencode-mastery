@@ -89,20 +89,20 @@ metadata:
 
 ## Install Flow
 
-| Step | Command                 | Result                                                         |
-| ---- | ----------------------- | -------------------------------------------------------------- |
-| 1    | `bun run deploy`        | Installs deps, copies to `~/.config/opencode/`, builds plugins |
-| 2    | `uv sync`               | Installs Python dependencies                                   |
-| 3    | `bun run download-docs` | Fetches docs from GitHub                                       |
-| 4    | `bun run build-index`   | Builds fuzzy search index                                      |
+| Step | Command                   | Result                                                                              |
+| ---- | ------------------------- | ----------------------------------------------------------------------------------- |
+| 1    | `./install.sh -y`         | Downloads from GitHub, copies files to `~/.config/opencode/`, attempts plugin build |
+| 2    | `bun run deploy`          | Builds TypeScript plugin entrypoints to `~/.config/opencode/plugin/*/index.js`      |
+| 3    | `./uninstall.sh --silent` | Removes managed installed commands, skills, and plugins                             |
 
-**Cross-platform:** Works on Windows, macOS, and Linux (TypeScript scripts via Bun).
+**Cross-platform:** Plugin build is cross-platform via Bun (`scripts/deploy.ts`).
+
+**Note:** `install.sh` runs a best-effort build in a temp dir. For deterministic local developer builds, run `bun run deploy` from project root.
 
 ## npm Scripts
 
 ```bash
-bun run deploy           # Install skills + plugins (cross-platform)
-bun run undeploy         # Remove installed files
+bun run deploy           # Build TypeScript plugins to installed directory
 bun run download-docs    # Download docs from GitHub
 bun run load-docs        # Lazy doc loader
 bun run build-index      # Build fuzzy search index
