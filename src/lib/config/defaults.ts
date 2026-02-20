@@ -38,6 +38,12 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
         provider: "auto",
         model: null,
         batchSize: 100,
+        // Phase 2 fields
+        priority: ["local", "openai", "gemini", "voyage"],
+        timeout: 30000,
+        local: {
+          modelPath: null,
+        },
       },
       search: {
         hybrid: {

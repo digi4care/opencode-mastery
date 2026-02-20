@@ -29,6 +29,13 @@ export const MemoryConfigSchema = z.object({
     provider: z.enum(["auto", "local", "openai", "gemini", "voyage"]).default("auto"),
     model: z.string().nullable().default(null),
     batchSize: z.number().int().min(1).max(1000).default(100),
+    // Phase 2 fields
+    priority: z.array(z.enum(["local", "openai", "gemini", "voyage"]))
+      .default(["local", "openai", "gemini", "voyage"]),
+    timeout: z.number().int().min(5000).max(120000).default(30000),
+    local: z.object({
+      modelPath: z.string().nullable().default(null),
+    }).default({}),
   }).default({}),
   search: z.object({
     hybrid: z.object({
