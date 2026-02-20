@@ -42,6 +42,7 @@ SKILLS=(
     "meta-agent"
     "skill-creator"
     "flow-analysis"
+    "ace-analysis"
     "opencode-memory"
     "test-driven-development"
     "systematic-debugging"

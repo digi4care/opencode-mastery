@@ -126,6 +126,7 @@ SKILLS=(
     "skill-creator"
     "repo-analysis"
     "flow-analysis"
+    "ace-analysis"
     "opencode-memory"
     "test-driven-development"
     "systematic-debugging"
