@@ -10,6 +10,11 @@ import { downloadDocsTool } from "./tools/download-docs";
 import { memoryStatus } from "./tools/memory-status";
 import { memoryRemember } from "./tools/memory-remember";
 import { memoryCompact } from "./tools/memory-compact";
+// Phase 4 memory tools
+import { memoryGet } from "./tools/memory-get";
+import { memorySync } from "./tools/memory-sync";
+import { memoryDbStatus } from "./tools/memory-db-status";
+import { memorySearch } from "./tools/memory-search";
 
 export const Plugin = async (context: PluginContext) => {
   return {
@@ -17,9 +22,15 @@ export const Plugin = async (context: PluginContext) => {
     tool: [
       searchDocs,
       downloadDocsTool,
+      // Old memory tools (kept for backward compatibility)
       memoryStatus,
       memoryRemember,
       memoryCompact,
+      // Phase 4 memory tools
+      memoryGet,
+      memorySync,
+      memoryDbStatus,
+      memorySearch,
     ],
     
     // Configuration
