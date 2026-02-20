@@ -27,6 +27,9 @@ COMMAND_FILES=(
     "flow-analyze.md"
     "flow-analyzer.md"
     "gsd-analyze-flow.md"
+    "gsd-auto-validate.md"
+    "gsd-auto-validate-status.md"
+    "gsd-auto-validate-report.md"
 )
 
 # Agents installed by this package
@@ -42,6 +45,7 @@ SKILLS=(
     "meta-agent"
     "skill-creator"
     "flow-analysis"
+    "gsd-validation"
     "ace-analysis"
     "opencode-memory"
     "test-driven-development"
@@ -68,6 +72,7 @@ PLUGINS=(
     "om-session"
     "repo-analyzer"
     "skill-creator"
+    "gsd-validation-runtime"
 )
 
 # Check if any files exist

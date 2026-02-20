@@ -126,6 +126,7 @@ SKILLS=(
     "skill-creator"
     "repo-analysis"
     "flow-analysis"
+    "gsd-validation"
     "ace-analysis"
     "opencode-memory"
     "test-driven-development"
@@ -160,6 +161,7 @@ PLUGINS=(
     "om-session"
     "repo-analyzer"
     "skill-creator"
+    "gsd-validation-runtime"
 )
 
 for plugin in "${PLUGINS[@]}"; do
@@ -245,8 +247,8 @@ echo ""
 echo "✅ Installation complete!"
 echo ""
 echo "📁 Installed:"
-echo "   • 18 skills in $SKILLS_DIR"
-echo "   • 6 plugins in $PLUGIN_DIR"
+echo "   • ${#SKILLS[@]} skills in $SKILLS_DIR"
+echo "   • ${#PLUGINS[@]} plugins in $PLUGIN_DIR"
 echo "   • agents in $AGENTS_DIR"
 echo "   • commands in $COMMANDS_DIR"
 echo "   • Shared config in $LIB_DIR/config"
