@@ -17,13 +17,25 @@ const SRC_DIR = join(import.meta.dir, "..", "src/plugin");
 
 const PLUGINS = [
   "tdd-enforcer",
-  "debug-assistant", 
+  "debug-assistant",
   "flow-analyzer",
   "om-session",
   "repo-analyzer",
   "skill-creator",
   "gsd-validation-runtime",
-  // "opencode-mastery", // TODO: fix getMemoryConfig import
+  "opencode-mastery",
+];
+
+// External dependencies that shouldn't be bundled
+const EXTERNALS = [
+  "@opencode-ai/plugin",
+  "@node-llama-cpp/mac-arm64-metal",
+  "@node-llama-cpp/mac-x64",
+  "@node-llama-cpp/win-x64",
+  "@node-llama-cpp/win-x64-cuda",
+  "@node-llama-cpp/win-x64-cuda-ext",
+  "@node-llama-cpp/win-x64-vulkan",
+  "@node-llama-cpp/win-arm64",
 ];
 
 interface Args {
@@ -68,7 +80,9 @@ async function buildPlugin(pluginName: string, verbose: boolean): Promise<boolea
   }
 
   try {
-    await $`bun build ${srcPath} --outdir=${outDir} --target=bun --sourcemap=external --external=@opencode-ai/plugin`.quiet();
+    const externalsFlags = EXTERNALS.map(e => `--external=${e}`);
+    const cmd = $`bun build ${srcPath} --outdir=${outDir} --target=bun --sourcemap=external ${externalsFlags}`.quiet();
+    await cmd;
     console.log(`  ✓ ${pluginName}`);
     return true;
   } catch (error) {

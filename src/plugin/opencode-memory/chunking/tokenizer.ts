@@ -17,3 +17,28 @@ export function truncateToTokens(text: string, maxTokens: number): string {
   if (text.length <= maxChars) return text;
   return text.slice(0, maxChars);
 }
+
+/**
+ * Get semantic overlap from the end of text.
+ * Returns the last N tokens of text for chunk overlap.
+ */
+export function getSemanticOverlap(text: string, overlapTokens: number): string {
+  if (!text || overlapTokens <= 0) return "";
+  const overlapChars = overlapTokens * CHARS_PER_TOKEN;
+  if (text.length <= overlapChars) return text;
+  return text.slice(-overlapChars);
+}
+
+/**
+ * Get overlap text (alias for getSemanticOverlap for compatibility)
+ */
+export function getOverlapText(text: string, overlapTokens: number): string {
+  return getSemanticOverlap(text, overlapTokens);
+}
+
+/**
+ * Check if token count is within limit
+ */
+export function isWithinLimit(text: string, maxTokens: number): boolean {
+  return countTokens(text) <= maxTokens;
+}

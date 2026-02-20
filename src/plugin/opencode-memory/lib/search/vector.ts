@@ -6,7 +6,7 @@
  */
 
 import { getDatabase } from "../../storage/database";
-import { getLockedProvider, isProviderLocked } from "../../embeddings/provider-lock";
+import { getLockedProvider } from "../../embeddings/provider-lock";
 import { embedBatch } from "../../embeddings/batch";
 import { getFeatureConfig } from "../../../../lib/config";
 import type { SearchResult, SearchOptions, SourceFilter } from "./types";
@@ -62,7 +62,7 @@ function normalizeCosine(similarity: number): number {
  */
 async function getQueryEmbedding(query: string): Promise<number[] | null> {
   // Check if provider is locked
-  if (!isProviderLocked()) {
+  if (getLockedProvider() === null) {
     return null;
   }
 
@@ -218,5 +218,5 @@ export async function vectorSearch(
  * Check if vector search is available
  */
 export function isVectorSearchAvailable(): boolean {
-  return isProviderLocked();
+  return getLockedProvider() !== null;
 }

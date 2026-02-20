@@ -5,7 +5,7 @@
 import { tool } from "@opencode-ai/plugin";
 import { z } from "zod";
 import { getMemoryStatus, needsCompaction } from "../lib/memory";
-import { getMemoryConfig, isFeatureEnabled } from "../lib/config";
+import { getFeatureConfig, isFeatureEnabled } from "../lib/config";
 
 export const memoryStatus = tool(
   z.object({
@@ -16,7 +16,7 @@ export const memoryStatus = tool(
     
     // Check if memory is enabled in config
     const memoryEnabled = isFeatureEnabled("memory", "memory");
-    const config = getMemoryConfig();
+    const config = getFeatureConfig("memory");
     
     if (!memoryEnabled) {
       return {
