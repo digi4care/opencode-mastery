@@ -15,6 +15,12 @@ import { memoryGet } from "./tools/memory-get";
 import { memorySync } from "./tools/memory-sync";
 import { memoryDbStatus } from "./tools/memory-db-status";
 import { memorySearch } from "./tools/memory-search";
+// Phase 5 memory hooks
+import { createMemoryBootstrapHook } from "./hooks/memory-bootstrap";
+import { createMemorySnapshotHook } from "./hooks/memory-snapshot";
+import { createMemoryReindexHook } from "./hooks/memory-reindex";
+import { createMemoryCompactionHook } from "./hooks/memory-compaction";
+import { createMemoryIntentHook } from "./hooks/memory-intent";
 
 export const Plugin = async (context: PluginContext) => {
   return {
@@ -42,10 +48,12 @@ export const Plugin = async (context: PluginContext) => {
       };
     },
     
-    // Lifecycle hooks
-    "session.start": async () => {
-      console.log("OpenCode Mastery plugin loaded");
-    },
+    // Phase 5 hooks - memory lifecycle integration
+    "session.created": createMemoryBootstrapHook(),
+    "session.deleted": createMemorySnapshotHook(),
+    "file.edited": createMemoryReindexHook(),
+    "experimental.session.compacting": createMemoryCompactionHook(),
+    "tool.execute.before": createMemoryIntentHook(),
   };
 };
 
