@@ -147,5 +147,11 @@ export const DEFAULT_CONFIG: OpenCodeConfig = {
     skillCreator: {
       enabled: true,
     },
+    gsdValidation: {
+      enabled: true,
+      default_mode: "full",
+      require_gap_gate: true,
+      readiness_timeout_ms: 30000,
+    },
   },
 };

@@ -159,6 +159,14 @@ export const SkillCreatorConfigSchema = z.object({
   enabled: z.boolean().default(true),
 });
 
+// Feature: GSD Validation Runtime
+export const GsdValidationConfigSchema = z.object({
+  enabled: z.boolean().default(true),
+  default_mode: z.enum(["quick", "full"]).default("full"),
+  require_gap_gate: z.boolean().default(true),
+  readiness_timeout_ms: z.number().int().min(1000).max(120000).default(30000),
+});
+
 // All features
 export const FeaturesConfigSchema = z.object({
   memory: MemoryConfigSchema.default({}),
@@ -170,6 +178,7 @@ export const FeaturesConfigSchema = z.object({
   flowAnalyzer: FlowAnalyzerConfigSchema.default({}),
   repoAnalyzer: RepoAnalyzerConfigSchema.default({}),
   skillCreator: SkillCreatorConfigSchema.default({}),
+  gsdValidation: GsdValidationConfigSchema.default({}),
 });
 
 // Project metadata
@@ -196,6 +205,7 @@ export type SessionConfig = z.infer<typeof SessionConfigSchema>;
 export type FlowAnalyzerConfig = z.infer<typeof FlowAnalyzerConfigSchema>;
 export type RepoAnalyzerConfig = z.infer<typeof RepoAnalyzerConfigSchema>;
 export type SkillCreatorConfig = z.infer<typeof SkillCreatorConfigSchema>;
+export type GsdValidationConfig = z.infer<typeof GsdValidationConfigSchema>;
 export type FeaturesConfig = z.infer<typeof FeaturesConfigSchema>;
 export type ProjectConfig = z.infer<typeof ProjectConfigSchema>;
 export type OpenCodeConfig = z.infer<typeof OpenCodeConfigSchema>;

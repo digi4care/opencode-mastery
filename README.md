@@ -16,7 +16,34 @@ curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/ins
 git clone https://github.com/digi4care/opencode-mastery.git
 cd opencode-mastery
 ./install.sh
+
+# Recommended after clone (build plugin JS artifacts)
+bun run deploy
 ```
+
+## Install, Deploy, Uninstall Workflow
+
+### User workflow
+
+```bash
+# Install from GitHub
+./install.sh -y
+
+# Optional but recommended if you cloned locally
+bun run deploy
+```
+
+### Developer workflow
+
+```bash
+# Build all TypeScript plugins to ~/.config/opencode/plugin/*/index.js
+bun run deploy
+
+# Remove managed installed artifacts
+./uninstall.sh --silent
+```
+
+Detailed guide: [docs/project/install-deploy-workflow.md](docs/project/install-deploy-workflow.md)
 
 ## Project Structure
 
@@ -121,22 +148,23 @@ curl -fsSL https://raw.githubusercontent.com/digi4care/opencode-mastery/main/uni
 Or manually:
 
 ```bash
-~/.ai_docs/opencode/uninstall.sh
+./uninstall.sh --silent
 ```
 
 ## Documentation
 
-| Topic         | Location                                                         |
-| ------------- | ---------------------------------------------------------------- |
-| Conventions   | [docs/project/conventions.md](docs/project/conventions.md)       |
-| Anti-patterns | [docs/project/anti-patterns.md](docs/project/anti-patterns.md)   |
-| Docs Guide    | [docs/project/DOCS-GUIDE.md](docs/project/DOCS-GUIDE.md)         |
-| Plugins       | [docs/opencode/plugins.md](docs/opencode/plugins.md)             |
-| Agents        | [docs/opencode/AGENTS.md](docs/opencode/AGENTS.md)               |
-| Tools         | [docs/opencode/tools.md](docs/opencode/tools.md)                 |
-| Skill Creator | [docs/opencode/skill-creator.md](docs/opencode/skill-creator.md) |
-| ACE Framework | [docs/ace/framework.md](docs/ace/framework.md)                   |
-| Config System | [docs/project/config-system.md](docs/project/config-system.md)   |
+| Topic         | Location                                                                           |
+| ------------- | ---------------------------------------------------------------------------------- |
+| Conventions   | [docs/project/conventions.md](docs/project/conventions.md)                         |
+| Anti-patterns | [docs/project/anti-patterns.md](docs/project/anti-patterns.md)                     |
+| Docs Guide    | [docs/project/DOCS-GUIDE.md](docs/project/DOCS-GUIDE.md)                           |
+| Plugins       | [docs/opencode/plugins.md](docs/opencode/plugins.md)                               |
+| Agents        | [docs/opencode/AGENTS.md](docs/opencode/AGENTS.md)                                 |
+| Tools         | [docs/opencode/tools.md](docs/opencode/tools.md)                                   |
+| Skill Creator | [docs/opencode/skill-creator.md](docs/opencode/skill-creator.md)                   |
+| ACE Framework | [docs/ace/framework.md](docs/ace/framework.md)                                     |
+| Config System | [docs/project/config-system.md](docs/project/config-system.md)                     |
+| Install Flow  | [docs/project/install-deploy-workflow.md](docs/project/install-deploy-workflow.md) |
 
 ## Links
 

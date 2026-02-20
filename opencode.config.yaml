@@ -134,6 +134,13 @@ features:
       gsd: true                 # Enable GSD-specific adapter defaults
       generic: true             # Enable generic adapter defaults
 
+  # GSD Validation Runtime - Automated validation orchestration tools
+  gsdValidation:
+    enabled: true
+    default_mode: full          # quick | full
+    require_gap_gate: true      # enforce human gate when gaps are found
+    readiness_timeout_ms: 30000 # default server readiness timeout
+
   # Repo Analyzer - GitHub repository analysis
   repoAnalyzer:
     enabled: true

@@ -22,6 +22,7 @@ const PLUGINS = [
   "om-session",
   "repo-analyzer",
   "skill-creator",
+  "gsd-validation-runtime",
   // "opencode-mastery", // TODO: fix getMemoryConfig import
 ];
 
