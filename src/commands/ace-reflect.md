@@ -12,12 +12,24 @@ Analyzes sessions and generates prompt improvement suggestions using the ACE (Ag
 ## Usage
 
 ```
-/ace-reflect              Analyze current session
-/ace-reflect --help       Show this help
-/ace-reflect session:id   Analyze specific session by ID
-/ace-reflect last:N       Analyze last N sessions
-/ace-reflect all          Full analysis of all sessions (limited to last 10)
+/ace-reflect                      Analyze current session (text only)
+/ace-reflect --help               Show this help
+/ace-reflect --verbose            Include detailed analysis
+/ace-reflect --technical          Include technical data (IDs, timestamps)
+/ace-reflect --full               Include everything (verbose + technical)
+/ace-reflect session:id           Analyze specific session by ID
+/ace-reflect last:N               Analyze last N sessions
+/ace-reflect all                  Full analysis of all sessions (limited to last 10)
 ```
+
+### Analysis Modes
+
+| Mode          | Flag          | What's Included                                     |
+| ------------- | ------------- | --------------------------------------------------- |
+| **Default**   | (none)        | Text content only - patterns, decisions, outcomes   |
+| **Verbose**   | `--verbose`   | Extended findings, more suggestions                 |
+| **Technical** | `--technical` | Session IDs, timestamps, message counts, tool usage |
+| **Full**      | `--full`      | Everything (verbose + technical)                    |
 
 ## How It Works
 
@@ -61,6 +73,12 @@ If you cannot read session data, analyze the current conversation context direct
 
 ### Step 2: Analyze Session Data
 
+**Check flags in `$ARGUMENTS`:**
+
+- `--verbose` → Extended analysis, more findings
+- `--technical` → Include IDs, timestamps, metadata
+- `--full` → All of the above
+
 **Option A: Subagent (if task tool available)**
 
 Use the task tool to start an ACE Analyzer subagent with clean context:
@@ -69,7 +87,30 @@ Use the task tool to start an ACE Analyzer subagent with clean context:
 task(
   subagent_type: "general",
   description: "ACE Session Analysis",
-  prompt: "You are an ACE analyzer. Analyze this session data: [summary]"
+  prompt: "You are an ACE analyzer. Analyze this session data.
+
+  MODE: [default/verbose/technical/full]
+
+  For DEFAULT mode:
+  - Focus on TEXT CONTENT only (what was discussed, decided, achieved)
+  - Identify PATTERNS, not individual mistakes
+  - Extract key decisions and outcomes
+
+  For VERBOSE mode (includes default +):
+  - More detailed findings
+  - Additional suggestions
+  - Deeper pattern analysis
+
+  For TECHNICAL mode (includes default +):
+  - Session IDs, timestamps
+  - Message counts
+  - Tool usage statistics
+  - File paths referenced
+
+  For FULL mode:
+  - Everything from all modes
+
+  Session data: [summary]"
 )
 ```
 
@@ -77,13 +118,90 @@ task(
 
 If the task tool is not available, analyze the current conversation context directly:
 
-1. Review the messages in this session
+1. **Default**: Review TEXT content - what was discussed, decided, achieved
 2. Identify patterns, not individual mistakes
-3. Generate suggestions following the Output Format below
+3. Generate suggestions based on content analysis
+4. Only include technical data if `--technical` or `--full` flag present
 
-### Step 3: Present Results
+### Step 3: Generate and Return Report
 
-After the subagent returns, present the results to the user in a clear format.
+**IMPORTANT**: This command MUST return a formal report to the main agent. The report is the PRIMARY OUTPUT.
+
+After analysis completes, return the report in this EXACT structure:
+
+```markdown
+# 📊 ACE Reflection Report
+
+[IF --technical OR --full:]
+
+> **Generated**: [timestamp]
+> **Session**: [session-id]
+> **Scope**: [current/session:id/last:N]
+> **Mode**: [default/verbose/technical/full]
+
+---
+
+## Summary
+
+[1-2 sentences describing what was discussed, decided, achieved - TEXT FOCUS]
+
+## Scores
+
+| Criterium    | Score    | Notes |
+| ------------ | -------- | ----- |
+| Completeness | X/5      | ...   |
+| Accuracy     | X/5      | ...   |
+| Efficiency   | X/5      | ...   |
+| Clarity      | X/5      | ...   |
+| Relevance    | X/5      | ...   |
+| **TOTAL**    | **X/25** |       |
+
+## Findings (Patterns)
+
+[DEFAULT mode: 2-3 key patterns from content]
+[VERBOSE/FULL mode: 5+ patterns with deeper analysis]
+
+1. [Finding 1 - Focus on what was discussed/decided]
+2. [Finding 2]
+
+[IF --technical OR --full:]
+
+## Technical Data
+
+- **Session ID**: [id]
+- **Duration**: [time]
+- **Messages**: [count]
+- **Tools used**: [list]
+- **Files modified**: [list]
+
+## Suggestions
+
+[DEFAULT mode: Top 2-3 actionable suggestions]
+[VERBOSE mode: All suggestions with reasoning]
+
+1. **Target**: [file path]
+   **Change**: [specific suggestion]
+   **Reason**: [why this helps]
+
+## Decision
+
+- [x] No changes needed (score ≥ 20)
+- [ ] Suggestions for review (score 15-19)
+- [ ] Changes recommended (score < 15)
+
+---
+
+_End of ACE Reflection Report_
+```
+
+**MODE SUMMARY:**
+
+- **Default**: Summary + Scores + 2-3 Findings + 2-3 Suggestions + Decision
+- **--verbose**: Default + more findings/suggestions + deeper analysis
+- **--technical**: Default + Technical Data section (IDs, timestamps, counts)
+- **--full**: Everything
+
+**DO NOT** summarize or paraphrase the report. Return the FULL report to the main agent.
 
 ## Scope Options
 
@@ -94,43 +212,24 @@ Use `$ARGUMENTS` to specify scope:
 - `last:N`: Analyze last N sessions
 - `all`: Full analysis (limited to 10 most recent)
 
-## Output Format
+## Report Storage (Optional)
 
-```markdown
-## ACE Reflection Report
+Save report to file for future reference:
 
-### Session Summary
-
-[Brief summary of what was attempted]
-
-### Scores
-
-| Criterium    | Score     | Notes |
-| ------------ | --------- | ----- |
-| Completeness | X/5       | ...   |
-| Accuracy     | X/5       | ...   |
-| Efficiency   | X/5       | ...   |
-| Clarity      | X/5       | ...   |
-| Relevance    | X/5       | ...   |
-| **Total**    | **XX/25** |       |
-
-### Findings
-
-1. [Finding 1 - Pattern, not individual mistake]
-2. [Finding 2]
-
-### Suggestions
-
-1. **Target**: [skill/command file]
-   **Change**: [specific suggestion]
-   **Reason**: [why this helps]
-
-### Decision
-
-- [ ] No changes needed (score ≥ 20)
-- [ ] Suggestions for review (score 15-19)
-- [ ] Changes recommended (score < 15)
+```bash
+# Save to .tmp/ace-reports/
+mkdir -p .tmp/ace-reports
+# Report saved as: .tmp/ace-reports/YYYY-MM-DD_HH-MM_session-id.md
 ```
+
+## Main Agent Instructions
+
+When you receive the ACE Reflection Report:
+
+1. **Present the full report** - Do not summarize or truncate
+2. **Ask user** - "Wil je de suggesties implementeren?"
+3. **If yes** - Apply the suggested changes
+4. **If no** - Continue with other tasks
 
 ## Configuration
 
