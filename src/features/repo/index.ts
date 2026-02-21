@@ -2,13 +2,15 @@
  * Repository Analysis Feature Module
  * 
  * Central exports for repo analysis tools.
- * Re-exports from plugin for modular import paths.
+ * Exposes plugin entrypoint for modular import paths.
  */
-export * from "../../plugin/repo-analyzer/tools/repo-analyze";
+import { REPO_ANALYZE_TOOL_NAME } from "../../plugin/repo-analyzer";
+
+export { default as repoAnalyzerPlugin } from "../../plugin/repo-analyzer";
 
 export const feature = {
   name: "repo",
   description: "GitHub repository analysis tools",
-  tools: ["repo-analyze"],
+  tools: [REPO_ANALYZE_TOOL_NAME],
   plugin: "repo-analyzer",
 };

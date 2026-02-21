@@ -3,7 +3,7 @@ description: Framework-agnostic flow completeness analysis using flow-analyzer t
 agent: flow-analyzer
 ---
 
-# /flow-analyze
+# /flow-analyzer
 
 Analyze intended flow definitions against implementation evidence and report gaps.
 

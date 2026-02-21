@@ -15,8 +15,9 @@ Manage persistent memory for OpenCode sessions.
 /memory off                Disable memory for this project
 /memory compact            Force memory compaction now
 /memory status             Show detailed memory status
-/remember <text>           Remember this for future sessions
-/what do you know about <topic>  Query memory
+/memory remember <text>    Remember this for future sessions
+/memory get <topic>        Query memory by topic
+/memory search <query>     Search indexed memory
 /memory sync               Sync memory with global storage
 ```
 
@@ -37,12 +38,12 @@ Shows current memory status including:
 
 1. Check if `.memory.md` exists in project root
 2. If NOT: Create from template
-3. Update config to enable memory
+3. Update `opencode.config.yaml` -> `features.memory.enabled: true`
 4. Load memory into session context
 
 ### /memory off
 
-1. Update `.memory.md` config to disable
+1. Update `opencode.config.yaml` -> `features.memory.enabled: false`
 2. Clear session memory context
 3. Continue session without memory
 
@@ -54,7 +55,7 @@ Shows current memory status including:
 4. Update semantic memory
 5. Report compaction results
 
-### /remember <text>
+### /memory remember <text>
 
 1. Parse the text to remember
 2. Determine if it's semantic (fact) or episodic (event)
@@ -63,7 +64,7 @@ Shows current memory status including:
    - Episodic → `.memory/daily/` log
 4. Confirm what was remembered
 
-### /what do you know about <topic>
+### /memory get <topic>
 
 1. Extract topic from query
 2. Search in:
@@ -71,6 +72,12 @@ Shows current memory status including:
    - Global memory (topics)
    - Daily logs (episodic)
 3. Format and return relevant context
+
+### /memory search <query>
+
+1. Use semantic search over indexed chunks
+2. Return top relevant matches with short snippets
+3. Include confidence cues when available
 
 ### /memory sync
 
@@ -87,22 +94,23 @@ Shows current memory status including:
 3. **For `/memory off`**: Disable memory
 4. **For `/memory compact`**: Force compaction
 5. **For `/memory status`**: Detailed status
-6. **For `/remember <text>`**: Extract text and store
-7. **For `/what do you know about <topic>`**: Extract topic and search
-8. **For `/memory sync`**: Trigger sync
+6. **For `/memory remember <text>`**: Extract text and store
+7. **For `/memory get <topic>`**: Extract topic and retrieve memory
+8. **For `/memory search <query>`**: Run semantic search
+9. **For `/memory sync`**: Trigger sync
 
-**Execute using the memory CLI script:**
+Before executing, verify required memory tools are available. If missing, stop and return a blocked response with setup guidance.
 
-```bash
-cd /media/digi4care/ExtDrive/projects/ai/opencode-mastery
-uv run ~/.ai_docs/opencode/scripts/memory_cli.py <command>
-```
+**Execute using TypeScript plugin tools (not legacy Python CLI):**
 
-Example:
-
-- `uv run ~/.ai_docs/opencode/scripts/memory_cli.py status`
-- `uv run ~/.ai_docs/opencode/scripts/memory_cli.py compact`
-- `uv run ~/.ai_docs/opencode/scripts/memory_cli.py remember mijn tekst`
+- `/memory` and `/memory status` -> `memory-status` (+ `memory-db-status` for technical details)
+- `/memory on` -> update `opencode.config.yaml` and verify with `memory-status`
+- `/memory off` -> update `opencode.config.yaml` and verify with `memory-status`
+- `/memory remember <text>` -> `memory-remember`
+- `/memory get <topic>` -> `memory-get`
+- `/memory search <query>` -> `memory-search`
+- `/memory compact` -> `memory-compact`
+- `/memory sync` -> `memory-sync`
 
 ## Memory System Location
 

@@ -1,6 +1,46 @@
-import { z } from "zod";
+import { constants as fsConstants, type Stats } from "node:fs";
+import { access, mkdtemp, readdir, readFile, rm, stat } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+
 import type { Plugin, PluginContext } from "@opencode-ai/plugin";
+import { z } from "zod";
+
 import { isFeatureEnabled } from "../../lib/config";
+
+export const REPO_ANALYZE_TOOL_NAME = "repo-analyze";
+
+const REPO_PATTERN = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/;
+
+const repoAnalyzeSchema = z.object({
+  repo: z
+    .string()
+    .regex(
+      REPO_PATTERN,
+      "Repository must match owner/repo with only letters, numbers, underscore, dot, or dash"
+    )
+    .describe("GitHub repository in format 'owner/repo' (e.g., 'vercel/next.js')"),
+  depth: z
+    .number()
+    .min(1)
+    .max(100)
+    .optional()
+    .default(1)
+    .describe("Git clone depth (1 = shallow, faster)"),
+  focus: z
+    .string()
+    .optional()
+    .refine(
+      (value) => !value || normalizeFocusPath(value) !== null,
+      "Focus path must be a safe relative path"
+    )
+    .describe("Focus analysis on specific directory (e.g., 'src/', 'packages/core/')"),
+  cleanup: z
+    .boolean()
+    .optional()
+    .default(true)
+    .describe("Remove cloned repo after analysis (default: true)"),
+});
 
 // Repository analyzer plugin for GitHub repositories
 const Plugin$1: Plugin = async (context: PluginContext) => {
@@ -8,49 +48,49 @@ const Plugin$1: Plugin = async (context: PluginContext) => {
     return { tool: [] };
   }
 
-  const repoAnalyzeSchema = z.object({
-    repo: z.string()
-      .describe("GitHub repository in format 'owner/repo' (e.g., 'vercel/next.js')"),
-    depth: z.number()
-      .min(1)
-      .max(100)
-      .optional()
-      .default(1)
-      .describe("Git clone depth (1 = shallow, faster)"),
-    focus: z.string()
-      .optional()
-      .describe("Focus analysis on specific directory (e.g., 'src/', 'packages/core/')"),
-    cleanup: z.boolean()
-      .optional()
-      .default(true)
-      .describe("Remove cloned repo after analysis (default: true)"),
-  });
+  const repoAnalyzeTool = context
+    .tool(repoAnalyzeSchema, async ({ repo, depth = 1, focus, cleanup = true }) => {
+      const safeRepo = repo.trim();
+      const safeFocus = focus ? normalizeFocusPath(focus) : null;
 
-  const repoAnalyzeTool = context.tool(
-    repoAnalyzeSchema,
-    async ({ repo, depth = 1, focus, cleanup = true }) => {
-      const tmpDir = process.env.TMPDIR || "/tmp";
-      const repoName = repo.split("/")[1] || repo.replace("/", "-");
-      const clonePath = `${tmpDir}/${repoName}`;
+      if (!REPO_PATTERN.test(safeRepo)) {
+        return {
+          success: false,
+          error:
+            "Invalid repository format. Expected owner/repo with only letters, numbers, underscore, dot, or dash.",
+        };
+      }
+
+      if (focus && !safeFocus) {
+        return {
+          success: false,
+          error: "Invalid focus path. Use a safe relative path without traversal.",
+        };
+      }
+
+      const ghCheck = await runCommand("gh", ["--version"]);
+      if (!ghCheck.success) {
+        return {
+          success: false,
+          error: "GitHub CLI (gh) not found. Install: brew install gh",
+        };
+      }
+
+      const cloneBase = await mkdtemp(path.join(tmpdir(), "repo-analyze-"));
+      const repoName = safeRepo.split("/")[1] || "repo";
+      const clonePath = path.join(cloneBase, repoName);
 
       try {
-        // Check if gh CLI is available
-        const ghCheck = await runCommand("which gh");
-        if (!ghCheck.success) {
-          return {
-            success: false,
-            error: "GitHub CLI (gh) not found. Install: brew install gh",
-          };
-        }
+        const cloneResult = await runCommand("gh", [
+          "repo",
+          "clone",
+          safeRepo,
+          clonePath,
+          "--",
+          "--depth",
+          String(depth),
+        ]);
 
-        // Clean up existing clone if exists
-        await runCommand(`rm -rf "${clonePath}"`);
-
-        // Clone the repository
-        const cloneResult = await runCommand(
-          `gh repo clone ${repo} "${clonePath}" -- --depth ${depth}`
-        );
-        
         if (!cloneResult.success) {
           return {
             success: false,
@@ -58,10 +98,13 @@ const Plugin$1: Plugin = async (context: PluginContext) => {
           };
         }
 
-        // Get repository info
-        const repoInfoResult = await runCommand(
-          `gh repo view ${repo} --json description,languages,stargazerCount,defaultBranchRef`
-        );
+        const repoInfoResult = await runCommand("gh", [
+          "repo",
+          "view",
+          safeRepo,
+          "--json",
+          "description,languages,stargazerCount,defaultBranchRef",
+        ]);
 
         let repoInfo: Record<string, unknown> = {};
         if (repoInfoResult.success) {
@@ -72,82 +115,94 @@ const Plugin$1: Plugin = async (context: PluginContext) => {
           }
         }
 
-        // Get current SHA for permalinks
-        const shaResult = await runCommand(
-          `cd "${clonePath}" && git rev-parse HEAD`
-        );
+        const shaResult = await runCommand("git", ["rev-parse", "HEAD"], {
+          cwd: clonePath,
+        });
         const sha = shaResult.success ? shaResult.stdout.trim() : "unknown";
 
-        // Analyze repository structure
-        const structure = await analyzeStructure(clonePath, focus);
-
-        // Detect package managers
+        const structure = await analyzeStructure(clonePath, safeFocus || undefined);
         const packageManagers = await detectPackageManagers(clonePath);
-
-        // Detect test frameworks
         const testFrameworks = await detectTestFrameworks(clonePath);
-
-        // Find key files
         const keyFiles = await findKeyFiles(clonePath);
 
-        // Build result
         const result = {
           success: true,
-          repo,
+          repo: safeRepo,
           clonePath,
           sha,
-          permalinkBase: `https://github.com/${repo}/blob/${sha}`,
+          permalinkBase: `https://github.com/${safeRepo}/blob/${sha}`,
           info: {
             description: (repoInfo.description as string) || "",
             stars: (repoInfo.stargazerCount as number) || 0,
-            defaultBranch: ((repoInfo.defaultBranchRef as Record<string, string>)?.name) || "main",
+            defaultBranch:
+              ((repoInfo.defaultBranchRef as Record<string, string>)?.name) || "main",
           },
-          languages: ((repoInfo.languages as Array<{ name: string }>)?.map(l => l.name)) || [],
+          languages: ((repoInfo.languages as Array<{ name: string }>)?.map((l) => l.name)) || [],
           structure,
           packageManagers,
           testFrameworks,
           keyFiles,
-          analysisPath: focus ? `${clonePath}/${focus}` : clonePath,
+          analysisPath: safeFocus ? path.join(clonePath, safeFocus) : clonePath,
         };
 
-        // Cleanup if requested
         if (cleanup) {
-          await runCommand(`rm -rf "${clonePath}"`);
+          await safeRemove(cloneBase);
           return { ...result, clonePath: "(cleaned up)" };
         }
 
         return result;
       } catch (error) {
+        if (cleanup) {
+          await safeRemove(cloneBase);
+        }
+
         return {
           success: false,
           error: `Analysis failed: ${error instanceof Error ? error.message : String(error)}`,
         };
       }
-    }
-  ).describe(
-    "Clone and analyze a GitHub repository. Returns structure, languages, package managers, test frameworks, and key files. " +
-    "The cloned repo is available at /tmp for further analysis with grep/read tools. " +
-    "Example: repo-analyze({ repo: 'vercel/next.js', depth: 1 })"
-  );
+    })
+    .describe(
+      "Clone and analyze a GitHub repository. Returns structure, languages, package managers, test frameworks, and key files. " +
+        "The cloned repo is available in a temp directory for further analysis with grep/read tools. " +
+        "Example: repo-analyze({ repo: 'vercel/next.js', depth: 1 })"
+    );
 
   return { tool: [repoAnalyzeTool] };
 };
 
 export default Plugin$1;
 
-// Helper functions
-async function runCommand(cmd: string): Promise<{ success: boolean; stdout: string; stderr: string }> {
+interface CommandResult {
+  success: boolean;
+  stdout: string;
+  stderr: string;
+}
+
+interface StructureInfo {
+  directories: Record<string, number>;
+  totalFiles: number;
+  topLevelFiles: string[];
+  focus?: { path: string; files: number; directories: Record<string, number> };
+}
+
+async function runCommand(
+  command: string,
+  args: string[],
+  options?: { cwd?: string }
+): Promise<CommandResult> {
   try {
-    const process = Bun.spawn(cmd, { 
-      shell: true,
+    const process = Bun.spawn([command, ...args], {
+      cwd: options?.cwd,
+      shell: false,
       stdout: "pipe",
       stderr: "pipe",
     });
-    
+
     const stdout = await new Response(process.stdout).text();
     const stderr = await new Response(process.stderr).text();
     const exitCode = await process.exited;
-    
+
     return {
       success: exitCode === 0,
       stdout: stdout.trim(),
@@ -162,11 +217,62 @@ async function runCommand(cmd: string): Promise<{ success: boolean; stdout: stri
   }
 }
 
-interface StructureInfo {
-  directories: Record<string, number>;
-  totalFiles: number;
-  topLevelFiles: string[];
-  focus?: { path: string; files: number; directories: Record<string, number> };
+async function pathExists(filePath: string): Promise<boolean> {
+  try {
+    await access(filePath, fsConstants.F_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function safeRemove(filePath: string): Promise<void> {
+  try {
+    await rm(filePath, { recursive: true, force: true });
+  } catch {
+    // Ignore cleanup errors
+  }
+}
+
+function normalizeFocusPath(input: string): string | null {
+  const trimmed = input.trim();
+  if (!trimmed || trimmed.includes("\0")) {
+    return null;
+  }
+
+  const normalized = path.posix.normalize(trimmed.replaceAll("\\", "/"));
+  const cleaned = normalized.replace(/^\.\//, "").replace(/\/+$/, "");
+
+  if (!cleaned || cleaned === "." || cleaned === "..") {
+    return null;
+  }
+
+  if (cleaned.startsWith("/") || cleaned.startsWith("../") || cleaned.includes("/../")) {
+    return null;
+  }
+
+  return cleaned;
+}
+
+function isPathInside(rootPath: string, targetPath: string): boolean {
+  const relative = path.relative(rootPath, targetPath);
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
+}
+
+async function countFilesRecursive(dirPath: string): Promise<number> {
+  let total = 0;
+
+  const entries = await readdir(dirPath, { withFileTypes: true });
+  for (const entry of entries) {
+    const entryPath = path.join(dirPath, entry.name);
+    if (entry.isDirectory()) {
+      total += await countFilesRecursive(entryPath);
+    } else if (entry.isFile()) {
+      total += 1;
+    }
+  }
+
+  return total;
 }
 
 async function analyzeStructure(basePath: string, focus?: string): Promise<StructureInfo> {
@@ -176,58 +282,66 @@ async function analyzeStructure(basePath: string, focus?: string): Promise<Struc
     topLevelFiles: [],
   };
 
-  // Count top-level directories and files
-  const lsResult = await runCommand(`ls -1 "${basePath}"`);
-  if (lsResult.success) {
-    const entries = lsResult.stdout.split("\n").filter(Boolean);
-    
-    for (const entry of entries) {
-      const isDir = await runCommand(`test -d "${basePath}/${entry}"`);
-      if (isDir.success) {
-        // Count files in directory
-        const countResult = await runCommand(`find "${basePath}/${entry}" -type f | wc -l`);
-        const count = parseInt(countResult.stdout, 10) || 0;
-        result.directories[entry] = count;
-        result.totalFiles += count;
-      } else {
-        result.topLevelFiles.push(entry);
+  let entries: Awaited<ReturnType<typeof readdir>> = [];
+  try {
+    entries = await readdir(basePath, { withFileTypes: true });
+  } catch {
+    return result;
+  }
+
+  for (const entry of entries) {
+    const entryPath = path.join(basePath, entry.name);
+    if (entry.isDirectory()) {
+      const count = await countFilesRecursive(entryPath);
+      result.directories[entry.name] = count;
+      result.totalFiles += count;
+    } else {
+      result.topLevelFiles.push(entry.name);
+      if (entry.isFile()) {
+        result.totalFiles += 1;
       }
     }
   }
 
-  // Analyze focus directory if specified
-  if (focus) {
-    const focusPath = `${basePath}/${focus}`.replace(/\/+$/, "");
-    const focusExists = await runCommand(`test -d "${focusPath}"`);
-    
-    if (focusExists.success) {
-      const focusInfo: StructureInfo["focus"] = {
-        path: focus,
-        files: 0,
-        directories: {},
-      };
+  if (!focus) {
+    return result;
+  }
 
-      const focusLsResult = await runCommand(`ls -1 "${focusPath}"`);
-      if (focusLsResult.success) {
-        const focusEntries = focusLsResult.stdout.split("\n").filter(Boolean);
-        
-        for (const entry of focusEntries) {
-          const isDir = await runCommand(`test -d "${focusPath}/${entry}"`);
-          if (isDir.success) {
-            const countResult = await runCommand(`find "${focusPath}/${entry}" -type f | wc -l`);
-            const count = parseInt(countResult.stdout, 10) || 0;
-            focusInfo.directories[entry] = count;
-            focusInfo.files += count;
-          } else {
-            focusInfo.files += 1;
-          }
-        }
-      }
-      
-      result.focus = focusInfo;
+  const focusPath = path.resolve(basePath, focus);
+  if (!isPathInside(basePath, focusPath)) {
+    return result;
+  }
+
+  let focusStat: Stats;
+  try {
+    focusStat = await stat(focusPath);
+  } catch {
+    return result;
+  }
+
+  if (!focusStat.isDirectory()) {
+    return result;
+  }
+
+  const focusInfo: StructureInfo["focus"] = {
+    path: focus,
+    files: 0,
+    directories: {},
+  };
+
+  const focusEntries = await readdir(focusPath, { withFileTypes: true });
+  for (const entry of focusEntries) {
+    const entryPath = path.join(focusPath, entry.name);
+    if (entry.isDirectory()) {
+      const count = await countFilesRecursive(entryPath);
+      focusInfo.directories[entry.name] = count;
+      focusInfo.files += count;
+    } else if (entry.isFile()) {
+      focusInfo.files += 1;
     }
   }
 
+  result.focus = focusInfo;
   return result;
 }
 
@@ -249,8 +363,7 @@ async function detectPackageManagers(basePath: string): Promise<string[]> {
   ];
 
   for (const check of checks) {
-    const result = await runCommand(`test -f "${basePath}/${check.file}"`);
-    if (result.success) {
+    if (await pathExists(path.join(basePath, check.file))) {
       managers.push(check.name);
     }
   }
@@ -260,20 +373,22 @@ async function detectPackageManagers(basePath: string): Promise<string[]> {
 
 async function detectTestFrameworks(basePath: string): Promise<string[]> {
   const frameworks: string[] = [];
+  const packageJsonPath = path.join(basePath, "package.json");
 
-  // Check package.json for test frameworks
-  const pkgResult = await runCommand(`cat "${basePath}/package.json" 2>/dev/null`);
-  if (pkgResult.success) {
-    const pkgContent = pkgResult.stdout.toLowerCase();
-    
-    if (pkgContent.includes("vitest")) frameworks.push("vitest");
-    if (pkgContent.includes("jest")) frameworks.push("jest");
-    if (pkgContent.includes("mocha")) frameworks.push("mocha");
-    if (pkgContent.includes("playwright")) frameworks.push("playwright");
-    if (pkgContent.includes("cypress")) frameworks.push("cypress");
+  if (await pathExists(packageJsonPath)) {
+    try {
+      const pkgContent = (await readFile(packageJsonPath, "utf8")).toLowerCase();
+
+      if (pkgContent.includes("vitest")) frameworks.push("vitest");
+      if (pkgContent.includes("jest")) frameworks.push("jest");
+      if (pkgContent.includes("mocha")) frameworks.push("mocha");
+      if (pkgContent.includes("playwright")) frameworks.push("playwright");
+      if (pkgContent.includes("cypress")) frameworks.push("cypress");
+    } catch {
+      // Ignore unreadable package.json
+    }
   }
 
-  // Check for other test files
   const checks = [
     { file: "pytest.ini", name: "pytest" },
     { file: "setup.cfg", pattern: "pytest", name: "pytest" },
@@ -282,18 +397,27 @@ async function detectTestFrameworks(basePath: string): Promise<string[]> {
   ];
 
   for (const check of checks) {
-    const result = await runCommand(`test -f "${basePath}/${check.file}"`);
-    if (result.success && !check.pattern) {
+    const filePath = path.join(basePath, check.file);
+    if (!(await pathExists(filePath))) {
+      continue;
+    }
+
+    if (!check.pattern) {
       frameworks.push(check.name);
-    } else if (result.success && check.pattern) {
-      const content = await runCommand(`cat "${basePath}/${check.file}"`);
-      if (content.success && content.stdout.toLowerCase().includes(check.pattern)) {
+      continue;
+    }
+
+    try {
+      const content = (await readFile(filePath, "utf8")).toLowerCase();
+      if (content.includes(check.pattern)) {
         frameworks.push(check.name);
       }
+    } catch {
+      // Ignore unreadable file
     }
   }
 
-  return [...new Set(frameworks)]; // Remove duplicates
+  return [...new Set(frameworks)];
 }
 
 async function findKeyFiles(basePath: string): Promise<string[]> {
@@ -320,8 +444,7 @@ async function findKeyFiles(basePath: string): Promise<string[]> {
   const found: string[] = [];
 
   for (const file of keyFiles) {
-    const result = await runCommand(`test -f "${basePath}/${file}"`);
-    if (result.success) {
+    if (await pathExists(path.join(basePath, file))) {
       found.push(file);
     }
   }

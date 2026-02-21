@@ -7,7 +7,6 @@ agent: general
 
 Run end-to-end validation for one phase by combining:
 
-- `/gsd-verify-work`
 - `/gsd-analyze-flow`
 - HITL decision gate on detected gaps
 - runtime test orchestration via gsd validation tools
@@ -25,8 +24,8 @@ Run end-to-end validation for one phase by combining:
 
 ## Process
 
-1. Run `/gsd-verify-work <phase>` and persist output as run evidence
-2. Run `/gsd-analyze-flow <phase>` and inspect detected gaps
+1. Run `/gsd-analyze-flow <phase>` and persist output as run evidence
+2. Inspect detected gaps from analysis output
 3. Open HITL gate when gaps exist and request one explicit decision
 4. Create run workspace via `gsd-run-create`
 5. Start required servers via `gsd-server-start` and wait using `gsd-server-wait-ready`
@@ -45,13 +44,14 @@ If gaps are found, request exactly one choice:
 
 Default behavior is never `force-test`.
 
-When user selects `generate-fix-plan`, hand control to `/gsd-plan-phase --gaps` and mark run as blocked.
+When user selects `generate-fix-plan`, generate a phase-scoped remediation plan from the gap evidence and mark run as blocked.
 
 ## Runtime Safety
 
 - Never terminate processes not registered as run-owned
 - Never skip teardown; always call `gsd-server-stop-owned` in finalization path
 - Never hide missing artifacts; include warnings in final report
+- If required `gsd-*` runtime tools are unavailable, stop and return `blocked` with a missing-tool list
 
 ## Output
 

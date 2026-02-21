@@ -10,11 +10,11 @@ const SCOPED_TOOLS = [
   "read",
   "glob",
   "grep",
-  "extract_flows",
-  "build_flow_graph",
-  "trace_implementation",
-  "detect_flow_gaps",
-  "score_flow_confidence",
+  "extract-flows",
+  "build-flow-graph",
+  "trace-implementation",
+  "detect-flow-gaps",
+  "score-flow-confidence",
 ];
 
 function buildAgentInstructions(target: "generic" | "gsd"): string {
@@ -75,11 +75,23 @@ export const Plugin = async (_context: PluginContext) => {
       ];
 
       const existingAgents = currentConfig?.agents || [];
-      const existingNames = new Set(existingAgents.map((agent: any) => agent?.name));
-      const mergedAgents = [
-        ...existingAgents,
-        ...additionalAgents.filter((agent) => !existingNames.has(agent.name)),
-      ];
+      const mergedAgents = [...existingAgents];
+
+      for (const additionalAgent of additionalAgents) {
+        const existingIndex = mergedAgents.findIndex(
+          (agent: any) => agent?.name === additionalAgent.name
+        );
+
+        if (existingIndex === -1) {
+          mergedAgents.push(additionalAgent);
+          continue;
+        }
+
+        mergedAgents[existingIndex] = {
+          ...mergedAgents[existingIndex],
+          ...additionalAgent,
+        };
+      }
 
       return {
         ...currentConfig,
