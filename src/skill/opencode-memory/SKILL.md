@@ -20,220 +20,88 @@ triggers:
 
 # OpenCode Memory System
 
-## Auto-Activation
+Persistent memory keeps useful project context available across sessions via the memory plugin, tools, hooks, and slash commands.
 
-**When `.memory.md` exists in project root → I activate automatically!**
+## Quick Commands
 
-```
-project/
-├── .memory.md    → Memory plugin activates
-└── src/
-```
-
-If a `.memory.md` file exists in your project root, I will:
-
-1. Automatically load on session start
-2. Enable all memory features
-3. Show "Memory: Enabled" in status
-
-## What I Do
-
-I provide persistent memory capabilities for OpenCode sessions. I help remember context across sessions, manage memory compaction, and enable cross-project knowledge sharing.
-
-## How I Work
-
-### 1. Project Memory (.memory.md)
-
-When you work in a project with a `.memory.md` file in the root:
-
-**On Session Start:**
-
-```
-1. Detect .memory.md in project root
-2. Load configuration from frontmatter
-3. Load bootstrap context (semantic memory)
-4. Load recent episodic memory from .memory/daily/
-5. Inject into session context
+```text
+/memory status                       Show memory health and indexing status
+/memory sync [--force] [--verbose]   Index MEMORY.md and related sources
+/memory compact                      Reduce memory size while preserving key context
+/remember "text" [flags]            Store new memory with category/priority metadata
+/recall "query" [flags]             Search memory with citations and relevance scores
+/forget "query" [--force]           Remove a memory entry (confirmation by default)
 ```
 
-**During Session:**
+See full command behavior and examples in `docs/MEMORY_USAGE.md`.
 
-```
-1. Monitor context usage (count-based trigger at 80%)
-2. Handle "remember this" requests (user_request mechanism)
-3. Log important context to daily logs
-```
+## Usage Patterns
 
-**On Session End:**
+### Starting a New Project
 
-```
-1. Create snapshot (last 15 messages)
-2. Update .memory.md recent context section
-3. Save to .memory/snapshots/
-```
+1. Run `/memory status` to confirm memory is enabled and healthy.
+2. Add baseline context with `/remember "Project uses Bun + strict TypeScript" --category context`.
+3. Continue saving decisions as they happen (architecture, standards, gotchas).
 
-### 2. Memory Configuration
+### Finding Past Decisions
 
-Your `.memory.md` should have this structure:
+Use targeted recall queries:
 
-```markdown
----
-memory:
-  version: "1.0"
-  enabled: true
+- `/recall "decision about auth provider"`
+- `/recall "why vectorWeight 0.7" --source memory --min-score 0.3`
 
-  compaction:
-    count_based: 80 # Trigger at 80% context
-    time_based: 15 # Minutes inactivity
-    event_based: true # Task completion
+The expected result format is citation + score + preview, for example:
 
-  types:
-    semantic:
-      enabled: true
-      scope: project
-    episodic:
-      enabled: true
-      retention: 30d
----
+`MEMORY.md#L45-L52 (0.87): "Use verb routing for /memory commands to keep UX consistent..."`
 
-# Project Context
+### Cleaning Up and Maintenance
 
-## Stack
+1. Run `/memory sync` after substantial MEMORY.md edits.
+2. Run `/memory compact` when memory grows noisy or repetitive.
+3. Use `/memory sync --force` if search quality drops after major edits.
 
-- Your tech stack here
+## Best Practices
 
-## Conventions
+### Writing Effective Memories
 
-- Your coding conventions
-```
+- Be specific about what changed and why it matters.
+- Include enough context to be reusable later.
+- Prefer one clear memory per idea.
 
-### 3. Available Commands
+Good:
 
-When you invoke memory commands, use these:
+`Use memory_search as shared entry point for /recall and /forget to keep filters consistent.`
 
-```markdown
-/memory status # Show memory usage and config
-/memory on # Enable memory for this project
-/memory off # Disable memory for this project
-/memory compact # Force compaction now
-/remember <text> # Remember this for future sessions
-/what do you know about <topic> # Query memory
-```
+Too vague:
 
-### 4. Memory Plugin Location
+`Search was updated.`
 
-The memory system is located at:
+### Use Categories Consistently
 
-```
-src/plugin/opencode-memory/
-```
+- `decision` for architecture choices and tradeoffs.
+- `pattern` for repeatable implementation approaches.
+- `correction` for fixes and lessons learned.
+- `preference` for team/user style constraints.
+- `context` for project facts and constraints.
 
-Key modules:
+### When to Use Priority
 
-- `storage/database.ts` - SQLite lifecycle and persistence
-- `storage/schema.ts` - Database schema and indexes
-- `embeddings/index.ts` - Embedding orchestration and providers
-- `lib/search/index.ts` - Hybrid search orchestration
-- `sync/index.ts` - Markdown-to-index synchronization
-- `chunking/index.ts` - Chunking pipeline entry point
+- `high`: security, production stability, irreversible decisions.
+- `medium`: most implementation notes.
+- `low`: temporary reminders and lightweight context.
 
-## How to Use Me
+### Organization Tips
 
-### Starting a New Project with Memory
+- Use consistent wording for recurring topics to improve recall matches.
+- Periodically compact to keep retrieval relevant.
+- Prefer concise technical language over conversational phrasing.
 
-1. Create `.memory.md` in project root (use template)
-2. Start OpenCode session
-3. Memory loads automatically
+## Integration Tips
 
-### Remembering Things
-
-When you learn important information:
-
-```
-User: "Remember that we use PostgreSQL for this project"
-→ Add to semantic memory in .memory.md
-→ Available in next session
-```
-
-### Querying Memory
-
-```
-User: "What database do we use in this project?"
-→ Search semantic memory
-→ Return relevant context
-```
-
-### Forcing Compaction
-
-```
-User: "The context is getting full, compact now"
-→ Trigger manual compaction
-→ Preserve critical entries
-→ Generate daily log entry
-```
-
-## Integration Points
-
-### Session Lifecycle Hooks
-
-The memory system integrates at these points (oh-my-opencode pattern):
-
-| Hook Event                        | Action                 | Runtime Handler             |
-| --------------------------------- | ---------------------- | --------------------------- |
-| `session.created`                 | Bootstrap loading      | session bootstrap pipeline  |
-| `experimental.session.compacting` | Pre-compaction flush   | compaction preparation      |
-| `session.deleted`                 | Snapshot creation      | snapshot persistence        |
-| `tool.execute.before`             | Intent detection (LLM) | intent detection middleware |
-
-### File Locations
-
-```
-Project Root/
-├── .memory.md              # Your memory config & context
-└── .memory/                # Auto-generated (gitignored)
-    ├── daily/              # Daily logs
-    ├── snapshots/          # Session snapshots
-    └── compacted/          # Compacted archives
-
-~/.ai_docs/opencode/memory/ # Global memory
-├── sessions/               # Session history
-├── topics/                # Topic memory
-└── index.json             # Master index
-```
-
-## Configuration Options
-
-In your `.memory.md` frontmatter:
-
-| Option                     | Type    | Default | Description                |
-| -------------------------- | ------- | ------- | -------------------------- |
-| `enabled`                  | boolean | true    | Enable/disable memory      |
-| `compaction.count_based`   | int     | 80      | % context before compact   |
-| `compaction.time_based`    | int     | 15      | Minutes inactivity         |
-| `compaction.event_based`   | boolean | true    | Trigger on task complete   |
-| `types.semantic.enabled`   | boolean | true    | Remember facts/preferences |
-| `types.episodic.enabled`   | boolean | true    | Remember sessions          |
-| `types.episodic.retention` | string  | 30d     | How long to keep           |
-
-## Troubleshooting
-
-### Memory Not Loading
-
-1. Check `.memory.md` exists in project root
-2. Verify frontmatter is valid YAML
-3. Check `enabled: true` in config
-
-### Compaction Not Triggering
-
-1. Check compaction config in .memory.md
-2. Verify count_based threshold (default 80%)
-3. Check logs for errors
-
-### Remember Not Working
-
-1. Use exact phrases: "remember this", "onthoud dit"
-2. Check write permissions on .memory.md
-3. Verify semantic section exists
+- Memory commands are thin wrappers around plugin tools (`memory_status`, `memory_sync`, `memory_search`, `memory_remember`).
+- Hooks automatically bootstrap and persist useful context at session boundaries.
+- Configuration is shared through `opencode.config.yaml` and `src/lib/config/`, so memory behavior stays aligned with project-wide settings.
+- Use this skill as quick guidance; use `docs/MEMORY_USAGE.md` for complete installation, configuration, troubleshooting, and workflow coverage.
 
 ---
 
