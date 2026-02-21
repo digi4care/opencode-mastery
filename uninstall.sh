@@ -19,17 +19,18 @@ SCRIPTS_DIR="$HOME/.ai_docs/opencode/scripts"
 # Commands installed by this package
 COMMAND_FILES=(
     "ace-reflect.md"
-    "memory.md"
-    "skill-creator-audit.md"
-    "skill-creator-create.md"
-    "skill-creator-optimize.md"
-    "skill-creator-plan.md"
     "flow-analyze.md"
     "flow-analyzer.md"
     "gsd-analyze-flow.md"
     "gsd-auto-validate.md"
     "gsd-auto-validate-status.md"
     "gsd-auto-validate-report.md"
+    "memory.md"
+    "quality-first-code-auditor.md"
+    "skill-creator-audit.md"
+    "skill-creator-create.md"
+    "skill-creator-optimize.md"
+    "skill-creator-plan.md"
 )
 
 # Agents installed by this package
