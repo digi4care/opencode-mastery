@@ -17,13 +17,13 @@ Form design patterns that reduce user friction and errors.
 ```html
 <div class="space-y-6">
   <div class="space-y-2">
-    <label class="text-sm font-medium">Email</label>
-    <input type="email" class="..." />
+    <label class="text-sm font-medium" for="email">Email</label>
+    <input id="email" type="email" class="..." />
   </div>
 
   <div class="space-y-2">
-    <label class="text-sm font-medium">Password</label>
-    <input type="password" class="..." />
+    <label class="text-sm font-medium" for="password">Password</label>
+    <input id="password" type="password" class="..." />
   </div>
 </div>
 ```
@@ -53,12 +53,13 @@ Use appropriate types for better mobile keyboards:
 ```html
 <div class="space-y-1">
   <input
+    id="email"
     type="email"
     class="border-red-500 focus:ring-red-500"
     aria-invalid="true"
     aria-describedby="email-error"
   />
-  <p id="email-error" class="text-sm text-red-500">
+  <p id="email-error" class="text-sm text-red-500" role="alert">
     Please enter a valid email address
   </p>
 </div>
@@ -71,13 +72,14 @@ Use appropriate types for better mobile keyboards:
 ```html
 <div class="relative">
   <input
+    id="password"
     type={showPassword ? "text" : "password"}
     class="pr-10"
-  >
+  />
   <button
     type="button"
     class="absolute right-2 top-1/2 -translate-y-1/2"
-    onclick={() => showPassword = !showPassword}
+    onclick={() => (showPassword = !showPassword)}
     aria-label={showPassword ? "Hide password" : "Show password"}
   >
     {showPassword ? <EyeOff /> : <Eye />}
@@ -114,12 +116,14 @@ Instead of "confirm password" field:
 <div class="relative">
   <input type="search" placeholder="Search..." class="pl-10 pr-10" />
   <SearchIcon class="absolute left-3 top-1/2 -translate-y-1/2" />
-  {#if value}
-  <button class="absolute right-3 top-1/2 -translate-y-1/2" onclick="{()" ="">
-    value = ''}>
+  <button
+    type="button"
+    class="absolute right-3 top-1/2 -translate-y-1/2"
+    onclick="clearSearch()"
+    aria-label="Clear search"
+  >
     <XIcon />
   </button>
-  {/if}
 </div>
 ```
 
@@ -139,11 +143,11 @@ Instead of "confirm password" field:
 
 ```html
 <!-- Option 1: Asterisk -->
-<label> Email <span class="text-red-500">*</span> </label>
+<label for="email">Email <span class="text-red-500">*</span></label>
 
 <!-- Option 2: Optional label -->
-<label>
-  Email
+<label for="company">
+  Company
   <span class="text-muted-foreground text-sm">(optional)</span>
 </label>
 ```
@@ -153,14 +157,17 @@ Instead of "confirm password" field:
 ```html
 <div class="mb-8">
   <div class="flex items-center">
-    {#each steps as step, i}
     <div class="flex items-center">
-      <div class="{currentStep">i ? 'bg-primary' : 'bg-muted'}> {i + 1}</div>
-      {#if i < steps.length - 1}
+      <div class="bg-primary text-white">1</div>
       <div class="h-px w-12 bg-muted"></div>
-      {/if}
     </div>
-    {/each}
+    <div class="flex items-center">
+      <div class="bg-muted">2</div>
+      <div class="h-px w-12 bg-muted"></div>
+    </div>
+    <div class="flex items-center">
+      <div class="bg-muted">3</div>
+    </div>
   </div>
 </div>
 ```

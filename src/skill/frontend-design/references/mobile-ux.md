@@ -1,52 +1,111 @@
-# Mobile UX
+# Mobile UX Reference
 
-Design patterns optimized for touch and mobile devices.
+> **Zie ook:** [SKILL.md](../SKILL.md) - Workflow stap 2: Apply mobile-first (VERPLICHT)
 
-## Touch Targets
+---
+
+## 1. Mobile-First (VERPLICHT)
+
+**Bij ELKE styling taak: mobile eerst, dan progressive enhancement.**
+
+### Waarom Mobile-First?
+
+- Mobile traffic > 60% van web traffic
+- Mobile constraints dwingen focus op essentie
+- Progressive enhancement > graceful degradation
+- Betere performance (minder CSS, sneller load)
+
+### Tailwind Breakpoint Volgorde
+
+**ALTIJD deze volgorde:**
+
+```html
+<!-- ❌ FOUT: Desktop first (breek de regel!) -->
+<div class="flex-row gap-8 p-8 md:flex-col md:gap-4 md:p-4">
+  <!-- ✅ GOED: Mobile first -->
+  <div
+    class="flex flex-col gap-4 p-4 md:flex-row md:gap-6 md:p-6 lg:gap-8 lg:p-8"
+  ></div>
+</div>
+```
+
+**Uitleg:**
+
+| Breakpoint | Scherm   | Wanneer gebruiken           |
+| ---------- | -------- | --------------------------- |
+| (geen)     | < 640px  | Mobile base styles          |
+| `sm:`      | ≥ 640px  | Large phones, small tablets |
+| `md:`      | ≥ 768px  | Tablets                     |
+| `lg:`      | ≥ 1024px | Laptops, desktops           |
+| `xl:`      | ≥ 1280px | Large desktops              |
+| `2xl:`     | ≥ 1536px | Extra large screens         |
+
+**Regel:** Base class = mobile → Dan `md:` → Dan `lg:`
+
+---
+
+## 2. Mobile-First Checklist
+
+Bij ELKE styling wijziging, check deze lijst:
+
+- [ ] **Base styles** werken op 375px (iPhone)
+- [ ] **Touch targets** minimaal 44x44px
+- [ ] **Spacing** minimaal 8px tussen klikbare elementen
+- [ ] **Font size** minimaal 16px (voorkomt iOS zoom)
+- [ ] **Primary actions** in thumb zone (onderin scherm)
+- [ ] **Breakpoints** in volgorde: base → `md:` → `lg:`
+
+---
+
+## 3. Touch Targets
 
 **Minimum size: 44x44px (Apple), 48x48px (Android)**
 
 ```html
-<!-- Bad: Too small -->
+<!-- ❌ FOUT: Te klein -->
 <button class="p-1">
   <Icon class="w-4 h-4" />
 </button>
 
-<!-- Good: Meets minimum -->
+<!-- ✅ GOED: Voldoet aan minimum -->
 <button class="p-3 min-h-[44px] min-w-[44px] flex items-center justify-center">
   <Icon class="w-5 h-5" />
 </button>
 ```
 
-## Minimum Spacing
+---
 
-**8px gap between touch targets**
+## 4. Minimum Spacing
+
+**8px gap tussen touch targets**
 
 ```html
-<!-- Bad: Too close -->
+<!-- ❌ FOUT: Te dicht bij elkaar -->
 <div class="flex gap-1">
   <button>Action 1</button>
   <button>Action 2</button>
 </div>
 
-<!-- Good: Adequate spacing -->
+<!-- ✅ GOED: Voldoende spacing -->
 <div class="flex gap-2">
   <button class="min-h-[44px]">Action 1</button>
   <button class="min-h-[44px]">Action 2</button>
 </div>
 ```
 
-## Thumb Zone
+---
 
-Place primary actions within easy thumb reach:
+## 5. Thumb Zone
+
+Plaats primary actions binnen handig thumb bereik:
 
 ```
 ┌─────────────────┐
-│    Easy         │  ← Top: Hard to reach
+│    Hard         │  ← Top: Moeilijk bereikbaar
 │  ┌───────────┐  │
-│  │   Easy    │  │  ← Center: Moderate
+│  │  Moderate │  │  ← Center: Matig
 │  │ ┌───────┐ │  │
-│  │ │ Easy  │ │  │  ← Bottom: Easy (thumb zone)
+│  │ │ EASY  │ │  │  ← Bottom: Thumb zone (PLAATS HIER CTAs!)
 │  └─┴───────┴─┘  │
 └─────────────────┘
 ```
@@ -68,32 +127,36 @@ Place primary actions within easy thumb reach:
 ### Bottom Sheet Actions
 
 ```html
-<!-- Primary action at bottom -->
+<!-- Primary action onderin -->
 <div class="fixed bottom-0 left-0 right-0 p-4 bg-background border-t">
   <button class="w-full min-h-[44px]">Continue</button>
 </div>
 ```
 
-## Viewport Height
+---
 
-**Never use `100vh` on mobile** - URL bar causes issues:
+## 6. Viewport Height
+
+**Nooit `100vh` op mobile** - URL bar veroorzaakt problemen:
 
 ```css
-/* Bad: Content hidden behind URL bar */
+/* ❌ FOUT: Content verborgen achter URL bar */
 .container {
   height: 100vh;
 }
 
-/* Good: Dynamic viewport height */
+/* ✅ GOED: Dynamic viewport height */
 .container {
   height: 100dvh; /* Modern browsers */
   height: -webkit-fill-available; /* Safari fallback */
 }
 ```
 
-## Responsive Breakpoints
+---
 
-Test at these widths:
+## 7. Responsive Breakpoints Test Matrix
+
+Test op deze breedtes:
 
 | Device        | Width  | Use Case          |
 | ------------- | ------ | ----------------- |
@@ -104,46 +167,36 @@ Test at these widths:
 | Desktop       | 1024px | Small laptop      |
 | Large desktop | 1440px | Standard monitor  |
 
-## Mobile-First CSS
+---
 
-```html
-<!-- Base styles for mobile, enhance up -->
-<div
-  class="
-  /* Mobile default */
-  flex flex-col gap-4 p-4
-  /* Tablet+ */
-  md:flex-row md:gap-6 md:p-6
-  /* Desktop */
-  lg:gap-8 lg:p-8
-"
-></div>
-```
+## 8. Font Size
 
-## Font Size
-
-**Minimum 16px for body text** - Prevents iOS zoom on focus:
+**Minimum 16px voor body text** - Voorkomt iOS zoom on focus:
 
 ```css
-/* Bad: iOS will zoom on focus */
+/* ❌ FOUT: iOS zoomt on focus */
 input {
   font-size: 14px;
 }
 
-/* Good: No zoom */
+/* ✅ GOED: Geen zoom */
 input {
   font-size: 16px;
 }
 ```
 
-## Viewport Meta Tag
+---
+
+## 9. Viewport Meta Tag
 
 ```html
-<!-- Required for responsive design -->
+<!-- VERPLICHT voor responsive design -->
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 ```
 
-## Gestures
+---
+
+## 10. Gestures
 
 | Gesture         | Use Case                |
 | --------------- | ----------------------- |
