@@ -10,15 +10,18 @@ De `sv` CLI voor Svelte projecten: create, add-ons, templates, en development wo
 
 ```bash
 # Project aanmaken
-npm create svelte@latest my-app
-npm create svelte@latest my-app -- --template skeleton --types ts
+bunx sv create my-app
+bunx sv create my-app --template skeleton --types ts
+
+# Dependencies
+bun install
 
 # Development
-npm run dev      # Dev server
-npm run build    # Production build
-npm run check    # Type checking
-npm run lint     # ESLint
-npm run format   # Prettier
+bun run dev      # Dev server
+bun run build    # Production build
+bun run check    # Type checking
+bun run lint     # ESLint
+bun run format   # Prettier
 ```
 
 ## Templates

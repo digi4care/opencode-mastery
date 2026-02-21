@@ -28,11 +28,9 @@ Expert database architecture skill voor:
 
 ## Related Skills
 
-| Skill        | Doel                                 |
-| ------------ | ------------------------------------ |
-| `postgresql` | PostgreSQL implementatie             |
-| `sqlite`     | SQLite implementatie (toe te voegen) |
-| `mysql`      | MySQL implementatie (toe te voegen)  |
+| Skill        | Doel                     |
+| ------------ | ------------------------ |
+| `postgresql` | PostgreSQL implementatie |
 
 ## Resources
 

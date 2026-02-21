@@ -444,7 +444,7 @@ For questions or issues, please refer to the main OpenCode Mastery documentation
 If you want to focus specifically on writing **custom tools** (Zod schema + handler + stable return shapes), see the `tools/` directory.
 
 - **[tools/README.md](../tools/README.md)** - Tools learning path (tiers)
-- **[../../../docs/opencode/tools.md](../../../docs/opencode/tools.md)** - Complete tools reference
+- **[../../../../../docs/opencode/tools.md](../../../../../docs/opencode/tools.md)** - Complete tools reference
 
 Tools are usually authored inside plugins. For plugin fundamentals (installation/loading), see `plugins/`.
 
@@ -495,7 +495,7 @@ See `plugins/` directory for complete plugin examples:
 
 ### Plugin Documentation
 
-**Consolidated guide**: [../../../docs/opencode/plugins.md](../../../docs/opencode/plugins.md)
+**Consolidated guide**: [../../../../../docs/opencode/plugins.md](../../../../../docs/opencode/plugins.md)
 
 See `../plugins/` directory for executable examples:
 
@@ -526,8 +526,8 @@ See `../plugins/` directory for executable examples:
 
 **Consolidated guides** (in docs/):
 
-- [docs/opencode/tools.md](../../../docs/opencode/tools.md) - Complete tools reference
-- [docs/opencode/plugins.md](../../../docs/opencode/plugins.md) - Complete plugins reference
+- [docs/opencode/tools.md](../../../../../docs/opencode/tools.md) - Complete tools reference
+- [docs/opencode/plugins.md](../../../../../docs/opencode/plugins.md) - Complete plugins reference
 
 ### Summary
 

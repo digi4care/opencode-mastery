@@ -62,6 +62,6 @@ Project configured via `svelte.config.js` and package.json.
 - references/lucia.md - Auth integration
 - references/mcp.md - Model Context Protocol
 - references/mdsvex.md - Markdown integration
-- references/package-managers.md - pnpm/npm/yarn
+- references/package-managers.md - bun and alternative managers
 - references/troubleshooting.md - Common issues
 - references/best-practices.md - Project setup tips

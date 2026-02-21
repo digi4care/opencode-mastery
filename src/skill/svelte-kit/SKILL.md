@@ -61,14 +61,14 @@ export const handle = async ({ event, resolve }) => {
 
 ## References
 
-- references/routing.md - File-based routing deep dive
-- references/data-loading.md - Load functions
-- references/form-actions.md - Form handling
-- references/hooks.md - Server hooks
-- references/adapters.md - Deployment adapters
-- references/ssr-ssg.md - Rendering modes
-- references/platform-context.md - Platform-specific APIs
-- references/troubleshooting.md - Common issues
+- references/documentation/routing.md - File-based routing deep dive
+- references/documentation/loading_data.md - Load functions
+- references/documentation/form_actions.md - Form handling
+- references/documentation/hooks.md - Server hooks
+- references/documentation/adapters.md - Deployment adapters
+- references/documentation/static_site_generation.md - Rendering modes
+- references/documentation/web_standards.md - Platform-specific APIs
+- references/documentation/errors.md - Common issues
 
 ## Best Practices
 

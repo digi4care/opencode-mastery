@@ -1,3 +1,13 @@
+---
+name: ace-analysis
+description: Analyzes sessions using ACE framework to generate prompt improvement suggestions focused on durable patterns.
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "1.0.0"
+---
+
 # ACE Analysis Skill
 
 Analyzes AI agent sessions using ACE (Agentic Context Engineering) framework.

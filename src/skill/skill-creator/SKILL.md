@@ -90,7 +90,7 @@ Should not trigger:
 
 Functional:
 
-- "Refactor `src/skill/foo/SKILL.md` with dry-run first, then apply only if quality score improves."
+- "Refactor `src/skill/frontend-design/SKILL.md` with dry-run first, then apply only if quality score improves."
 
 ## References
 

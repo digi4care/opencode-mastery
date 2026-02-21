@@ -1,8 +1,8 @@
 ---
 name: flow-analysis
 description: Analyze feature flows for completeness, preconditions, and branch coverage using reusable flow-analyzer tools.
-license: See LICENSE in repository root
-compatibility: OpenCode plugin + command workflows
+license: MIT
+compatibility: opencode
 metadata:
   author: opencode-mastery
   version: 0.1.0

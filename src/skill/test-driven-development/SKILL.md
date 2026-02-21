@@ -21,8 +21,6 @@ Use me when:
 - new function
 - create endpoint
 - add method
-- bug fix
-- fix this
 - implement this
 - write code for
 
@@ -40,6 +38,7 @@ Do not use me for:
 - general programming questions
 - installation or troubleshooting
 - framework-agnostic code help
+- bug investigation (use systematic-debugging first)
 
 ## Workflow
 
@@ -76,7 +75,7 @@ Should trigger:
 
 - Create a new API endpoint
 - Add user authentication
-- Fix this bug properly
+- Implement a new endpoint with tests first
 - Implement payment processing
 - Write a login function
 

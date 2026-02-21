@@ -2,7 +2,10 @@
 name: postgresql
 description: PostgreSQL implementation - schema design, data types, indexing, partitioning, JSONB, performance optimization, extensions (pgvector, postgis). Use for PostgreSQL CODE. For database selection decisions use database-architect skill.
 license: MIT
-compatibility: OpenCode
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "1.0.0"
 ---
 
 # PostgreSQL Table Design
@@ -216,8 +219,7 @@ CREATE INDEX ON orders (created_at);
 ## Related Skills
 
 - **database-architect** - DB selection and architecture design
-- **drizzle** - TypeScript ORM for PostgreSQL
-- **prisma** - Type-safe database client
+- **repo-analysis** - Analyze existing PostgreSQL patterns in repositories
 
 ## Resources
 

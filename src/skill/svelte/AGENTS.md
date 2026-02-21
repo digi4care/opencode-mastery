@@ -4,7 +4,7 @@
 
 ## Overview
 
-Complete Svelte en SvelteKit kennis: components, reactivity, stores, lifecycle, routing, SSR.
+Complete Svelte component kennis: components, reactivity, stores, lifecycle, and composition.
 
 ## Svelte 5 Runes
 
@@ -61,8 +61,8 @@ export const count = writable(0);
 
 - Svelte component development
 - Reactivity en state management
-- SvelteKit routing en SSR
 - Store patterns
+- For SvelteKit routing/SSR use `svelte-kit` skill
 - Debugging Svelte issues
 
 ## Related Skills
@@ -76,4 +76,4 @@ export const count = writable(0);
 
 - **SKILL.md** → Comprehensive framework guide
 - **Svelte Docs**: https://svelte.dev/docs
-- **SvelteKit Docs**: https://kit.svelte.dev/docs
+- **SvelteKit Docs** (framework topics): https://kit.svelte.dev/docs

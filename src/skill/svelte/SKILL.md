@@ -19,7 +19,7 @@ Complete Svelte knowledge base combining official documentation and real-world p
 - Working with Svelte reactivity (runes)
 - State management with stores
 - Animations and transitions
-- SvelteKit full-stack development
+- Svelte component architecture used inside SvelteKit apps (component layer only)
 - Component composition patterns
 
 ## Quick Reference
@@ -58,12 +58,14 @@ const count = writable(0);
 
 ## References
 
-- references/svelte-5-runes.md - Reactivity with $state, $derived, $effect
-- references/stores.md - Svelte stores
-- references/components.md - Component patterns
-- references/animations.md - Transitions and animations
-- references/sveltekit.md - SvelteKit integration
-- references/troubleshooting.md - Common issues
+- references/documentation/runes_state.md - Reactivity with $state
+- references/documentation/runes_derived.md - Derived values with $derived
+- references/documentation/runes_effect.md - Side effects with $effect
+- references/documentation/stores.md - Svelte stores
+- references/documentation/svelte_files.md - Component patterns and file conventions
+- references/documentation/styles.md - Styling and transitions
+- references/documentation/lifecycle_hooks.md - Lifecycle patterns
+- references/documentation/other.md - Common issues and advanced topics
 
 ## Related Skills
 

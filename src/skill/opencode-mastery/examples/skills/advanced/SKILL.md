@@ -275,7 +275,7 @@ After studying this example, you should understand:
 
 ### Adding New Phases
 
-1. Create new script: `scripts/phase-custom.sh`
+1. Create new script: `scripts/phase-<name>.sh`
 2. Add to router.sh case statement
 3. Update configuration if needed
 

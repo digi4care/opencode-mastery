@@ -46,10 +46,11 @@ The MCP server provides tools for:
 
 ## References
 
-- references/installation.md - Setup and configuration
-- references/tools.md - Available MCP tools
-- references/playground.md - Playground integration
-- references/troubleshooting.md - Common issues
+- references/documentation/local_setup.md - Setup and local configuration
+- references/documentation/remote_setup.md - Remote setup
+- references/documentation/tools.md - Available MCP tools
+- references/documentation/resources.md - Resource usage and integration
+- references/documentation/prompts.md - Prompt templates and patterns
 
 ## Related Skills
 

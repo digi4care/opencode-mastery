@@ -1,3 +1,13 @@
+---
+name: gsd-validation
+description: Automated post-phase validation workflow for GSD phases with deterministic gates and HITL controls.
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "1.0.0"
+---
+
 # gsd-validation
 
 Automated post-phase validation workflow for GSD phases.
@@ -17,14 +27,14 @@ Run a deterministic verification pipeline after implementation:
 Use this skill when the request includes:
 
 - validating a finished phase end-to-end
-- combining `/gsd-verify-work` and `/gsd-analyze-flow`
+- combining `/gsd-auto-validate` and `/gsd-analyze-flow`
 - automated browser + server log validation
 - safe teardown requirements in shared/swarm environments
 
 ## Workflow
 
 1. Parse phase id and execution mode (`quick|full`)
-2. Run `/gsd-verify-work <phase>`
+2. Run `/gsd-auto-validate <phase>`
 3. Run `/gsd-analyze-flow <phase>`
 4. If gaps exist, enforce HITL gate using `references/gate-policy.md`
 5. If approved for tests, execute runtime tools in this order:

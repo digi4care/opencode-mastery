@@ -10,13 +10,13 @@ Svelte port van shadcn-ui. Components landen in `$lib/components/ui/`. Gebruikt 
 
 ```bash
 # Initialize
-pnpm dlx shadcn-svelte@latest init
+bunx shadcn-svelte@latest init
 
 # Add components
-pnpm dlx shadcn-svelte@latest add button
-pnpm dlx shadcn-svelte@latest add dialog
-pnpm dlx shadcn-svelte@latest add card
-pnpm dlx shadcn-svelte@latest add form
+bunx shadcn-svelte@latest add button
+bunx shadcn-svelte@latest add dialog
+bunx shadcn-svelte@latest add card
+bunx shadcn-svelte@latest add form
 ```
 
 ## Usage Pattern
@@ -52,7 +52,7 @@ pnpm dlx shadcn-svelte@latest add form
 | Niet doen                        | Wel doen                        |
 | -------------------------------- | ------------------------------- |
 | Components zelf schrijven        | CLI gebruiken om te installeren |
-| `npm`/`yarn` in dit project      | `pnpm dlx` voor shadcn CLI      |
+| `npm`/`yarn` in dit project      | `bunx` voor shadcn CLI          |
 | Tailwind v3 config in v4 project | `@theme` block gebruiken        |
 
 ## When to Use
@@ -72,8 +72,8 @@ pnpm dlx shadcn-svelte@latest add form
 
 - **SKILL.md** → Complete reference
 - **References**:
-  - [Installation](references/installation.md)
-  - [Dark Mode](references/dark_mode.md)
-  - [Forms](references/forms.md)
-  - [Troubleshooting](references/troubleshooting.md)
+  - [Installation](references/documentation/Installation_e2993602e4.md)
+  - [Dark Mode](references/documentation/Dark_Mode_ed9cf28a2a.md)
+  - [Forms](references/documentation/Formsnap_7e47279aa6.md)
+  - [Troubleshooting](references/documentation/FAQ_18bce2f4b4.md)
 - **Official Site**: https://www.shadcn-svelte.com/

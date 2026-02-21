@@ -25,17 +25,17 @@ shadcn-svelte is a Svelte port of shadcn-ui - accessible UI components built wit
 
 ```bash
 # Install shadcn-svelte
-pnpm dlx shadcn-svelte@latest init
+bunx shadcn-svelte@latest init
 
 # Add components
-pnpm dlx shadcn-svelte@latest add button
-pnpm dlx shadcn-svelte@latest add dialog
-pnpm dlx shadcn-svelte@latest add card
+bunx shadcn-svelte@latest add button
+bunx shadcn-svelte@latest add dialog
+bunx shadcn-svelte@latest add card
 
 # Add form components
-pnpm dlx shadcn-svelte@latest add form
-pnpm dlx shadcn-svelte@latest add input
-pnpm dlx shadcn-svelte@latest add select
+bunx shadcn-svelte@latest add form
+bunx shadcn-svelte@latest add input
+bunx shadcn-svelte@latest add select
 ```
 
 ```svelte
@@ -68,13 +68,13 @@ pnpm dlx shadcn-svelte@latest add select
 ## References
 
 - [Design Tokens](references/design-tokens.md) - **CRITICAL: Read before styling**
-- [Installation](references/installation.md)
-- [Dark Mode Setup](references/dark_mode.md)
+- [Installation](references/documentation/Installation_e2993602e4.md)
+- [Dark Mode Setup](references/documentation/Dark_Mode_ed9cf28a2a.md)
 - [Component Categories](references/registry.json)
-- [Troubleshooting](references/troubleshooting.md)
-- [Form Components](references/forms.md)
+- [Troubleshooting](references/documentation/FAQ_18bce2f4b4.md)
+- [Form Components](references/documentation/Formsnap_7e47279aa6.md)
 
 ## Related Skills
 
-- [tailwind](file://../../../tailwind/SKILL.md) - Styling
-- [svelte-kit](file://../../../svelte-kit/SKILL.md) - Framework
+- tailwind - Styling
+- svelte-kit - Framework

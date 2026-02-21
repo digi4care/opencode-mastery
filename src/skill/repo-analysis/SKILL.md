@@ -3,6 +3,11 @@ name: repo-analysis
 description: |
   Analyze GitHub repositories for architecture, patterns, and code quality.
   Use when user asks to analyze, review, or understand a GitHub repository.
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "1.0.0"
 ---
 
 # Repository Analysis Skill
@@ -25,7 +30,7 @@ Use this skill when the user asks:
 
 - **Local codebase analysis** → Use `systematic-debugging` or `test-driven-development` skills
 - **Single file review** → Use `read` tool directly, no cloning needed
-- **Documentation lookup** → Use `context7` skill for library docs
+- **Documentation lookup** → Use `opencode-mastery` skill or `ExternalScout` for library docs
 - **Web content analysis** → Use `webfetch` tool for non-GitHub URLs
 - **Private repos without access** → Will fail, ask user for access first
 
@@ -292,6 +297,6 @@ User: "What language is React written in?"
 
 - **Tool**: `src/plugin/repo-analyzer/index.ts` - Implementation
 - **Config**: `opencode.config.yaml` → `features.repoAnalyzer` - Settings
-- **Related Skills**: `context7` (docs), `systematic-debugging` (local analysis)
+- **Related Skills**: `opencode-mastery` (docs), `systematic-debugging` (local analysis)
 - **GitHub CLI**: `gh repo clone --help` - Clone options
 - **Pattern Source**: [oh-my-opencode librarian agent](https://github.com/code-yeongyu/oh-my-opencode)

@@ -67,12 +67,12 @@ playwright-cli close
 
 ## References
 
-- references/test-generation.md - Auto-generate tests
-- references/tracing.md - Performance analysis
-- references/video-recording.md - Video capture
-- references/request-mocking.md - API mocking
-- references/session-management.md - Multi-session
-- references/storage-state.md - Cookies/localStorage
+- references/playwright-cli-ref-test-generation.md - Auto-generate tests
+- references/playwright-cli-ref-tracing.md - Performance analysis
+- references/playwright-cli-ref-video-recording.md - Video capture
+- references/playwright-cli-ref-request-mocking.md - API mocking
+- references/playwright-cli-ref-session-management.md - Multi-session
+- references/playwright-cli-ref-storage-state.md - Cookies/localStorage
 
 ## Related Skills
 

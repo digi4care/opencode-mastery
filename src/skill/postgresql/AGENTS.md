@@ -43,8 +43,7 @@ serial             -- → use generated always as identity
 ## Related Skills
 
 - **database-architect** - DB selection and architecture
-- **sqlite** - Lightweight embedded database
-- **mysql** - Alternative relational database
+- **repo-analysis** - Repository analysis for existing DB patterns
 
 ## Resources
 

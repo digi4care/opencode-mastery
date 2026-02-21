@@ -2,7 +2,10 @@
 name: database-architect
 description: Database technology selection and architecture - choose between SQL vs NoSQL, PostgreSQL vs MySQL vs MongoDB, scaling strategies, migration planning. Use for database DECISIONS. For PostgreSQL implementation use postgresql skill.
 license: MIT
-compatibility: OpenCode
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "1.0.0"
 ---
 
 # Database Architect
@@ -216,7 +219,7 @@ When asked for database architecture advice:
 4. **Plan indexing** - Based on query patterns
 5. **Design caching** - Multi-tier strategy
 6. **Plan scalability** - Growth projections
-7. **Refer to skill** - Point to postgresql/sqlite/mysql for implementation
+7. **Refer to skill** - Point to postgresql (or project-specific implementation docs) for implementation
 
 ## Example Interactions
 
@@ -233,9 +236,6 @@ When asked for database architecture advice:
 | Skill          | Use When                          |
 | -------------- | --------------------------------- |
 | **postgresql** | PostgreSQL implementation details |
-| **sqlite**     | SQLite for embedded/local         |
-| **mysql**      | MySQL implementation details      |
-| **redis**      | Caching layer                     |
 
 ## Resources
 

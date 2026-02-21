@@ -1,6 +1,11 @@
 ---
 name: opencode-memory
 description: Persistent memory system with .memory.md, compaction, and cross-project sync
+license: MIT
+compatibility: opencode
+metadata:
+  author: OpenCode Community
+  version: "1.0.0"
 triggers:
   - "memory"
   - ".memory.md"
@@ -120,17 +125,17 @@ When you invoke memory commands, use these:
 The memory system is located at:
 
 ```
-src/skill/opencode-memory/src/
+src/plugin/opencode-memory/
 ```
 
 Key modules:
 
-- `index.ts` - Main plugin entry (oh-my-opencode pattern)
-- `tools/memory-tool.ts` - AI callable memory tools
-- `hooks/memory-bootstrap.ts` - Session start → load .memory.md
-- `hooks/memory-compaction.ts` - Context 80% → flush to daily log
-- `hooks/memory-snapshot.ts` - Session end → save snapshot
-- `hooks/memory-intent.ts` - LLM-powered intent detection (multi-language)
+- `storage/database.ts` - SQLite lifecycle and persistence
+- `storage/schema.ts` - Database schema and indexes
+- `embeddings/index.ts` - Embedding orchestration and providers
+- `lib/search/index.ts` - Hybrid search orchestration
+- `sync/index.ts` - Markdown-to-index synchronization
+- `chunking/index.ts` - Chunking pipeline entry point
 
 ## How to Use Me
 
@@ -173,12 +178,12 @@ User: "The context is getting full, compact now"
 
 The memory system integrates at these points (oh-my-opencode pattern):
 
-| Hook Event                        | Action                 | TypeScript File            |
-| --------------------------------- | ---------------------- | -------------------------- |
-| `session.created`                 | Bootstrap loading      | hooks/memory-bootstrap.ts  |
-| `experimental.session.compacting` | Pre-compaction flush   | hooks/memory-compaction.ts |
-| `session.deleted`                 | Snapshot creation      | hooks/memory-snapshot.ts   |
-| `tool.execute.before`             | Intent detection (LLM) | hooks/memory-intent.ts     |
+| Hook Event                        | Action                 | Runtime Handler             |
+| --------------------------------- | ---------------------- | --------------------------- |
+| `session.created`                 | Bootstrap loading      | session bootstrap pipeline  |
+| `experimental.session.compacting` | Pre-compaction flush   | compaction preparation      |
+| `session.deleted`                 | Snapshot creation      | snapshot persistence        |
+| `tool.execute.before`             | Intent detection (LLM) | intent detection middleware |
 
 ### File Locations
 
